@@ -856,7 +856,7 @@ const Exp1Tutorial={
    const close=document.createElement('button');close.type='button';close.className='tutorial-dismiss-btn';close.textContent='Dismiss';close.addEventListener('click',()=>{this.dismissedForSession=true;this.reset()});
    el.append(avatar,messageBox,close);canvas.parentNode.insertBefore(el,canvas);this.bannerEl=el;
   }
-  this.bannerEl.querySelector('.tutorial-text-content').textContent=message.replace(/^Prof\\. Trung:\\s*/, '');
+  this.bannerEl.querySelector('.tutorial-text-content').textContent=message.replace(/^Prof\. Trung:\s*/, '');
   const close=this.bannerEl.querySelector('.tutorial-dismiss-btn');close.textContent=final?'Got it!':'Dismiss';close.setAttribute('aria-label',final?'Acknowledge tutorial completion':'Dismiss tutorial guidance');
   this.bannerEl.hidden=false;
  },
@@ -1239,7 +1239,7 @@ showMenu=function(type='menu'){
  const existingContinue=document.getElementById('continueRun');
  document.getElementById('hubContinue').addEventListener('click',()=>{if(loadCheckpoint())existingContinue.click();else{document.getElementById('hubModes').click()}});
  document.getElementById('hubModes').addEventListener('click',()=>{const modes=document.getElementById('modes');modes.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});const first=modes.querySelector('button:not([disabled])');if(first)first.focus({preventScroll:true})});
- document.getElementById('hubNotes').addEventListener('click',()=>{ProfessorPager.refresh();const panel=document.getElementById('profPagerNotes');panel.hidden=false;document.getElementById('profPagerButton').setAttribute('aria-expanded','true');document.getElementById('profPagerButton').scrollIntoView({block:'center'});document.getElementById('profPagerButton').focus({preventScroll:true})});
+ document.getElementById('hubNotes').addEventListener('click',()=>{const panel=document.getElementById('profPagerNotes'),button=document.getElementById('profPagerButton');if(panel.hidden)button.click();button.scrollIntoView({block:'center'});button.focus({preventScroll:true})});
  document.getElementById('hubScores').addEventListener('click',()=>{if(typeof scoresButton!=='undefined'&&scoresButton)scoresButton.click()});
  const original=showMenu;
  showMenu=function(type='menu'){original(type);hub.hidden=type!=='menu';if(type==='menu'){let p=null;try{p=JSON.parse(localStorage.getItem('petri-panic-intern-v1'))}catch(e){}const name=p&&typeof p.name==='string'?p.name:'Intern';document.getElementById('labHubGreeting').textContent='Welcome back, '+name+'! Your Globs are counting on you.';const has=!!loadCheckpoint();document.getElementById('hubContinue').textContent=has?'💾 Continue Saved Research':'🧬 Start Your Research';}};
