@@ -398,7 +398,42 @@ body.menu-open{overflow:hidden}
  #overlay.preparing #guardianOptions{height:122px!important}
  #overlay.preparing .era-card{min-height:76px}
 }
-/* Optional Hard Mode */.modal .mode.hard-mode{grid-column:1/-1;min-height:63px;background:linear-gradient(120deg,#fff5f2,#fbd5d9);border-color:#f2bac3;border-bottom-color:#c87b91;color:#8a3655}.modal .mode.hard-mode.active{background:linear-gradient(#f6d4ee,#edaecb);border-color:#b23e86}.modal .mode.hard-mode span{color:#97546d}@media(max-width:600px){.modal .mode.hard-mode{min-height:52px;font-size:24px}}</style></head>
+/* Optional Hard Mode */.modal .mode.hard-mode{grid-column:1/-1;min-height:63px;background:linear-gradient(120deg,#fff5f2,#fbd5d9);border-color:#f2bac3;border-bottom-color:#c87b91;color:#8a3655}.modal .mode.hard-mode.active{background:linear-gradient(#f6d4ee,#edaecb);border-color:#b23e86}.modal .mode.hard-mode span{color:#97546d}@media(max-width:600px){.modal .mode.hard-mode{min-height:52px;font-size:24px}}/* Candy UI improvement — preserved gameplay engine */
+/* Candy menu polish, scoped to the welcome modal; gameplay remains untouched. */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap');
+#overlay:not(.preparing) .modal{background:linear-gradient(155deg,#fff9fd 0%,#ffeaf4 57%,#f7c4dd 100%);border:6px solid #fffafc;border-radius:38px;box-shadow:inset 0 0 0 3px #efb6d3,inset 0 5px #fff,0 10px 0 #bd78a0,0 25px 46px #85446c55;padding-bottom:clamp(17px,3vh,28px)}
+#overlay:not(.preparing) #modalTitle{font:700 clamp(32px,5.9vw,51px)/1.04 'Fredoka','Nunito',sans-serif;color:#ba3c7d;letter-spacing:-.025em;text-shadow:0 2px 0 #fff9fc,0 4px 7px #bd7e9d48;margin:6px 0 9px}
+#overlay:not(.preparing) #modalBody{font:700 clamp(12px,1.9vw,15px)/1.45 'Nunito',sans-serif;color:#784262;max-width:470px;margin:4px auto 17px}
+#overlay:not(.preparing) .mascot{height:103px;filter:drop-shadow(0 5px 5px #b65b9259)}
+#overlay:not(.preparing) .kawaii-mascot{scale:1.12}
+#overlay:not(.preparing) .modes{gap:13px;margin:18px 0 21px;overflow:visible;padding:8px 5px}
+#overlay:not(.preparing) .mode{position:relative;isolation:isolate;overflow:visible;min-height:102px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;font:700 clamp(18px,3vw,24px)/1.08 'Fredoka',sans-serif;color:#91426e;background:linear-gradient(145deg,#fffefc,#ffe5f1);border:3px solid #fff;border-bottom:7px solid #d999b9;border-radius:23px;box-shadow:inset 0 3px 0 #fffffffa,0 6px 12px #b5578530;transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s,background .2s;transform-origin:center;cursor:pointer;touch-action:manipulation}
+#overlay:not(.preparing) .mode:before{content:'';position:absolute;inset:4px 6px auto;height:35%;border-radius:18px;background:linear-gradient(#fff9,transparent);pointer-events:none}
+#overlay:not(.preparing) .mode:after{content:' ';display:none}
+#overlay:not(.preparing) .mode .mode-icon{display:grid;place-items:center;width:37px;height:37px;margin-bottom:4px;color:white;border:2px solid #fffc;border-radius:14px;background:linear-gradient(145deg,#f3a9d7,#c66cae);box-shadow:inset 0 2px #fff7,0 4px #ad739e5c}
+#overlay:not(.preparing) .mode[data-mode="trial"] .mode-icon{background:linear-gradient(145deg,#79d7ef,#668ddc)}
+#overlay:not(.preparing) .mode[data-mode="challenge"] .mode-icon{background:linear-gradient(145deg,#7bdbb4,#35ac8c)}
+#overlay:not(.preparing) .mode[data-mode="hard"] .mode-icon{background:linear-gradient(145deg,#ffc07d,#e87485)}
+#overlay:not(.preparing) .mode[data-mode="lab"] .mode-icon{background:linear-gradient(145deg,#ffd47e,#e59b63)}
+#overlay:not(.preparing) .mode .mode-icon svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#overlay:not(.preparing) .mode span{position:relative;font:800 11px/1.3 'Nunito',sans-serif;color:#95637f;margin-top:2px}
+#overlay:not(.preparing) .mode.active{z-index:1;transform:scale(1.035) translateY(-2px);background:linear-gradient(145deg,#fffefa,#fff0f6);border-color:#ffc73d;border-bottom-color:#d29a1e;box-shadow:0 0 0 2px #ffe17a,0 7px 0 #cb9b35,0 13px 18px #c28e3b4b}
+#overlay:not(.preparing) .mode.active:after{content:'★';display:grid;place-items:center;position:absolute;top:-13px;right:-10px;width:30px;height:30px;border-radius:50%;border:3px solid white;background:#ffca3e;color:#fff;text-shadow:0 1px #ba8616;font:900 18px 'Nunito',sans-serif;box-shadow:0 3px 0 #d39723,0 5px 12px #c3843459}
+@media(hover:hover){#overlay:not(.preparing) .mode:hover:not(.active){transform:translateY(-3px);box-shadow:inset 0 3px white,0 8px 0 #d999b9,0 14px 16px #b5578538}}
+#overlay:not(.preparing) .mode:active{transform:translateY(4px) scale(.99)!important;box-shadow:0 2px 0 #d999b9!important}
+#overlay:not(.preparing) #play{width:min(440px,100%);min-height:68px;font:700 clamp(24px,5.7vw,37px)/1.08 'Fredoka',sans-serif;letter-spacing:.01em;background:linear-gradient(120deg,#ff7d8c,#ff7aa5 52%,#ffae78);border:3px solid #fff8f0;border-bottom:8px solid #ce5267;border-radius:24px;box-shadow:inset 0 4px #ffffff77,0 7px 0 #bd5c79,0 13px 19px #a7527755;transition:transform .18s cubic-bezier(.175,.885,.32,1.275),box-shadow .18s}
+#overlay:not(.preparing) #play:active{transform:translateY(6px);box-shadow:inset 0 2px #fff7,0 2px 0 #bd5c79}
+#overlay:not(.preparing) #mute,#overlay:not(.preparing) #reset,#overlay:not(.preparing) #helpButton{font:800 12px/1.2 'Nunito',sans-serif;border:2px solid #ebafcf;border-bottom:4px solid #d690b7;border-radius:99px;min-height:42px;padding:9px 13px;transition:transform .18s}
+#overlay:not(.preparing) #mute:active,#overlay:not(.preparing) #reset:active,#overlay:not(.preparing) #helpButton:active{transform:translateY(2px)}
+#overlay:not(.preparing) .retro-controller{display:none}
+#overlay:not(.preparing) .modal:before{font-family:'Nunito',sans-serif;letter-spacing:4px;font-size:17px}
+#overlay:not(.preparing) #mascot:focus-visible{outline:3px solid #a648a1;outline-offset:5px;border-radius:28px}
+#overlay:not(.preparing) .mode:focus-visible,#overlay:not(.preparing) button:focus-visible{outline:4px solid #8047c0;outline-offset:3px}
+@media(max-width:600px){#overlay:not(.preparing) .modal{padding:12px 12px 17px}#overlay:not(.preparing) #modalTitle{font-size:clamp(29px,7.8vw,39px)}#overlay:not(.preparing) #modalBody{font-size:12px;margin-bottom:8px}#overlay:not(.preparing) .mascot{height:84px}#overlay:not(.preparing) .modes{gap:10px;padding:6px;margin:8px 0 14px}#overlay:not(.preparing) .mode{min-height:92px;padding:10px 5px;font-size:18px}#overlay:not(.preparing) .mode span{font-size:10px}#overlay:not(.preparing) .mode .mode-icon{width:33px;height:33px}#overlay:not(.preparing) #play{min-height:61px}}
+@media(orientation:landscape) and (max-height:600px){#overlay:not(.preparing) .mascot{height:49px}#overlay:not(.preparing) .kawaii-mascot{scale:.65}#overlay:not(.preparing) .mode{min-height:75px}#overlay:not(.preparing) .mode .mode-icon{width:27px;height:27px}#overlay:not(.preparing) .modes{margin:6px 0}}
+@media(prefers-reduced-motion:reduce){#overlay:not(.preparing) .mascot,#overlay:not(.preparing) .mode,#overlay:not(.preparing) #play,#overlay:not(.preparing) .modal:before{animation:none!important;transition:none!important}}
+
+</style></head>
 <body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · CANDY CULTURE ALPHA 11</small></div></div><div class="level-chip" id="levelChip" aria-label="Current experiment"><span class="level-flower" aria-hidden="true">✿</span><div class="level-copy"><span class="level-eyebrow">CURRENT EXPERIMENT</span><strong id="levelNum">01 <span class="level-of">/ 21</span></strong><span id="regionName" class="region-name">Starter Culture</span></div><div class="level-track" aria-hidden="true"><span id="levelFill"></span></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div id="guardianPicker" class="hidden guardian-picker"><strong id="guardianSlotsLabel">✨ Your Guardian Team</strong><div id="guardianSlotDisplay" class="guardian-slots"></div><div id="guardianOptions" class="guardian-options"></div></div>
 <div id="levelPicker" class="hidden level-picker"><strong>🧬 Choose an Experiment</strong><p>Swipe between science eras, then choose an unlocked experiment.</p><div class="era-carousel" aria-label="Science eras"><button type="button" id="eraPrev" aria-label="Previous era">‹</button><div class="era-card" id="eraCard" aria-live="polite"><span class="era-icon" id="eraIcon">⚙️</span><strong id="eraName">Victorian Origins</strong><small id="eraYears">Experiments 01–05</small><span id="eraTheme">Steam & discovery</span></div><button type="button" id="eraNext" aria-label="Next era">›</button></div><div id="eraDots" class="era-dots"></div><div id="levelOptions" class="level-options"></div></div><button type="button" class="secondary hidden" id="guardianBack">← Back to game modes</button><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span id="adventureLevel">Collect 3 DNA pieces</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode hard-mode" data-mode="hard">🔥 Hard Mode<span>Fiercer invaders · rising shop prices · 3 DNA</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><button type="button" class="secondary hidden" id="continueRun" style="display:block;margin:8px auto;min-height:48px">💾 Continue saved experiment</button><button type="button" class="secondary hidden" id="returnMainMenu" style="display:block;margin:8px auto">← Return to Main Menu</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button><button type="button" class="secondary" id="helpButton">❔ How to Play</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><nav class="game-actions" aria-label="Game menus"><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><button type="button" id="guardianToggle" class="shop-toggle guardian-action" aria-label="Open Guardian collection">🛡️ Guardians</button><button type="button" id="inspectToggle" class="shop-toggle inspect-action" aria-pressed="false">🔎 Inspect Glob</button></nav><div class="culture-status" id="cultureStatus" aria-label="Culture condition"><span id="cultureMood">💗 Your Globs are happy</span><span id="cultureWater">💧 0 / 10 droplets</span><span id="cultureThreat">✨ Peaceful for now</span></div><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
 <button class="buy" data-buy="glob"><span class="emoji">🦠</span><span class="desc"><strong>Baby Glob</strong><small>Another little producer</small></span><em id="cost-glob">70</em></button>
@@ -1012,4 +1047,48 @@ window.addEventListener('error',function(event){try{$('runCheck').style.display=
 // Avoid false pauses when iOS Safari briefly loses focus during touch interactions.
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing'){saveCheckpoint();pause()}});
 chosenLevel=clamp(save.level||1,1,21);updateUI();showMenu('menu');requestAnimationFrame(frame);
-})();</script></body></html>
+})();</script><script>
+/* Non-destructive welcome polish. The existing game state, shop and save routines remain authoritative. */
+(()=>{
+ const icons={
+ adventure:'<path d="M5 4c12 0 2 16 14 16M19 4C7 4 17 20 5 20"/><path d="M7 8h10M7 16h10"/>',
+ trial:'<circle cx="12" cy="13" r="8"/><path d="M12 8v5l3 2M9 2h6"/>',
+ challenge:'<path d="M12 21V4M12 11H7a3 3 0 0 1-3-3V6m8 9h5a3 3 0 0 0 3-3v-2"/>',
+ hard:'<path d="M12 22c5 0 8-4 8-9 0-3-2-6-5-9 0 4-3 5-3 8-2-1-3-3-3-5-3 3-5 7-5 10 0 3 3 5 8 5Z"/>',
+ lab:'<path d="m12 3 2.5 5.5L20 11l-5.5 3L12 21l-2.5-7L4 11l5.5-2.5L12 3Z"/>'
+ };
+ const modes=document.getElementById('modes');
+ if(!modes)return;
+ const cards=Array.from(modes.querySelectorAll('button[data-mode]'));
+ cards.forEach(card=>{
+  const k=card.dataset.mode;
+  if(!card.querySelector('.mode-icon')){
+   const badge=document.createElement('span');badge.className='mode-icon';badge.setAttribute('aria-hidden','true');
+   badge.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+(icons[k]||icons.lab)+'</svg>';
+   card.insertBefore(badge,card.firstChild);
+  }
+  card.setAttribute('aria-pressed',String(card.classList.contains('active')));
+ });
+ const sync=()=>cards.forEach(card=>card.setAttribute('aria-pressed',String(card.classList.contains('active'))));
+ modes.addEventListener('click',()=>queueMicrotask(sync));
+ modes.addEventListener('keydown',event=>{
+  if(!['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(event.key))return;
+  event.preventDefault();
+  const i=cards.indexOf(document.activeElement);
+  const d=event.key==='ArrowRight'||event.key==='ArrowDown'?1:-1;
+  const next=cards[(Math.max(i,0)+d+cards.length)%cards.length];
+  next.focus();next.click();sync();
+ });
+ const mascot=document.getElementById('mascot');
+ if(mascot){
+  mascot.setAttribute('role','button');mascot.setAttribute('tabindex','0');mascot.setAttribute('aria-label','Give the Pink Lab mascot a little bounce');
+  const bounce=()=>{
+   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+   mascot.animate([{transform:'scale(1)'},{transform:'scale(1.16) rotate(5deg)'},{transform:'scale(1)'}],{duration:400,easing:'cubic-bezier(.175,.885,.32,1.275)'});
+  };
+  mascot.addEventListener('click',bounce);
+  mascot.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();bounce()}});
+ }
+})();
+
+</script></body></html>
