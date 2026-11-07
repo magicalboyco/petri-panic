@@ -1174,6 +1174,8 @@ chosenLevel=clamp(save.level||1,1,21);updateUI();showMenu('menu');requestAnimati
 #internOrientation input{display:block;width:100%;box-sizing:border-box;border:2px solid #e69bc2;border-radius:12px;background:#fff;color:#452b42;padding:13px;font:inherit;margin:12px 0}
 #internOrientation button{border:0;border-radius:14px;background:#f36ba6;color:#fff;padding:12px 20px;font:800 16px Nunito,system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 0 #b93e7c}
 #internOrientation button:disabled{opacity:.5;cursor:not-allowed}
+#internOrientation button{min-width:44px;min-height:44px;touch-action:manipulation}
+#internOrientation .intern-card{overscroll-behavior:contain}
 #internOrientation .intern-skip{background:transparent;color:#855977;box-shadow:none;font-size:13px}
 #internOrientation .intern-progress{font-size:12px;color:#946a84;margin-top:14px}
 </style>
@@ -1206,20 +1208,20 @@ const lines=[
 'You’ll be fine! Probably! SCIENCE BELIEVES IN YOU!',
 '🧫 EXPERIMENT 01 — FIRST DAY ON THE JOB!\nWater the dish to care for your first Glob. Your internship begins now.'
 ];
-let step=0,profile=null;
+let step=0,profile=null,previousFocus=null,previousOverflow='';
 try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved&&typeof saved.name==='string'&&saved.name.trim())profile=saved}catch(e){}
 function save(name){const trimmed=String(name||'').trim().slice(0,16)||'Intern';profile={id:profile&&profile.id||('intern-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8)),name:trimmed,orientationDone:true};try{localStorage.setItem(KEY,JSON.stringify(profile))}catch(e){}}
-function close(){el.hidden=true;document.body.style.removeProperty('overflow');const main=document.getElementById('modalTitle');if(main&&profile)main.textContent='Welcome, '+profile.name+'!';}
-function render(){el.hidden=false;document.body.style.overflow='hidden';const isName=step===3;dialogue.textContent=lines[step].replaceAll('{name}',input.value.trim()||profile&&profile.name||'Intern');input.hidden=!isName;label.hidden=!isName;next.disabled=isName&&!input.value.trim();next.textContent=step===lines.length-1?'Enter the Lab! ♡':'Continue ♡';progress.textContent=(step+1)+' / '+lines.length;skip.textContent=isName?'Use “Intern” instead':'Skip story';if(isName)input.focus()}
+function close(){el.hidden=true;document.body.style.overflow=previousOverflow;if(previousFocus&&previousFocus.isConnected&&typeof previousFocus.focus==='function')previousFocus.focus();const main=document.getElementById('modalTitle');if(main&&profile)main.textContent='Welcome, '+profile.name+'!';}
+function render(){if(el.hidden){previousFocus=document.activeElement;previousOverflow=document.body.style.overflow}el.hidden=false;document.body.style.overflow='hidden';const isName=step===3;dialogue.textContent=lines[step].replaceAll('{name}',input.value.trim()||profile&&profile.name||'Intern');input.hidden=!isName;label.hidden=!isName;next.disabled=isName&&!input.value.trim();next.textContent=step===lines.length-1?'Enter the Lab! ♡':'Continue ♡';progress.textContent=(step+1)+' / '+lines.length;skip.textContent=isName?'Use “Intern” instead':'Skip story';if(isName)input.focus();else next.focus()}
 function finish(){save(input.value.trim()||profile&&profile.name||'Intern');close()}
 next.addEventListener('click',()=>{if(step===3&&!input.value.trim())return;if(step===lines.length-1){finish();return}step++;render()});
 skip.addEventListener('click',finish);
 input.addEventListener('input',()=>{next.disabled=!input.value.trim()});
 input.addEventListener('keydown',e=>{if(e.key==='Enter'&&input.value.trim()){e.preventDefault();next.click()}});
-document.addEventListener('keydown',e=>{if(!el.hidden&&e.key==='Escape'){e.preventDefault();finish()}});
+document.addEventListener('keydown',e=>{if(el.hidden)return;if(e.key==='Tab'){const controls=[input,next,skip].filter(node=>!node.hidden&&!node.disabled);const first=controls[0],last=controls[controls.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}else if(!el.contains(document.activeElement)){e.preventDefault();first.focus()}}else if(e.key==='Escape'){e.preventDefault();finish()}e.stopPropagation()},true);
 if(!profile)render();
 else{const main=document.getElementById('modalTitle');if(main)main.textContent='Welcome back, '+profile.name+'!'}
 window.petriIntern={get:()=>profile,rename:(name)=>{save(name);return profile},replay:()=>{step=0;render()}};
-const credits=document.getElementById('endgameExtras');if(credits){const button=document.createElement('button');button.type='button';button.textContent='👨🏻‍🔬 Professor’s Story';button.addEventListener('click',()=>{step=0;render()});credits.append(button)}
+const credits=document.getElementById('endgameExtras');if(credits){const button=document.createElement('button');button.type='button';button.textContent='👨🏻‍🔬 Professor’s Story';button.addEventListener('click',()=>{if(typeof state!=='undefined'&&state==='playing')return;step=0;render()});credits.append(button)}
 })();
 </script></body></html>
