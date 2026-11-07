@@ -1087,8 +1087,8 @@ function scoreBoard(){endgamePanel.replaceChildren();const title=document.create
  const p=document.createElement('p');p.className='endgame-note';p.textContent='Local high scores are stored only in this browser. Older victories cannot be recovered automatically.';endgamePanel.append(p);
 }
 function creditsPage(){endgamePanel.replaceChildren();const h=document.createElement('h3');h.textContent='🎬 Petri Panic Pink Lab';endgamePanel.append(h);
- const creator=document.createElement('p');creator.className='credit-line';creator.textContent='Created by';const name=document.createElement('strong');name.textContent='Trung C Ho';creator.append(name);endgamePanel.append(creator);
- const original=document.createElement('p');original.className='credit-line';original.textContent='Game design, characters, and Petri Lab world';endgamePanel.append(original);
+ const creator=document.createElement('p');creator.className='credit-line';creator.textContent='Original Vision · Game Concept · Creative Direction · Creator';const name=document.createElement('strong');name.textContent='Trung C. Ho';creator.append(name);endgamePanel.append(creator);
+ const original=document.createElement('p');original.className='credit-line';original.textContent='The original vision and creative foundation for Petri Panic Pink Lab, including its playful world and overall game direction';endgamePanel.append(original);
  const repo=document.createElement('p');repo.className='credit-line';repo.append('Source repository: ');const a=document.createElement('a');a.href='https://github.com/magicalboyco/petri-panic';a.target='_blank';a.rel='noopener noreferrer';a.textContent='magicalboyco/petri-panic';repo.append(a);endgamePanel.append(repo);
  const fonts=document.createElement('p');fonts.className='credit-line';fonts.textContent='Typography: Google Fonts — Fredoka, Nunito, Cute Font, Press Start 2P';endgamePanel.append(fonts);
  const soundCredit=document.createElement('p');soundCredit.className='credit-line';soundCredit.textContent='Victory music: original synthesized fanfare generated in-browser with Web Audio';endgamePanel.append(soundCredit);
