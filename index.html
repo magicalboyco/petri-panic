@@ -808,7 +808,7 @@ const Exp1Tutorial={
  onWaterAction(){if(this.step!==1||state!=='playing')return;this.step=2;this.render('Prof. Trung: Lovely! Keep caring for your Globs. Watch for sparkling BioBits bubbles and tap one to collect it!')},
  onCoinsEarned(){if(this.step!==2||state!=='playing')return;this.step=0;
   try{const raw=localStorage.getItem('petri-panic-intern-v1');if(raw){const p=JSON.parse(raw);if(p&&typeof p==='object'&&!Array.isArray(p)){p.exp1TutorialDone=true;localStorage.setItem('petri-panic-intern-v1',JSON.stringify(p))}}}catch(e){}
-  this.render('Prof. Trung: You collected BioBits! That is your research currency. Keep caring for your Globs!',true);
+  this.render('Prof. Trung: You collected BioBits! Save up for a Baby Glob (70 BioBits) or a permanent Rich Droplets upgrade (140 BioBits) on the supply shelf. You choose when to shop!',true);
  },
  render(message,final=false){if(this.dismissedForSession)return;
   if(!this.bannerEl){const canvas=document.getElementById('game');if(!canvas)return;
@@ -1276,7 +1276,7 @@ const ProfessorPager={
  ],
  level(){return Math.max(1,Math.min(21,Number(state==='playing'||state==='paused'?activeLevel:chosenLevel)||1))},
  help(){if(state==='playing'&&mode==='adventure'&&activeLevel===1){if(Exp1Tutorial.step===1)return 'First task: tap inside the dish to place water near a Glob.';if(Exp1Tutorial.step===2)return 'Next: tap a glowing BioBits bubble to collect it.'}
-  return 'Care: tap inside the dish to place water. BioBits: tap the glowing bubbles. DNA: collect three fragments to complete an experiment. Shop: spend BioBits on upgrades. Guardians: choose your team before starting an experiment. Inspect: use the Inspect control to learn about your Globs.'},
+  return 'Care: tap inside the dish to place water. BioBits: tap glowing bubbles. Supply shelf: Baby Glob costs 70 BioBits; permanent Rich Droplets start at 140 BioBits. Purchases are optional. DNA: collect three fragments to finish DNA experiments. Guardians: choose your team before starting. Inspect: use Inspect to learn about Globs.'},
  refresh(){const level=this.level();const chapter=this.chapters.filter(c=>c.at<=level).slice(-1)[0];document.getElementById('profPagerTitle').textContent=chapter.title+' · Experiment '+String(level).padStart(2,'0');document.getElementById('profPagerStory').textContent=chapter.story;document.getElementById('profPagerHelp').textContent=this.help()},
  close(){const panel=document.getElementById('profPagerNotes');panel.hidden=true;document.getElementById('profPagerButton').setAttribute('aria-expanded','false')},
  init(){document.getElementById('profPagerButton').addEventListener('click',()=>{const panel=document.getElementById('profPagerNotes');if(!panel.hidden){this.close();return}this.refresh();panel.hidden=false;document.getElementById('profPagerButton').setAttribute('aria-expanded','true')})}
