@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620" aria-label="Illustrated pastel Pink Laboratories research room, with windows, equipment, shelves, and a glass workbench">
+<defs>
+ <linearGradient id="wall" x1="0" y1="0" x2=".45" y2="1"><stop stop-color="#a99bc7"/><stop offset=".47" stop-color="#dfb9dd"/><stop offset="1" stop-color="#d795bd"/></linearGradient>
+ <linearGradient id="window" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#bfeafa"/><stop offset=".55" stop-color="#fee5eb"/><stop offset="1" stop-color="#f9b5d4"/></linearGradient>
+ <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffe6cb"/><stop offset=".23" stop-color="#d9aac4"/><stop offset=".62" stop-color="#ba83ab"/><stop offset="1" stop-color="#71577f"/></linearGradient>
+ <linearGradient id="shelf" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffe5ed"/><stop offset=".33" stop-color="#c88bb7"/><stop offset="1" stop-color="#795a91"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fcffff" stop-opacity=".9"/><stop offset=".35" stop-color="#add9f6" stop-opacity=".55"/><stop offset="1" stop-color="#f5b9db" stop-opacity=".82"/></linearGradient>
+ <linearGradient id="flask" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#ffd8e7"/><stop offset="1" stop-color="#e34d9d"/></linearGradient>
+ <radialGradient id="halo"><stop stop-color="#fff9ff" stop-opacity=".87"/><stop offset="1" stop-color="#fff3fb" stop-opacity="0"/></radialGradient>
+ <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+ <filter id="drop" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur stdDeviation="5"/></filter>
+ <g id="testtube"><path d="M-12 -43V13Q-12 30 0 30Q12 30 12 13V-43" fill="url(#glass)" stroke="#67597c" stroke-width="3" stroke-linejoin="round"/><path d="M-10 0V14Q-10 26 0 26Q10 26 10 14V0Z" fill="url(#flask)" opacity=".85"/><path d="M-16 -43H16" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M-11 -43H11" stroke="#73617f" stroke-width="2"/><path d="M-7 -35V-3" stroke="#fff" stroke-width="3" opacity=".8"/></g>
+ <g id="book"><rect x="-14" y="-50" width="28" height="50" rx="3" fill="#6c9dc9" stroke="#5b5379" stroke-width="3"/><path d="M-10 -40H10M-10 -9H10" stroke="#ecd2ab" stroke-width="4"/><path d="M-6 -34V-17" stroke="#f8eac6" stroke-width="2"/></g>
+ <g id="flaskShape"><path d="M-12 -54H12M-9 -54V-20L-30 21Q-37 40 -17 42H17Q37 40 30 21L9 -20V-54" fill="url(#glass)" stroke="#695578" stroke-width="3" stroke-linejoin="round"/><path d="M-24 20Q-9 13 0 20Q9 25 24 17L29 31Q30 38 16 38H-16Q-28 37 -24 20Z" fill="url(#flask)"/><path d="M-17 19L-9 0" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M-10 -50H10" stroke="#fff" stroke-width="5"/><circle cx="-6" cy="28" r="3" fill="#fff" opacity=".8"/><circle cx="12" cy="22" r="4" fill="#fff" opacity=".55"/></g>
+</defs>
+<!-- Softly lit lab walls -->
+<rect width="900" height="620" fill="url(#wall)"/>
+<path d="M0 0H900V79H0Z" fill="#78658f" opacity=".47"/>
+<path d="M0 74H900" stroke="#fff5ff" stroke-width="4" opacity=".6"/>
+<path d="M0 102H900" stroke="#795c91" stroke-width="2" opacity=".42"/>
+<ellipse cx="450" cy="250" rx="450" ry="315" fill="url(#halo)"/>
+<path d="M0 432H900V620H0Z" fill="#a0789e" opacity=".18"/>
+<!-- West bay window and distant garden -->
+<rect x="18" y="106" width="250" height="321" rx="13" fill="#684f7d" opacity=".32" filter="url(#drop)"/>
+<rect x="21" y="98" width="250" height="318" rx="11" fill="url(#window)" stroke="#e7daf0" stroke-width="12"/>
+<g opacity=".7"><path d="M31 342Q76 282 115 304Q157 250 199 284Q234 279 260 308V406H31Z" fill="#91bd9f"/><path d="M31 372Q102 330 158 354Q198 319 260 351V405H31Z" fill="#9ac4bd"/>
+<path d="M79 338V272H99V338M106 322V244H131V322M143 323V261H161V323M176 341V284H194V341" fill="#b9b8d4" stroke="#e5c9df" stroke-width="3"/></g>
+<path d="M146 101V414M22 236H270" stroke="#fef9fb" stroke-width="11" opacity=".9"/>
+<path d="M145 101V414M22 236H270" stroke="#795e8d" stroke-width="2" opacity=".36"/>
+<path d="M37 113V406M257 113V406" stroke="#fff" stroke-width="3" opacity=".75"/>
+<path d="M41 113Q84 128 117 122" stroke="#fff" stroke-width="8" opacity=".4" fill="none"/>
+<!-- soft hanging greenery -->
+<g stroke="#497e71" stroke-width="4" fill="none"><path d="M52 0Q30 81 45 152Q65 170 52 220"/><path d="M84 0Q60 69 92 126"/></g>
+<g fill="#7abf85" stroke="#4e8876" stroke-width="2">
+<ellipse cx="43" cy="37" rx="17" ry="28" transform="rotate(39 43 37)"/><ellipse cx="68" cy="67" rx="15" ry="25" transform="rotate(-37 68 67)"/><ellipse cx="39" cy="116" rx="17" ry="29" transform="rotate(40 39 116)"/><ellipse cx="80" cy="151" rx="14" ry="24" transform="rotate(-38 80 151)"/><ellipse cx="54" cy="185" rx="16" ry="23" transform="rotate(35 54 185)"/><ellipse cx="86" cy="54" rx="13" ry="20" transform="rotate(-24 86 54)"/><ellipse cx="100" cy="98" rx="13" ry="19" transform="rotate(26 100 98)"/></g>
+<g stroke="#c9f0a5" stroke-width="2" opacity=".75"><path d="M43 21V53M65 50L78 79M38 102L52 125M70 141L88 160M48 174L62 191"/></g>
+<!-- Distant wall shelves and books -->
+<rect x="289" y="170" width="317" height="13" rx="5" fill="#77557f" opacity=".35" filter="url(#drop)"/>
+<path d="M280 166H622V184H280Z" fill="url(#shelf)" stroke="#684d79" stroke-width="3"/>
+<g transform="translate(326 160)"><use href="#book"/><use href="#book" transform="translate(30 0) scale(1 .84)"/><use href="#book" transform="translate(60 0) scale(1 1.12)"/><use href="#book" transform="translate(91 0) scale(1 .94)"/></g>
+<g transform="translate(475 135) scale(.65)"><use href="#flaskShape"/></g>
+<g transform="translate(554 136) scale(.55)"><use href="#flaskShape"/></g>
+<g transform="translate(600 151)"><rect x="-12" y="-35" width="24" height="32" rx="4" fill="#e8afc5" stroke="#745d80" stroke-width="3"/><path d="M-7 -25H7M-7 -15H7" stroke="#fff" stroke-width="3"/></g>
+<!-- warm ceiling pendant lamps -->
+<path d="M720 0V35" stroke="#e8d5e7" stroke-width="5"/><path d="M678 34Q719 2 763 34L779 61H664Z" fill="#d28cb5" stroke="#665479" stroke-width="4"/><ellipse cx="719" cy="61" rx="53" ry="13" fill="#fff0bf"/><ellipse cx="719" cy="83" rx="74" ry="27" fill="#ffe4bf" opacity=".3" filter="url(#soft)"/>
+<path d="M378 0V25" stroke="#e8d5e7" stroke-width="5"/><path d="M351 28Q379 9 406 28L419 45H338Z" fill="#d49bc2" stroke="#695977" stroke-width="3"/><ellipse cx="379" cy="44" rx="36" ry="9" fill="#fff1d0"/>
+<!-- right wall cabinets, DNA poster, shelves -->
+<rect x="694" y="105" width="185" height="225" rx="12" fill="#a685bb" opacity=".28" stroke="#6f5b83" stroke-width="4"/>
+<rect x="714" y="118" width="134" height="164" rx="9" fill="#e2c6df" stroke="#8b6798" stroke-width="5"/>
+<rect x="727" y="136" width="105" height="129" rx="6" fill="#8b9fc2" stroke="#f1e4ed" stroke-width="5"/>
+<path d="M748 154Q812 176 753 197Q707 219 805 248M805 154Q746 181 801 198Q839 221 746 248" stroke="#c9eefc" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M750 161H802M768 175H783M743 191H812M765 211H784M748 230H801M753 245H802" stroke="#ffe2f2" stroke-width="4"/>
+<path d="M671 284H889V302H671Z" fill="url(#shelf)" stroke="#76567f" stroke-width="3"/>
+<g transform="translate(699 275) scale(.69)"><use href="#flaskShape"/></g>
+<g transform="translate(771 277) scale(.72)"><use href="#testtube"/><use href="#testtube" transform="translate(30 2)"/><use href="#testtube" transform="translate(60 1)"/></g>
+<g transform="translate(866 264) scale(.75)"><use href="#flaskShape"/></g>
+<!-- Big lab counter and lower cabinets -->
+<rect x="0" y="480" width="900" height="140" fill="url(#wood)"/>
+<rect x="0" y="450" width="900" height="39" rx="9" fill="#eac2d0" stroke="#795777" stroke-width="5"/>
+<path d="M0 459H900" stroke="#fff4ec" stroke-width="8" opacity=".82"/>
+<path d="M0 483H900" stroke="#956480" stroke-width="8"/>
+<path d="M30 500H264V605H30ZM312 500H557V605H312ZM609 500H865V605H609Z" fill="#a984ad" opacity=".3" stroke="#e5c2dc" stroke-width="7"/>
+<path d="M64 505H236V603H64ZM335 505H541V603H335ZM632 505H848V603H632Z" fill="none" stroke="#654f7b" stroke-width="3" opacity=".54"/>
+<g fill="#f3d9b5" stroke="#766079" stroke-width="2"><rect x="215" y="550" width="25" height="8" rx="4"/><rect x="513" y="550" width="25" height="8" rx="4"/><rect x="815" y="550" width="25" height="8" rx="4"/></g>
+<!-- Left-side stylized microscope -->
+<g transform="translate(18 335)" stroke="#65516f" stroke-width="4" stroke-linejoin="round">
+ <ellipse cx="105" cy="250" rx="100" ry="11" fill="#7c5f8c" opacity=".3" stroke="none"/>
+ <path d="M68 212Q85 202 103 189L100 135Q141 103 120 62L101 79Q104 107 84 112L59 153L64 212Z" fill="#b5aad3"/>
+ <path d="M96 85L126 61L107 41L74 65Z" fill="#e6ddeb"/>
+ <path d="M80 63L103 34L120 41L98 72Z" fill="#f3e6f1"/>
+ <rect x="101" y="12" width="23" height="43" rx="5" transform="rotate(25 101 12)" fill="#756a91"/>
+ <path d="M114 9L129 15L119 35L102 28Z" fill="#342f54"/>
+ <path d="M65 168H157V181H65Z" fill="#6d6b91"/>
+ <path d="M116 170V210H133V181Z" fill="#d7b4d3"/>
+ <circle cx="106" cy="128" r="15" fill="#eecbd7"/>
+ <circle cx="106" cy="128" r="6" fill="#fff"/>
+ <path d="M41 210H167Q186 210 187 228H26Q28 212 41 210Z" fill="#eee1ec"/>
+ <path d="M42 221H171" stroke="#fff" stroke-width="6"/>
+</g>
+<!-- foreground sample jars / glass highlights -->
+<g transform="translate(773 466) scale(.85)"><use href="#flaskShape"/></g>
+<g transform="translate(852 480) scale(.92)"><use href="#flaskShape"/></g>
+<g opacity=".55" fill="#fff"><circle cx="293" cy="232" r="5"/><circle cx="599" cy="224" r="3"/><circle cx="637" cy="379" r="4"/><circle cx="282" cy="388" r="3"/></g>
+</svg>
