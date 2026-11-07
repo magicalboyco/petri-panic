@@ -548,11 +548,14 @@ function renderCollection(){
  wrap.appendChild(item)}
 
 }
-function keepGuardianInDish(g){
-  const dx=g.x-450,dy=g.y-310;
-  const scaled=Math.hypot(dx/395,dy/255);
-  if(scaled>1){g.x=450+dx/scaled;g.y=310+dy/scaled}
+// Keep the entire creature within the oval culture, not just its center.
+function keepInDish(entity,padding=36){
+  const dx=entity.x-450,dy=entity.y-310;
+  const rx=Math.max(1,423-padding),ry=Math.max(1,280-padding);
+  const scaled=Math.hypot(dx/rx,dy/ry);
+  if(scaled>1){entity.x=450+dx/scaled;entity.y=310+dy/scaled}
 }
+function keepGuardianInDish(g){keepInDish(g,47)}
 function resetWorld(){ bossDefeated=false;bossWeakTime=0;elapsed=0;coins=mode==='lab'?200:130;dna=0;score=0;wave=0;attackTimer=mode==='lab'?Infinity:43;warning=0;starTime=0;starDropTimer=60;scuttle=chosenGuardians().includes('scuttle');rescue=false;challengeDrops=45;flash=0;globs=[glob(310,290),glob(550,350)];water=[];bubbles=[];enemies=[];particles=[];floatingText=[];sparkles=[];guardians=chosenGuardians().filter(id=>id!=='scuttle').map((id,i)=>({id,x:390+i*95,y:280+i*35,cool:0,abilityCool:1.5}));scuttleX=400;scuttleY=320;autoTick=0;globs.forEach(g=>g.hunger=6);updateUI();message('Tap anywhere in the dish to add a 💧 moisture droplet!',5)}
 let guardianStep=false;
 function openGuardianMenu(){
@@ -628,10 +631,10 @@ for(const other of globs){
 const avoidStrength=target?24:41;
 g.vx+=clamp(separateX,-1.8,1.8)*avoidStrength*dt*3;
 g.vy+=clamp(separateY,-1.8,1.8)*avoidStrength*dt*3;
-g.x=clamp(g.x+g.vx*dt,38,W-38);g.y=clamp(g.y+g.vy*dt,56,H-52);if(stage(g)>g.lastStage){g.lastStage=stage(g);g.moodTimer=2;sparkleBurst(g.x,g.y,20,'pink');}
+g.x+=g.vx*dt;g.y+=g.vy*dt;const preEdgeX=g.x,preEdgeY=g.y;keepInDish(g,radius(g)+12);if(g.x!==preEdgeX)g.vx*=.35;if(g.y!==preEdgeY)g.vy*=.35;if(stage(g)>g.lastStage){g.lastStage=stage(g);g.moodTimer=2;sparkleBurst(g.x,g.y,20,'pink');}
 if(g.hunger>48||g.hp<=0){g.dead=true;emit(g.x,g.y,'#c5c0d0',13);sparkleBurst(g.x,g.y,8,'pink');message('A Glob got too dry! Give them more moisture! 🥺',2)}
 if(g.eaten>=2&&g.produce<=0&&g.hunger<25&&bubbles.filter(b=>!b.star).length<16){let value=[12,27,60][stage(g)]*(starTime>0?2:1);bubble(g.x,g.y,Math.round(value*(g.personality===0?.75:1)*(g.bonusTime>0?1.3:1)));g.produce=rnd(10,14)/(starTime>0?1.6:1)}
-if(stage(g)===2&&g.hunger<10&&g.birth<=0&&globs.length<30){g.birth=rnd(16,25);if(Math.random()<.72){globs.push(glob(clamp(g.x+rnd(-37,37),35,W-35),clamp(g.y+rnd(-37,37),55,H-55)));g.heartTimer=2.6;sparkleBurst(g.x,g.y,27,'pink');emit(g.x,g.y,'#ff8bbc',19);message('An Expert Glob had a baby! 👶💕',2.8);score+=100}}}
+if(stage(g)===2&&g.hunger<10&&g.birth<=0&&globs.length<30){g.birth=rnd(16,25);if(Math.random()<.72){const baby=glob(g.x+rnd(-37,37),g.y+rnd(-37,37));keepInDish(baby,30);globs.push(baby);g.heartTimer=2.6;sparkleBurst(g.x,g.y,27,'pink');emit(g.x,g.y,'#ff8bbc',19);message('An Expert Glob had a baby! 👶💕',2.8);score+=100}}}
 globs=globs.filter(g=>!g.dead);
 for(const b of bubbles){b.phase+=dt*5;const ddx=b.x-450,ddy=b.y-310,dist=Math.max(1,Math.hypot(ddx,ddy));const swirl=b.star?0:24*(b.orbit||1);b.x+=b.vx*dt-ddy/dist*swirl*dt;b.y+=b.vy*dt+ddx/dist*swirl*dt;const edge=Math.hypot((b.x-450)/403,(b.y-310)/261);if(edge>1){b.x=450+(b.x-450)/edge;b.y=310+(b.y-310)/edge;b.vx*=-.4;b.vy*=-.4}b.vx*=Math.exp(-2.2*dt);b.vy*=Math.exp(-2.2*dt);b.life-=dt;if(scuttle&&!b.star&&distance(b,{x:scuttleX,y:scuttleY})<35)collect(b);if(b.star&&b.clicked){b.gone=true;starTime=15;message('Rare STAR CELL! Sparkle mode! 🌟',3)}if(b.life<=0)b.gone=true}bubbles=bubbles.filter(b=>!b.gone);
 if(scuttle){let nearest=null,best=Infinity;for(const b of bubbles){if(b.star||b.gone)continue;const d=distance(b,{x:scuttleX,y:scuttleY});if(d<best){best=d;nearest=b}}const goal=nearest||{x:450+210*Math.sin(elapsed*.31),y:310+160*Math.sin(elapsed*.47+.8)};const dx=goal.x-scuttleX,dy=goal.y-scuttleY,dist=Math.hypot(dx,dy);if(dist>3){const step=Math.min(dist,130*dt);scuttleX+=dx/dist*step;scuttleY+=dy/dist*step;const pos={x:scuttleX,y:scuttleY};keepGuardianInDish(pos);scuttleX=pos.x;scuttleY=pos.y}}
@@ -687,7 +690,7 @@ for(const guard of guardians){
       if(ability==='comfort')for(const g of globs)if(distance(g,guard)<170)g.hunger=Math.max(0,g.hunger-7);
       sparkleBurst(guard.x,guard.y,12,'pink')}
   }
-}enemies=enemies.filter(e=>!e.dead);for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;p.vy+=18*dt}particles=particles.filter(p=>p.life>0);for(const t of floatingText){t.y-=34*dt;t.life-=dt}floatingText=floatingText.filter(t=>t.life>0);
+}for(const guard of guardians)keepGuardianInDish(guard);enemies=enemies.filter(e=>!e.dead);for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;p.vy+=18*dt}particles=particles.filter(p=>p.life>0);for(const t of floatingText){t.y-=34*dt;t.life-=dt}floatingText=floatingText.filter(t=>t.life>0);
 if(globs.length===0){if(rescue){rescue=false;let g=glob(W/2,H/2);g.hunger=0;globs.push(g);emit(g.x,g.y,'#ffb6d9',35);message('Rescue capsule activated! One baby saved! 🩹',5)}else{showMenu('lose');return}}
 checkpointTimer+=dt;if(checkpointTimer>=4){checkpointTimer=0;saveCheckpoint()}
 uiTick-=dt;if(uiTick<=0){uiTick=.18;updateUI()}}
