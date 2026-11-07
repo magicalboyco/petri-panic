@@ -178,37 +178,223 @@ body.menu-open{overflow:hidden}
  .modal #mute,.modal #reset{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.modal .mascot,.kawaii-mascot{animation:none}}
+
+/* ALPHA 11 — Candy Culture: high-clarity level badge and cohesive toy-like polish */
+:root{--candy-ink:#713558;--candy-blush:#f8e4f0;--candy-shadow:#ad5d89}
+.top{gap:12px;padding:12px 17px;background:linear-gradient(160deg,#fffdfc,#ffe9f2 55%,#f6c3dd);
+ border:4px solid #fffafc;box-shadow:inset 0 3px 0 #fff,0 6px 0 #cb83ab,0 13px 26px #aa5a8345}
+.brandicon{display:grid;place-items:center;width:53px;height:53px;background:linear-gradient(#fff,#ffe3f1);
+ border:3px solid #fff;border-bottom-color:#e5a3c7;border-radius:18px;box-shadow:0 3px 0 #d69aba}
+.brand h1{text-shadow:0 2px 0 #fff,3px 5px 0 #ad5b8d}
+.level-chip{flex:0 0 auto;display:grid;position:relative;grid-template-columns:36px auto;align-items:center;
+ min-width:186px;padding:9px 13px 11px;gap:3px 7px;
+ background:linear-gradient(145deg,#fffefa,#ffeaf3);border:3px solid #eaa7c8;border-bottom:5px solid #d17fae;
+ border-radius:23px;box-shadow:inset 0 2px 0 #fff,0 4px 9px #a8517e27}
+.level-flower{font-size:33px;line-height:1;color:#e285b6;text-shadow:1px 2px 0 white;animation:level-wiggle 5s ease-in-out infinite}
+.level-copy{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0}
+.level-eyebrow{color:#a65c83;font:700 7px/1.45 'Press Start 2P',monospace;white-space:nowrap}
+.level-copy strong{color:#b93882;font:900 24px/1 'Nunito',sans-serif;letter-spacing:-.6px}
+.level-of{font-size:12px;color:#ae7695;font-weight:800}
+.region-name{font:900 10px/1.3 'Nunito',sans-serif;color:#804065;white-space:nowrap}
+.level-track{grid-column:1/-1;height:7px;border-radius:10px;border:1px solid #e9b3cb;background:#f7d2e5;overflow:hidden}
+.level-track span{display:block;height:100%;width:5%;border-radius:10px;background:linear-gradient(90deg,#f19cc5,#d74894);transition:width .4s ease}
+.stat{border:2px solid #f0b8d2;border-bottom:4px solid #dc9cbe;
+ background:linear-gradient(150deg,#fff,#fff0f8);box-shadow:inset 0 2px 0 #fff}
+.stat strong{color:#a82e76;letter-spacing:-.5px}
+.smallbtn{border:2px solid white;border-bottom:5px solid #d19cbb;background:linear-gradient(#fffefa,#ffe5f1);font-weight:900}
+.dishwrap{border-color:#fffafc;box-shadow:0 0 0 4px #e2a4c2,0 9px 0 #bd799b,0 17px 30px #97527845}
+.ribbon{background:#fffafcf0;border-color:#f4b4d0;box-shadow:inset 0 1px white,0 4px 0 #d58caf;color:#a24578}
+.panel{background:linear-gradient(145deg,#fffafd,#ffe8f3 65%,#f9d4e8);border-color:#fffdfd;
+ box-shadow:inset 0 3px white,0 7px 0 #c982a5,0 15px 27px #a858813c}
+.buy{transition:transform .12s ease,background .12s ease;box-shadow:inset 0 2px white,0 3px 5px #ac659023;
+ background:linear-gradient(145deg,#fff,#fff0f8);border-color:#efbdd7}
+.buy:not(:disabled):hover{transform:translateY(-2px);background:#ffe6f3}
+.shop-toggle{border-color:#fffafc;border-bottom:5px solid #b45088;box-shadow:inset 0 2px #ffffff80,0 5px #ba6a9b,0 9px 17px #b66b9754}
+@keyframes level-wiggle{0%,90%,100%{transform:rotate(0)}94%{transform:rotate(-10deg)}97%{transform:rotate(9deg)}}
+@media(max-width:900px){.top{justify-content:center}.level-chip{order:2;min-width:180px}.stats{order:3;justify-content:center}.brand{order:1}.brand h1{font-size:51px}}
+@media(max-width:600px){
+ .top{gap:7px;padding:8px;justify-content:space-between;border-width:3px}
+ .brand{gap:5px}.brandicon{width:37px;height:37px;font-size:25px;border-radius:13px}
+ .brand h1{font-size:41px}.brand small{font-size:6px}
+ .level-chip{min-width:141px;grid-template-columns:24px auto;gap:2px 5px;padding:6px 8px;border-width:2px;border-bottom-width:4px;border-radius:16px}
+ .level-flower{font-size:23px}.level-eyebrow{font-size:5.7px}.level-copy strong{font-size:20px}
+ .region-name{font-size:9px}.level-track{height:5px}
+ .stats{width:100%;justify-content:space-between;gap:4px}
+ .stat{flex:1;min-width:0;text-align:center;padding:4px 5px}
+ .stat small{font-size:6px}.stat strong{font-size:17px}
+ .smallbtn{padding:8px 9px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.level-flower{animation:none}}
+
+/* Alpha 12 staged: responsive control rail and accessible adventure preparation */
+.layout{grid-template-columns:minmax(0,1fr) 270px;column-gap:12px;row-gap:0;align-items:start}
+.game-actions{grid-column:1;display:flex;gap:12px;align-items:center;justify-content:flex-end;margin:13px 6px 0;flex-wrap:wrap}
+.game-actions .shop-toggle{position:static;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+ min-height:54px;font-size:24px;padding:11px 17px;white-space:nowrap}
+.game-actions .guardian-action{background:linear-gradient(#ddf7ff,#9fd8f9);color:#70467d;border-bottom-color:#648bc4;box-shadow:inset 0 3px #fff9,0 5px #79a6c8}
+.guardian-picker,.level-picker{width:100%;background:#fff3f9;border:2px solid #efb6d4;border-radius:17px;padding:11px;margin:8px 0;text-align:center}
+.guardian-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:205px;overflow-y:auto;margin:8px 0}
+.guardian-choice{display:flex;align-items:center;text-align:left;gap:8px;border:2px solid #e7a8c9;border-radius:14px;padding:6px;background:#fff;color:#85406b;min-width:0}
+.guardian-choice .guardian-face{font-size:24px}.guardian-choice strong,.guardian-choice small{display:block;line-height:1.25}
+.guardian-choice strong{font-size:13px}.guardian-choice small{font-size:10px}.guardian-choice.chosen{background:#ffe1ef;border-color:#d74894}
+.guardian-choice.locked{filter:grayscale(1);opacity:.52;cursor:not-allowed}
+.guardian-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:9px 0}
+.guardian-slot{border:2px dashed #cd81ac;border-radius:12px;background:#fff;padding:6px 3px;font:800 10px Nunito;min-height:42px;display:grid;place-items:center}
+.guardian-slot.locked{opacity:.5;filter:grayscale(1)}
+.level-picker p{font:600 11px Nunito;margin:5px}.level-options{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:7px}
+.level-choice{background:white;color:#b14482;border:2px solid #eaa7c8;border-radius:11px;min-height:36px;font-size:12px;font-weight:900}
+.level-choice.chosen{background:#e983b5;color:white;border-color:#b83b80}.level-choice.locked{opacity:.35;filter:grayscale(1)}
+.collection-overlay{position:fixed;inset:0;z-index:11000;display:flex;justify-content:center;align-items:center;background:#68295890;padding:14px}
+.collection-card{width:min(500px,100%);max-height:85dvh;overflow:auto;border:5px solid white;border-radius:28px;padding:16px;background:linear-gradient(#fff9fc,#f8d6e8);text-align:center}
+.collection-card h2{font:42px 'Cute Font';margin:0;color:#b3377b}.collection-card p{font-size:12px}
+.collection-item{text-align:left;border:2px solid #e5afcb;background:white;border-radius:13px;padding:9px;margin:5px 0;font-size:12px}
+.collection-item.locked{filter:grayscale(1);opacity:.56}
+@media(max-width:900px){.layout{display:grid;grid-template-columns:minmax(0,1fr)}.game-actions{grid-column:1;justify-content:center;margin:10px 4px 7px}.game-actions .shop-toggle{font-size:21px;min-height:49px}}
+@media(max-width:620px){body{padding:4px}.top{gap:6px}.game-actions{gap:7px;flex-wrap:nowrap}.game-actions .shop-toggle{flex:1;min-width:0;font-size:19px;min-height:48px;padding:9px 5px}
+ .guardian-options{max-height:145px;gap:5px}.guardian-choice{padding:4px}.guardian-choice small{font-size:9px}
+ .level-options{grid-template-columns:repeat(7,minmax(0,1fr))}.level-choice{min-height:32px;padding:2px;font-size:11px}
+ .modal{max-height:calc(100dvh - 12px)}}
+@media(orientation:landscape) and (max-height:600px) and (max-width:1000px){
+ .top{padding:4px 10px}.brand h1{font-size:34px}.brandicon{width:32px;height:32px;font-size:22px}
+ .layout{grid-template-columns:minmax(0,1fr) minmax(180px,26vw);column-gap:9px}
+ .game-actions{grid-column:1;justify-content:center;margin:6px 0}
+ .panel:not(.shopping){display:block;padding:8px;max-height:calc(100dvh - 125px);overflow-y:auto}
+ .modal .mascot,.retro-controller{display:none}.modal .modes{margin:5px 0}
+ .guardian-options{max-height:95px}.modal h2{font-size:37px}.modal #play{min-height:45px;height:auto}
+}
+@media(prefers-reduced-motion:reduce){.game-actions .shop-toggle{transition:none}}
 </style></head>
-<body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · HANDHELD DREAM ALPHA 10</small></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span>3 DNA pieces to win</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
+<body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · CANDY CULTURE ALPHA 11</small></div></div><div class="level-chip" id="levelChip" aria-label="Current experiment"><span class="level-flower" aria-hidden="true">✿</span><div class="level-copy"><span class="level-eyebrow">CURRENT EXPERIMENT</span><strong id="levelNum">01 <span class="level-of">/ 21</span></strong><span id="regionName" class="region-name">Starter Culture</span></div><div class="level-track" aria-hidden="true"><span id="levelFill"></span></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div id="guardianPicker" class="hidden guardian-picker"><strong id="guardianSlotsLabel">✨ Your Guardian Team</strong><div id="guardianSlotDisplay" class="guardian-slots"></div><div id="guardianOptions" class="guardian-options"></div></div>
+<div id="levelPicker" class="hidden level-picker"><strong>🧬 Choose an Experiment</strong><p>Replay any unlocked experiment without losing your progress.</p><div id="levelOptions" class="level-options"></div></div><button type="button" class="secondary hidden" id="guardianBack">← Back to game modes</button><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span id="adventureLevel">Collect 3 DNA pieces</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><button type="button" class="secondary hidden" id="returnMainMenu" style="display:block;margin:8px auto">← Return to Main Menu</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><nav class="game-actions" aria-label="Game menus"><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><button type="button" id="guardianToggle" class="shop-toggle guardian-action" aria-label="Open Guardian collection">🛡️ Guardians</button></nav><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
 <button class="buy" data-buy="glob"><span class="emoji">🦠</span><span class="desc"><strong>Baby Glob</strong><small>Another little producer</small></span><em id="cost-glob">70</em></button>
-<button class="buy" data-buy="scuttle"><span class="emoji">🐌</span><span class="desc"><strong>Scuttle</strong><small>Collects BioBits automatically</small></span><em id="cost-scuttle">190</em></button>
+<p class="note">🛡️ Choose Guardians on the Adventure preparation screen, not in the shop.</p>
 <button class="buy" data-buy="nutrition"><span class="emoji">💧</span><span class="desc"><strong>Rich droplets</strong><small>Permanent feeding upgrade</small></span><em id="cost-nutrition">140</em></button>
 <button class="buy" data-buy="regen"><span class="emoji">💗</span><span class="desc"><strong>Healing aid</strong><small>Permanent fast regeneration</small></span><em id="cost-regen">160</em></button>
 <button class="buy" data-buy="zap"><span class="emoji">⚡</span><span class="desc"><strong>Sterilizer +</strong><small>Permanent stronger clicks</small></span><em id="cost-zap">170</em></button>
 <button class="buy" data-buy="star"><span class="emoji">🌟</span><span class="desc"><strong>Star Cell</strong><small>Temporary 15s power-up</small></span><em id="cost-star">230</em></button>
 <button class="buy" data-buy="revive"><span class="emoji">🩹</span><span class="desc"><strong>Rescue capsule</strong><small>One emergency baby revive</small></span><em id="cost-revive">130</em></button>
-<button class="buy" data-buy="antidote"><span class="emoji">💊</span><span class="desc"><strong>Antidote</strong><small>Cures poison instantly</small></span><em id="cost-antidote">100</em></button><button class="buy" data-buy="defender"><span class="emoji">🛡️</span><span class="desc"><strong>Extra Bouncer</strong><small>Temporary defense</small></span><em id="cost-defender">250</em></button><button class="buy special" data-buy="dna"><span class="emoji">🧬</span><span class="desc"><strong>DNA fragment</strong><small>Collect 3 to finish</small></span><em id="cost-dna">260</em></button>
-</div><hr class="divider"><h2>🔬 Culture notes</h2><div id="notes" class="guide">💧 Tap to drop water. Globs swim to it.<br>💕 Feed to grow: Baby → Grown → Expert.<br>👶 Happy Experts sometimes reproduce.<br>✨ Tap BioBits bubbles to collect them.<br>🦠 Tap viruses; tap mold repeatedly.<br>💗 Feed hurt Globs to heal them.</div><p id="extra" class="note">Permanent upgrades save on this device. In-level creatures and DNA reset between experiments.</p></aside></div><div class="footer">⏱️ Shopping never pauses the game · ✨ Tuned BioBits rewards · Touch or mouse: tap to water / collect / zap · Space: pause · 1–8 shop shortcuts · Runs in a single browser file</div></div>
+<button class="buy" data-buy="antidote"><span class="emoji">💊</span><span class="desc"><strong>Antidote</strong><small>Cures poison instantly</small></span><em id="cost-antidote">100</em></button><button class="buy special" data-buy="dna"><span class="emoji">🧬</span><span class="desc"><strong>DNA fragment</strong><small>Collect 3 to finish</small></span><em id="cost-dna">260</em></button>
+</div><hr class="divider"><h2>🔬 Culture notes</h2><div id="notes" class="guide">💧 Tap to drop water. Globs swim to it.<br>💕 Feed to grow: Baby → Grown → Expert.<br>👶 Happy Experts sometimes reproduce.<br>✨ Tap BioBits bubbles to collect them.<br>🦠 Tap viruses; tap mold repeatedly.<br>💗 Feed hurt Globs to heal them.</div><p id="extra" class="note">Permanent upgrades save on this device. In-level creatures and DNA reset between experiments.</p></aside></div><div id="guardianCollection" class="collection-overlay hidden" role="dialog" aria-modal="true" aria-label="Guardian collection"><div class="collection-card"><h2>🛡️ Guardian Corner</h2><p>View your team and unlock more Guardians by completing experiments. Choose your team before each adventure.</p><div id="collectionContents"></div><button type="button" class="secondary" id="closeCollection">Close ♡</button></div></div><div class="footer">⏱️ Shopping never pauses the game · ✨ Tuned BioBits rewards · Touch or mouse: tap to water / collect / zap · Space: pause · 1–8 shop shortcuts · Runs in a single browser file</div></div>
 <script>
 (function(){'use strict';
 const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d');const W=900,H=620;const rnd=(a,b)=>a+Math.random()*(b-a),clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
-let save={nutrition:0,regen:0,zap:0,slots:1,lab:0,level:1};try{const s=JSON.parse(localStorage.getItem('petri-panic-pink-v2'));if(s)save={...save,...s}}catch(e){}function persist(){try{localStorage.setItem('petri-panic-pink-v2',JSON.stringify(save))}catch(e){}}
-let state='menu',mode='adventure',selected='adventure',elapsed=0,coins=120,dna=0,wave=0,attackTimer=45,warning=0,attackType='',starTime=0,starDropTimer=65,scuttle=false,rescue=false,challengeDrops=45,score=0,flash=0,noticeTime=0,toast='',last=0,audioOn=true,audioContext=null,globs=[],water=[],bubbles=[],enemies=[],particles=[],guardians=[],scuttleX=460,autoTick=0,uiTick=0,floatingText=[],sparkles=[];
-const cost={glob:70,scuttle:190,nutrition:()=>140+save.nutrition*160,regen:()=>160+save.regen*180,zap:()=>170+save.zap*190,star:500,revive:130,antidote:100,defender:250,dna:()=>260+45*Math.max(0,(save.level||1)-1)};const getCost=k=>typeof cost[k]==='function'?cost[k]():cost[k];
+let save={nutrition:0,regen:0,zap:0,slots:1,lab:0,level:1,scuttleUnlocked:false,selectedGuardian:'none',selectedGuardians:[]};try{const s=JSON.parse(localStorage.getItem('petri-panic-pink-v2'));if(s)save={...save,...s}}catch(e){}function persist(){try{localStorage.setItem('petri-panic-pink-v2',JSON.stringify(save))}catch(e){}}
+let activeLevel=1,chosenLevel=1;let state='menu',mode='adventure',selected='adventure',elapsed=0,coins=120,dna=0,wave=0,attackTimer=45,warning=0,attackType='',starTime=0,starDropTimer=65,scuttle=false,rescue=false,challengeDrops=45,score=0,flash=0,noticeTime=0,toast='',last=0,audioOn=true,audioContext=null,globs=[],water=[],bubbles=[],enemies=[],particles=[],guardians=[],scuttleX=460,scuttleY=320,autoTick=0,uiTick=0,floatingText=[],sparkles=[];
+const cost={glob:70,scuttle:190,nutrition:()=>140+save.nutrition*160,regen:()=>160+save.regen*180,zap:()=>170+save.zap*190,star:500,revive:130,antidote:100,defender:250,dna:()=>260+45*Math.max(0,activeLevel-1)};const getCost=k=>typeof cost[k]==='function'?cost[k]():cost[k];
 function sound(f=440){if(!audioOn)return;try{audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();const osc=audioContext.createOscillator(),gain=audioContext.createGain(),now=audioContext.currentTime;osc.type='sine';osc.frequency.setValueAtTime(f,now);gain.gain.setValueAtTime(.028,now);gain.gain.exponentialRampToValueAtTime(.001,now+.09);osc.connect(gain);gain.connect(audioContext.destination);osc.start(now);osc.stop(now+.09)}catch(e){}}
+
+// Original multi-section candy-lab soundtrack. Four distinct 16-beat phrases,
+// alternating arrangements, and a gentle bridge create a longer musical journey.
+// Notes are MIDI pitches; null means a deliberate rest.
+const musicSections=[
+ {lead:[76,79,81,79,76,74,72,null,74,76,79,83,81,79,76,null],chords:[[48,52,55],[53,57,60],[50,53,57],[55,59,62]]},
+ {lead:[79,81,83,86,83,81,79,76,77,79,81,84,83,79,76,null],chords:[[53,57,60],[55,59,62],[57,60,64],[52,55,59]]},
+ {lead:[72,null,76,79,77,76,74,null,71,74,77,81,79,77,76,null],chords:[[45,48,52],[50,53,57],[48,52,55],[55,59,62]]},
+ {lead:[76,79,84,83,81,79,76,74,72,76,79,81,79,76,72,null],chords:[[48,52,55],[53,57,60],[55,59,62],[48,52,55]]}
+];
+let musicStep=0,musicClock=null;
+function musicNote(midi,when,duration,volume,type){
+ if(midi===null||!audioOn||!audioContext)return;
+ const osc=audioContext.createOscillator(),gain=audioContext.createGain();
+ osc.type=type;osc.frequency.value=440*Math.pow(2,(midi-69)/12);
+ gain.gain.setValueAtTime(.0001,when);
+ gain.gain.linearRampToValueAtTime(volume,when+.018);
+ gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
+ osc.connect(gain);gain.connect(audioContext.destination);
+ osc.start(when);osc.stop(when+duration+.02);
+}
+function startMusic(){
+ if(musicClock)return;
+ musicClock=setInterval(()=>{
+  if(state!=='playing'||!audioOn||!audioContext||audioContext.state!=='running')return;
+  const step=musicStep++,sectionIndex=Math.floor(step/16)%musicSections.length;
+  const phrase=Math.floor(step/64),section=musicSections[sectionIndex],i=step%16;
+  const at=audioContext.currentTime+.015;
+  // Repeat the full theme with a different answer phrase and ornamentation.
+  let lead=section.lead[i];
+  if(phrase%2===1&&i===11&&lead!==null)lead-=2;
+  if(phrase%3===2&&i===6&&lead!==null)lead+=2;
+  musicNote(lead,at,i%4===3?.28:.19,.009,sectionIndex===2?'sine':'triangle');
+  const chord=section.chords[Math.floor(i/4)];
+  if(i%4===0)musicNote(chord[0],at,.7,.014,'triangle');
+  if(i%4===2)musicNote(chord[1]+12,at,.27,.0045,'sine');
+  // Light bell-like arpeggios join only during alternate phrases.
+  if(phrase%2===1&&i%4===3)musicNote(chord[2]+12,at,.19,.0035,'sine');
+ },255);
+}
 function message(t,secs=3){toast=t;noticeTime=secs;$('ribbon').textContent=t}
-function glob(x=rnd(90,W-90),y=rnd(120,H-90)){return{x,y,vx:rnd(-16,16),vy:rnd(-16,16),eaten:0,hunger:5,hp:1,age:0,produce:rnd(8,12),birth:rnd(8,16),phase:rnd(0,6),target:null,face:rnd(0,8),moodTimer:0,hurtTimer:0,heartTimer:0,lastStage:0,personality:Math.floor(Math.random()*3),poison:0,poisonFeed:0,feedCooldown:0}}
+function glob(x=rnd(90,W-90),y=rnd(120,H-90)){return{x,y,vx:rnd(-16,16),vy:rnd(-16,16),eaten:0,hunger:5,hp:1,age:0,produce:rnd(8,12),birth:rnd(8,16),phase:rnd(0,6),target:null,face:rnd(0,8),moodTimer:0,hurtTimer:0,heartTimer:0,lastStage:0,personality:Math.floor(Math.random()*3),speedFactor:rnd(.72,1.32),wanderPhase:rnd(0,Math.PI*2),poison:0,poisonFeed:0,feedCooldown:0}}
 function stage(g){return g.eaten>=9?2:g.eaten>=4?1:0}function maxhp(g){return stage(g)+1}function radius(g){return [16,23,31][stage(g)]}
-function resetWorld(){elapsed=0;coins=mode==='lab'?200:130;dna=0;score=0;wave=0;attackTimer=mode==='lab'?Infinity:43;warning=0;starTime=0;starDropTimer=60;scuttle=false;rescue=false;challengeDrops=45;flash=0;globs=[glob(310,290),glob(550,350)];water=[];bubbles=[];enemies=[];particles=[];floatingText=[];sparkles=[];guardians=(mode==='adventure'&&(save.level||1)>=2)?[{x:450,y:480,cool:0}]:[];scuttleX=400;autoTick=0;globs.forEach(g=>g.hunger=6);updateUI();message('Tap anywhere in the dish to add a 💧 moisture droplet!',5)}
-function begin(){document.body.classList.remove('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');mode=selected;resetWorld();state='playing';$('overlay').classList.add('hidden');$('pause').textContent='Ⅱ Pause';updateUI();sound(630)}
-function showMenu(type='menu'){document.body.classList.add('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');state=type;$('overlay').classList.remove('hidden');$('modes').classList.toggle('hidden',type==='paused');$('reset').classList.toggle('hidden',type!=='menu');$('modalTip').textContent=type==='menu'?'Permanent upgrades and your Living Lab collection save in this browser.':`Mode: ${mode==='trial'?'Time Trial':mode==='challenge'?'Challenge':mode==='lab'?'Living Lab':'Adventure'}`;
+const guardianCatalog=[
+ {id:'scuttle',name:'Scuttle',icon:'🐌',detail:'Hunts down floating BioBits',level:2},
+ {id:'bouncer',name:'Bouncer',icon:'🩵',detail:'Patrols the dish and chases invaders',level:2},
+ {id:'nurse',name:'Mallow',icon:'💗',detail:'Heals injured Globs',level:4},
+ {id:'feeder',name:'Dewdrop',icon:'💧',detail:'Creates extra nourishing water',level:6},
+ {id:'spark',name:'Glimmer',icon:'✨',detail:'Creates bonus BioBits',level:9},
+ {id:'nursery',name:'Lovie',icon:'💕',detail:'Encourages healthy Expert births',level:12}
+];
+function guardianUnlocked(id){const g=guardianCatalog.find(c=>c.id===id);return !!g&&(id==='scuttle'&&save.scuttleUnlocked||(save.level||1)>=g.level)}
+function unlockedSlots(){return (save.level||1)>=15?3:(save.level||1)>=8?2:1}
+function chosenGuardians(){let a=Array.isArray(save.selectedGuardians)?save.selectedGuardians:[];if(!a.length&&save.selectedGuardian&&save.selectedGuardian!=='none')a=[save.selectedGuardian];return a.filter(id=>guardianUnlocked(id)).slice(0,unlockedSlots())}
+function renderGuardianPicker(){
+ const options=$('guardianOptions'),slots=$('guardianSlotDisplay');if(!options||!slots)return;
+ let chosen=chosenGuardians();save.selectedGuardians=chosen;
+ $('guardianSlotsLabel').textContent='✨ Your Guardians · '+chosen.length+' / '+unlockedSlots()+' slots';
+ slots.innerHTML='';
+ for(let i=0;i<3;i++){let el=document.createElement('div');el.className='guardian-slot'+(i>=unlockedSlots()?' locked':'');
+ el.textContent=i>=unlockedSlots()?'🔒 Slot '+(i+1)+(i===1?' · level 8':' · level 15'):chosen[i]?guardianCatalog.find(x=>x.id===chosen[i]).icon+' '+guardianCatalog.find(x=>x.id===chosen[i]).name:'♡ Empty slot';slots.appendChild(el)}
+ options.innerHTML='';
+ for(const g of guardianCatalog){const owned=guardianUnlocked(g.id),selected=chosen.includes(g.id),button=document.createElement('button');
+ button.type='button';button.className='guardian-choice'+(selected?' chosen':'')+(owned?'':' locked');
+ button.disabled=!owned;button.setAttribute('aria-pressed',String(selected));
+ button.innerHTML='<span class="guardian-face">'+g.icon+'</span><span><strong>'+g.name+'</strong><small>'+g.detail+'</small><small>'+(owned?(selected?'✓ Equipped':'Tap to equip'):'🔒 Unlock at experiment '+g.level)+'</small></span>';
+ button.addEventListener('click',()=>{let next=chosenGuardians();if(next.includes(g.id))next=next.filter(x=>x!==g.id);else if(next.length<unlockedSlots())next.push(g.id);else{next.shift();next.push(g.id)}save.selectedGuardians=next;save.selectedGuardian=next[0]||'none';persist();renderGuardianPicker()});options.appendChild(button)}
+}
+function renderLevelPicker(){
+ const wrap=$('levelOptions');if(!wrap)return;wrap.innerHTML='';
+ chosenLevel=clamp(chosenLevel,1,save.level||1);
+ for(let i=1;i<=21;i++){const b=document.createElement('button'),unlocked=i<=(save.level||1);
+ b.type='button';b.disabled=!unlocked;b.className='level-choice'+(i===chosenLevel?' chosen':'')+(unlocked?'':' locked');
+ b.textContent=unlocked?String(i).padStart(2,'0'):'🔒';b.title=unlocked?'Play experiment '+i:'Complete earlier experiments to unlock';
+ b.setAttribute('aria-label',unlocked?'Play experiment '+i:'Experiment '+i+' locked');
+ b.onclick=()=>{chosenLevel=i;renderLevelPicker();$('play').textContent='Start Experiment '+String(i).padStart(2,'0')+' ✨'};wrap.appendChild(b)}
+}
+function renderCollection(){
+ const wrap=$('collectionContents');wrap.innerHTML='';
+ for(const g of guardianCatalog){const owned=guardianUnlocked(g.id),item=document.createElement('div');item.className='collection-item'+(owned?'':' locked');
+ item.textContent=(owned?g.icon:'🔒')+' '+g.name+' · '+(owned?g.detail:'Unlock at experiment '+g.level);wrap.appendChild(item)}
+}
+function keepGuardianInDish(g){
+  const dx=g.x-450,dy=g.y-310;
+  const scaled=Math.hypot(dx/395,dy/255);
+  if(scaled>1){g.x=450+dx/scaled;g.y=310+dy/scaled}
+}
+function resetWorld(){ elapsed=0;coins=mode==='lab'?200:130;dna=0;score=0;wave=0;attackTimer=mode==='lab'?Infinity:43;warning=0;starTime=0;starDropTimer=60;scuttle=chosenGuardians().includes('scuttle');rescue=false;challengeDrops=45;flash=0;globs=[glob(310,290),glob(550,350)];water=[];bubbles=[];enemies=[];particles=[];floatingText=[];sparkles=[];guardians=chosenGuardians().filter(id=>id!=='scuttle').map((id,i)=>({id,x:390+i*95,y:280+i*35,cool:0,abilityCool:1.5}));scuttleX=400;scuttleY=320;autoTick=0;globs.forEach(g=>g.hunger=6);updateUI();message('Tap anywhere in the dish to add a 💧 moisture droplet!',5)}
+let guardianStep=false;
+function openGuardianMenu(){
+  guardianStep=true;
+  
+  $('guardianPicker').classList.remove('hidden');
+  $('guardianPicker').style.display='block';
+  $('guardianBack').classList.remove('hidden');
+  $('modes').classList.add('hidden');
+  $('levelPicker').classList.remove('hidden');
+  renderLevelPicker();
+  $('modalTitle').textContent='Choose your Guardian ♡';
+  $('modalBody').textContent='Prepare for Adventure! Pick your unlocked companion before entering the Petri dish.';
+  $('play').textContent='Start Experiment '+String(chosenLevel).padStart(2,'0')+' ✨';
+  $('modalTip').textContent='Guardians are chosen here, separately from the Supply Shelf.';
+  renderGuardianPicker();
+}
+function begin(){activeLevel=clamp(chosenLevel,1,save.level||1);guardianStep=false;document.body.classList.remove('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');mode=selected;resetWorld();state='playing';$('overlay').classList.add('hidden');$('pause').textContent='Ⅱ Pause';updateUI();sound(630);startMusic()}
+function showMenu(type='menu'){guardianStep=false;$('levelPicker').classList.add('hidden');$('returnMainMenu').classList.toggle('hidden',type!=='paused');$('guardianBack').classList.add('hidden');$('guardianPicker').classList.add('hidden');$('guardianPicker').style.display='none';document.body.classList.add('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');state=type;$('overlay').classList.remove('hidden');$('modes').classList.toggle('hidden',type==='paused');$('reset').classList.toggle('hidden',type!=='menu');$('modalTip').textContent=type==='menu'?'Permanent upgrades and your Living Lab collection save in this browser.':`Mode: ${mode==='trial'?'Time Trial':mode==='challenge'?'Challenge':mode==='lab'?'Living Lab':'Adventure'}`;
 let title='Welcome to the Pink Lab!',body='Water the dish, nurture Globs to Expert level, collect BioBits, and survive contamination. Choose a mode!',action="Let's grow! ♡",icon='🌸🦠🌸';
 if(type==='paused'){title='Taking a tiny break?';body='Everything is frozen exactly where you left it.';action='Resume ♡';icon='💖'}
-if(type==='win'){title='Experiment complete!';body='Three DNA fragments assembled! Experiment '+(save.level||1)+' unlocked. Bouncer joins free from Experiment 2 onward.';action='Play again';icon='🎉🧬🎉'}
+if(type==='win'){const nextLevel=clamp(activeLevel+1,1,21);chosenLevel=nextLevel;title='Experiment complete!';body='Three DNA fragments assembled! Experiment '+nextLevel+' unlocked. Choose a guardian for the next level!';action='Next: Experiment '+String(nextLevel).padStart(2,'0')+' / 21 ✨';icon='🎉🧬🎉'}
 if(type==='lose'){title='Oh no! Culture collapse!';body='All your Globs were lost. Next time, keep them fed, protect your Experts, and consider a rescue capsule.';action='Try again';icon='🥺💔'}
 if(type==='timeup'){title='Time Trial complete!';body=`Score: ${Math.floor(score)}! You ended with ${globs.length} Globs and ${Math.floor(coins)} BioBits. Can you beat it?`;action='Play again';icon='🏆⏱️'}
 if(type==='challengewin'){title='Challenge survived!';body=`Amazing! You survived 2 minutes using ${45-challengeDrops} of your 45 moisture droplets.`;action='Play again';icon='🌵💗'}
-if(type==='menu'){$('mascot').innerHTML='<span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span>'}else $('mascot').textContent=icon;$('modalTitle').textContent=title;$('modalBody').textContent=body;$('play').textContent=action;}
+if(type==='menu'){$('mascot').innerHTML='<span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span>'}else $('mascot').textContent=icon;$('modalTitle').textContent=title;$('modalBody').textContent=body;$('play').textContent=action;$('guardianPicker').style.display='none';renderGuardianPicker();}
 function pause(){if(document.getElementById('supplyPanel').classList.contains('shopping')){document.getElementById('supplyPanel').classList.remove('shopping');return}if(state==='playing')showMenu('paused');else if(state==='paused'){state='playing';document.body.classList.remove('menu-open');$('overlay').classList.add('hidden')}}
 function emit(x,y,color,n=10){for(let i=0;i<n;i++){let a=rnd(0,Math.PI*2),v=rnd(15,100);particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:rnd(.3,.8),color,r:rnd(2,5)})}}
 
@@ -226,25 +412,124 @@ function collect(b){if(b.gone)return;b.gone=true;coins+=b.value;score+=b.value;e
 function click(x,y){if(state!=='playing')return;for(let i=enemies.length-1;i>=0;i--){let e=enemies[i];if(distance(e,{x,y})<e.r+15){e.hp-=1+save.zap+(starTime>0?2:0);emit(x,y,'#ffd4eb',9);if(e.hp<=0){e.dead=true;score+=30;emit(e.x,e.y,'#fc83b9',25);sparkleBurst(e.x,e.y,12,'mint');message(e.kind==='virus'?'Virus neutralized!':'Mold cleaned!',1.5)}else message('Keep tapping to sterilize!',.9);sound(410);updateUI();return}}
 for(let i=bubbles.length-1;i>=0;i--){let b=bubbles[i];if(distance(b,{x,y})<b.r+22){collect(b);return}}
 if(mode==='challenge'&&challengeDrops<=0){message('Out of droplets! Keep your culture alive!',2);return}
-if(water.length>=19){message('Let some moisture soak in first!',1.2);return}sparkleBurst(x,y,5,'blue');water.push({x,y,r:12+save.nutrition*2,life:14+save.nutrition*3,phase:rnd(0,7),power:1+save.nutrition*.55});if(mode==='challenge')challengeDrops--;emit(x,y,'#9dd8ff',7);sound(540);updateUI()}
-function purchase(k){if(state!=='playing')return;if((k==='scuttle'&&scuttle)||(k==='revive'&&rescue)||(k==='nutrition'&&save.nutrition>=3)||(k==='regen'&&save.regen>=3)||(k==='zap'&&save.zap>=3)){message('Already owned or fully upgraded!',2);return}if((k==='dna'&&mode!=='adventure')){message('DNA fragments are only needed in Adventure mode.',2);return}let price=getCost(k);if(coins<price){message(`Need ${price-coins} more BioBits for that!`,2);sound(230);return}coins-=price;sparkleBurst(740,115,12,'pink');
-switch(k){case'glob':globs.push(glob());message('A baby Glob joined your dish! 🥹');break;case'scuttle':scuttle=true;message('Scuttle is collecting BioBits for you! 🐌');break;case'nutrition':save.nutrition++;persist();message('Permanent rich droplets unlocked! 💧');break;case'regen':save.regen++;persist();message('Permanent healing aid upgraded! 💗');break;case'zap':save.zap++;persist();message('Permanent sterilizer upgrade! ⚡');break;case'antidote':for(const g of globs){g.poison=0;g.poisonFeed=0}message('Poison cured! 💊');break;case'defender':guardians.push({x:rnd(130,770),y:500,cool:0});message('Bouncer deployed! 🛡️');break;case'star':starTime=15;emit(450,300,'#f9c865',40);sparkleBurst(450,300,44,'gold');message('STAR CELL! 15 seconds of sparkle power! 🌟');break;case'revive':rescue=true;message('Rescue capsule saved for an emergency! 🩹');break;case'dna':dna++;emit(450,300,'#ffeabc',20);sparkleBurst(450,300,25,'gold');message(`DNA fragment ${dna} of 3 collected! 🧬`);if(dna===3){save.lab=(save.lab||0)+1;save.level=Math.min(21,(save.level||1)+1);persist();emit(450,300,'#fff1b8',100);sparkleBurst(450,300,90,'gold');updateUI();showMenu('win');return}break}
+if(water.length>=10){message('💧 Ten drops max! Wait for one to disappear.',1.2);return}sparkleBurst(x,y,5,'blue');water.push({x,y,r:12+save.nutrition*2,life:8+save.nutrition*1.5,phase:rnd(0,7),power:1+save.nutrition*.55});if(mode==='challenge')challengeDrops--;emit(x,y,'#9dd8ff',7);sound(540);updateUI()}
+function purchase(k){if(state!=='playing')return;if((k==='scuttle'&&save.scuttleUnlocked)||(k==='revive'&&rescue)||(k==='nutrition'&&save.nutrition>=3)||(k==='regen'&&save.regen>=3)||(k==='zap'&&save.zap>=3)){message('Already owned or fully upgraded!',2);return}if((k==='dna'&&mode!=='adventure')){message('DNA fragments are only needed in Adventure mode.',2);return}let price=getCost(k);if(coins<price){message(`Need ${price-coins} more BioBits for that!`,2);sound(230);return}coins-=price;sparkleBurst(740,115,12,'pink');
+switch(k){case'glob':globs.push(glob());message('A baby Glob joined your dish! 🥹');break;case'scuttle':save.scuttleUnlocked=true;save.selectedGuardian='scuttle';save.selectedGuardians=Array.from(new Set([...chosenGuardians(),'scuttle'])).slice(0,unlockedSlots());scuttle=true;persist();renderGuardianPicker();sparkleBurst(scuttleX,scuttleY,28,'pink');message('Scuttle arrived! 🐌 See Scuttle in your dish. Unlocked for future levels!');break;case'nutrition':save.nutrition++;persist();message('Permanent rich droplets unlocked! 💧');break;case'regen':save.regen++;persist();message('Permanent healing aid upgraded! 💗');break;case'zap':save.zap++;persist();message('Permanent sterilizer upgrade! ⚡');break;case'antidote':for(const g of globs){g.poison=0;g.poisonFeed=0}message('Poison cured! 💊');break;case'defender':guardians.push({x:rnd(130,770),y:500,cool:0});message('Bouncer deployed! 🛡️');break;case'star':starTime=15;emit(450,300,'#f9c865',40);sparkleBurst(450,300,44,'gold');message('STAR CELL! 15 seconds of sparkle power! 🌟');break;case'revive':rescue=true;message('Rescue capsule saved for an emergency! 🩹');break;case'dna':dna++;emit(450,300,'#ffeabc',20);sparkleBurst(450,300,25,'gold');message(`DNA fragment ${dna} of 3 collected! 🧬`);if(dna===3){save.lab=(save.lab||0)+1;save.level=Math.max(save.level||1,Math.min(21,activeLevel+1));persist();emit(450,300,'#fff1b8',100);sparkleBurst(450,300,90,'gold');updateUI();showMenu('win');return}break}
 sound(880);updateUI()}
-function updateUI(){ $('money').textContent=Math.floor(coins);$('dna').textContent=mode==='adventure'?`${dna}/3`:'—';$('count').textContent=globs.length;for(let k of Object.keys(cost)){let b=document.querySelector(`[data-buy="${k}"]`);if(!b)continue;let owned=(k==='scuttle'&&scuttle)||(k==='revive'&&rescue);let max=(['nutrition','regen','zap'].includes(k)&&save[k]>=3);let unavailable=(k==='dna'&&mode!=='adventure')||(k==='antidote'&&!globs.some(g=>g.poison>0));b.disabled=state!=='playing'||coins<getCost(k)||owned||max||unavailable;$('cost-'+k).textContent=owned?'OWNED':max?'MAX':unavailable?'—':getCost(k)}$('notes').innerHTML=`💧 Tap to feed Globs and heal them.<br>💕 Baby → Grown → Expert → babies!<br>✨ Collect floating BioBits bubbles.<br>🦠 Tap red viruses; clear spreading mold.<br>🌟 Star power: ${Math.ceil(starTime)}s · 🩹 Rescue: ${rescue?'Ready':'None'}${mode==='trial'?`<br>⏱️ Time left: ${Math.max(0,Math.ceil(180-elapsed))}s`:''}${mode==='challenge'?`<br>💧 Drops remaining: ${challengeDrops} · ${Math.max(0,Math.ceil(120-elapsed))}s`:''}${mode==='lab'?`<br>🎀 DNA experiments completed: ${save.lab||0}`:''}`}
+function updateUI(){const currentLevel=clamp(state==='playing'||state==='paused'||state==='guardian-roster'?activeLevel:chosenLevel,1,21);const regions=['Starter Culture','Radiant Slide','Rotifer Grove','Deep Culture','Omega Slide'];const regionIndex=Math.min(4,Math.floor((currentLevel-1)/5));$('levelNum').innerHTML=String(currentLevel).padStart(2,'0')+' <span class="level-of">/ 21</span>';$('adventureLevel').textContent='Collect 3 DNA pieces';$('regionName').textContent=regions[regionIndex];$('levelFill').style.width=Math.max(5,Math.round(currentLevel/21*100))+'%';$('levelChip').setAttribute('aria-label','Experiment '+currentLevel+' of 21: '+regions[regionIndex]); $('money').textContent=Math.floor(coins);$('dna').textContent=mode==='adventure'?`${dna}/3`:'—';$('count').textContent=globs.length;for(let k of Object.keys(cost)){let b=document.querySelector(`[data-buy="${k}"]`);if(!b)continue;let owned=(k==='scuttle'&&save.scuttleUnlocked)||(k==='revive'&&rescue);let max=(['nutrition','regen','zap'].includes(k)&&save[k]>=3);let unavailable=(k==='dna'&&mode!=='adventure')||(k==='antidote'&&!globs.some(g=>g.poison>0));b.disabled=state!=='playing'||coins<getCost(k)||owned||max||unavailable;$('cost-'+k).textContent=owned?'OWNED':max?'MAX':unavailable?'—':getCost(k)}$('notes').innerHTML=`💧 Tap to feed Globs and heal them.<br>💕 Baby → Grown → Expert → babies!<br>✨ Collect floating BioBits bubbles.<br>🦠 Tap red viruses; clear spreading mold.<br>🌟 Star power: ${Math.ceil(starTime)}s · 🩹 Rescue: ${rescue?'Ready':'None'}${mode==='trial'?`<br>⏱️ Time left: ${Math.max(0,Math.ceil(180-elapsed))}s`:''}${mode==='challenge'?`<br>💧 Drops remaining: ${challengeDrops} · ${Math.max(0,Math.ceil(120-elapsed))}s`:''}${mode==='lab'?`<br>🎀 DNA experiments completed: ${save.lab||0}`:''}`}
 function spawnWave(){wave++;attackType=(wave>3&&Math.random()<.45)?'mixed':Math.random()<.5?'virus':'mold';let kinds=attackType==='mixed'?['virus','mold']:Array.from({length:attackType==='virus'?Math.min(4,wave+1):1},()=>attackType);for(let kind of kinds){enemies.push({kind,x:rnd(80,820),y:kind==='virus'?-35:rnd(110,490),r:kind==='virus'?20:28,hp:Math.floor(rnd(5,11)),maxHp:10,speed:kind==='virus'?34+wave*6:8+wave*2,phase:rnd(0,6),cool:0,spread:12,dead:false})}message(attackType==='virus'?'🦠 VIRUS ATTACK! Tap to zap!':attackType==='mold'?'🍄 CREEPING MOLD! Clear it fast!':'⚠️ DOUBLE CONTAMINATION! Both enemy types!',5);flash=.5;sound(210)}
 function update(dt){elapsed+=dt;for(const p of sparkles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=12*dt;p.vx*=Math.exp(-1.5*dt);p.life-=dt}sparkles=sparkles.filter(p=>p.life>0);flash=Math.max(0,flash-dt);starTime=Math.max(0,starTime-dt);noticeTime-=dt;if(noticeTime<=0){$('ribbon').textContent=mode==='lab'?'🎀 Peaceful Living Lab — grow and decorate with more Globs':starTime>0?'🌟 STAR CELL ACTIVE!':`💧 Water • ✨ Collect • 💗 Protect • ${mode==='adventure'?'🧬 Complete DNA':'🌸 Keep growing'}`;noticeTime=0}
 if(mode==='trial'&&elapsed>=180){showMenu('timeup');return}if(mode==='challenge'&&elapsed>=120){showMenu('challengewin');return}
 if(mode!=='lab'){attackTimer-=dt;if(attackTimer<0&&warning===0&&enemies.length===0){warning=3;message('⚠️ Contamination approaching!',3)}if(warning>0){warning-=dt;if(warning<=0){warning=0;spawnWave();attackTimer=wave>3?45:53}}}
 starDropTimer-=dt;if(starDropTimer<0&&mode!=='lab'){starDropTimer=rnd(75,120);if(Math.random()<.48){bubbles.push({x:rnd(65,835),y:rnd(70,300),vx:0,vy:-5,value:0,star:true,life:10,phase:0,r:20});message('A rare Star Cell appeared! Tap it! 🌟',3)}}
-for(const w of water){w.life-=dt;w.phase+=dt*2;w.r=Math.min(26+save.nutrition*2,w.r+dt*1.1)}water=water.filter(w=>w.life>0&&!w.used);
-for(const g of globs){g.age+=dt;g.phase+=dt*2;g.moodTimer=Math.max(0,g.moodTimer-dt);g.hurtTimer=Math.max(0,g.hurtTimer-dt);g.heartTimer=Math.max(0,g.heartTimer-dt);g.hunger+=dt*(starTime>0?.28:.75)*(g.personality===2?1.2:1);g.feedCooldown=Math.max(0,g.feedCooldown-dt);if(g.poison>0){g.hp-=dt*(.022+Math.floor(((save.level||1)-1)/7)*.015)}g.produce-=dt;g.birth-=dt;let target=null,min=Infinity;for(const w of water){let d=distance(g,w);if(d<min){min=d;target=w}}if(target){let dx=target.x-g.x,dy=target.y-g.y,speed=(stage(g)===2?43:55)*(g.personality===2?1.4:g.personality===0?.86:1);g.vx+=(dx/Math.max(1,min)*speed-g.vx)*Math.min(1,dt*2.3);g.vy+=(dy/Math.max(1,min)*speed-g.vy)*Math.min(1,dt*2.3);if(min<radius(g)+target.r-3){target.life-=3*dt;if(g.age>0){g.hunger=Math.max(0,g.hunger-13*dt*target.power);g.eaten+=dt*(.72+save.nutrition*.13)*(starTime>0?3:1);if(Math.random()<dt*.8)g.moodTimer=.7;if(g.poison>0&&g.feedCooldown<=0){g.poisonFeed++;g.feedCooldown=1.5;if(g.poisonFeed>=(save.level<=7?4:save.level<=14?6:8)){g.poison=0;g.poisonFeed=0;emit(g.x,g.y,'#a8f1be',15)}}if(g.hp<maxhp(g))g.hp=Math.min(maxhp(g),g.hp+dt*(.18+save.regen*.2+ (starTime>0?1.5:0)));}}}else{g.vx+=rnd(-25,25)*dt;g.vy+=rnd(-25,25)*dt;g.vx=clamp(g.vx,-24,24);g.vy=clamp(g.vy,-24,24)}g.x=clamp(g.x+g.vx*dt,38,W-38);g.y=clamp(g.y+g.vy*dt,56,H-52);if(stage(g)>g.lastStage){g.lastStage=stage(g);g.moodTimer=2;sparkleBurst(g.x,g.y,20,'pink');}
+for(const w of water){w.life-=dt;w.phase+=dt*2;w.r=Math.max(3,Math.min(26+save.nutrition*2,w.r+dt*.8)*Math.min(1,w.life/2.5))}water=water.filter(w=>w.life>0&&!w.used);
+for(const g of globs){g.age+=dt;g.phase+=dt*2;g.moodTimer=Math.max(0,g.moodTimer-dt);g.hurtTimer=Math.max(0,g.hurtTimer-dt);g.heartTimer=Math.max(0,g.heartTimer-dt);g.hunger+=dt*(starTime>0?.28:.75)*(g.personality===2?1.2:1);g.feedCooldown=Math.max(0,g.feedCooldown-dt);if(g.poison>0){g.hp-=dt*(.022+Math.floor((activeLevel-1)/7)*.015)}g.produce-=dt;g.birth-=dt;let target=null,min=Infinity;for(const w of water){let d=distance(g,w);if(d<min){min=d;target=w}}if(target){let dx=target.x-g.x,dy=target.y-g.y,speed=(stage(g)===2?43:55)*(g.personality===2?1.4:g.personality===0?.86:1);g.vx+=(dx/Math.max(1,min)*speed*g.speedFactor-g.vx)*Math.min(1,dt*2.3);g.vy+=(dy/Math.max(1,min)*speed*g.speedFactor-g.vy)*Math.min(1,dt*2.3);if(min<radius(g)+target.r-3){target.life-=12*dt;if(g.age>0){g.hunger=Math.max(0,g.hunger-13*dt*target.power);g.eaten+=dt*(.72+save.nutrition*.13)*(starTime>0?3:1);if(Math.random()<dt*.8)g.moodTimer=.7;if(g.poison>0&&g.feedCooldown<=0){g.poisonFeed++;g.feedCooldown=1.5;if(g.poisonFeed>=(activeLevel<=7?4:activeLevel<=14?6:8)){g.poison=0;g.poisonFeed=0;emit(g.x,g.y,'#a8f1be',15)}}if(g.hp<maxhp(g))g.hp=Math.min(maxhp(g),g.hp+dt*(.18+save.regen*.2+ (starTime>0?1.5:0)));}}}else{const drift=elapsed*(.36+g.speedFactor*.23)+g.wanderPhase+g.face*.6;const speed=(12+(g.personality===2?8:g.personality===0?-3:0))*g.speedFactor;const dx=Math.cos(drift)*speed,dy=Math.sin(drift)*speed;g.vx+=(dx-g.vx)*Math.min(1,dt*1.8);g.vy+=(dy-g.vy)*Math.min(1,dt*1.8)}// Gentle personal-space steering: different Globs avoid piling into one spot.
+let separateX=0,separateY=0;
+for(const other of globs){
+ if(other===g||other.dead)continue;
+ const dx=g.x-other.x,dy=g.y-other.y,dist=Math.hypot(dx,dy);
+ const spacing=radius(g)+radius(other)+14;
+ if(dist<spacing){const direction=dist>1?{x:dx/dist,y:dy/dist}:{x:Math.cos(g.wanderPhase),y:Math.sin(g.wanderPhase)};
+ const strength=(spacing-dist)/spacing;
+ separateX+=direction.x*strength;separateY+=direction.y*strength;}
+}
+const avoidStrength=target?24:41;
+g.vx+=clamp(separateX,-1.8,1.8)*avoidStrength*dt*3;
+g.vy+=clamp(separateY,-1.8,1.8)*avoidStrength*dt*3;
+g.x=clamp(g.x+g.vx*dt,38,W-38);g.y=clamp(g.y+g.vy*dt,56,H-52);if(stage(g)>g.lastStage){g.lastStage=stage(g);g.moodTimer=2;sparkleBurst(g.x,g.y,20,'pink');}
 if(g.hunger>48||g.hp<=0){g.dead=true;emit(g.x,g.y,'#c5c0d0',13);sparkleBurst(g.x,g.y,8,'pink');message('A Glob got too dry! Give them more moisture! 🥺',2)}
 if(g.eaten>=2&&g.produce<=0&&g.hunger<25&&bubbles.filter(b=>!b.star).length<16){let value=[12,27,60][stage(g)]*(starTime>0?2:1);bubble(g.x,g.y,Math.round(value*(g.personality===0?.75:1)));g.produce=rnd(10,14)/(starTime>0?1.6:1)}
 if(stage(g)===2&&g.hunger<10&&g.birth<=0&&globs.length<30){g.birth=rnd(16,25);if(Math.random()<.72){globs.push(glob(clamp(g.x+rnd(-37,37),35,W-35),clamp(g.y+rnd(-37,37),55,H-55)));g.heartTimer=2.6;sparkleBurst(g.x,g.y,27,'pink');emit(g.x,g.y,'#ff8bbc',19);message('An Expert Glob had a baby! 👶💕',2.8);score+=100}}}
 globs=globs.filter(g=>!g.dead);
-for(const b of bubbles){b.phase+=dt*5;b.x=clamp(b.x+b.vx*dt,32,W-32);b.y=clamp(b.y+b.vy*dt,55,H-45);b.vx*=Math.exp(-2.2*dt);b.vy*=Math.exp(-2.2*dt);b.life-=dt;if(scuttle&&!b.star&&distance(b,{x:scuttleX,y:H-55})<100)collect(b);if(b.star&&b.clicked){b.gone=true;starTime=15;message('Rare STAR CELL! Sparkle mode! 🌟',3)}if(b.life<=0)b.gone=true}bubbles=bubbles.filter(b=>!b.gone);
-if(scuttle){let nearest=null,best=Infinity;for(let b of bubbles){let d=Math.abs(b.x-scuttleX)+Math.abs(b.y-(H-55))*.35;if(d<best&&!b.star){best=d;nearest=b}}scuttleX=clamp(scuttleX+(nearest?Math.sign(nearest.x-scuttleX)*145*dt:Math.sin(elapsed)*25*dt),40,860)}
-for(const e of enemies){e.phase+=dt*3;e.cool-=dt;let target=null,min=Infinity;for(const g of globs){let d=distance(e,g);if((save.level||1)>7&&g.eaten>=4)d-=(save.level>=15?160:55);if(d<min){min=d;target=g}}if(target){if(e.kind==='virus'){e.x+=(target.x-e.x)/Math.max(min,1)*e.speed*(.85+.15*Math.max(0,e.hp)/(e.maxHp||10))*dt;e.y+=(target.y-e.y)/Math.max(min,1)*e.speed*dt}else{e.x+=(target.x-e.x)/Math.max(min,1)*e.speed*(.85+.15*Math.max(0,e.hp)/(e.maxHp||10))*.18*dt;e.y+=(target.y-e.y)/Math.max(min,1)*e.speed*.18*dt;e.spread-=dt;if(e.spread<0&&enemies.filter(z=>z.kind==='mold').length<4){e.spread=14;enemies.push({kind:'mold',x:clamp(e.x+rnd(-55,55),45,W-45),y:clamp(e.y+rnd(-55,55),55,H-55),r:21,hp:Math.floor(rnd(5,11)),maxHp:10,speed:8,phase:0,cool:1,spread:22})}}if(min<radius(target)+e.r-6&&e.cool<=0){if(starTime<=0){target.hp-=1;target.hunger+=8;target.hurtTimer=1.25;if(e.kind==='mold'){target.poison=1;target.poisonFeed=0;message('Glob poisoned! Feed or buy Antidote! 💚',3)}emit(target.x,target.y,'#fb8aab',8);if(target.hp<=0){target.dead=true;message('A Glob was lost! Feed and protect the others!',3)}}e.cool=e.kind==='virus'?3:4.5;flash=.2}}else{e.y+=dt*20}if(e.y>H+70)e.dead=true}
-for(const guard of guardians){guard.cool-=dt;let target=enemies.filter(e=>!e.dead).sort((a,b)=>distance(guard,a)-distance(guard,b))[0];if(target){let d=distance(guard,target)||1;guard.x+=(target.x-guard.x)/d*32*dt;guard.y+=(target.y-guard.y)/d*32*dt;if(d<45&&guard.cool<=0){target.hp--;guard.cool=1.5;emit(target.x,target.y,'#73d5ee',6);if(target.hp<=0)target.dead=true}}}enemies=enemies.filter(e=>!e.dead);for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;p.vy+=18*dt}particles=particles.filter(p=>p.life>0);for(const t of floatingText){t.y-=34*dt;t.life-=dt}floatingText=floatingText.filter(t=>t.life>0);
+for(const b of bubbles){b.phase+=dt*5;b.x=clamp(b.x+b.vx*dt,32,W-32);b.y=clamp(b.y+b.vy*dt,55,H-45);b.vx*=Math.exp(-2.2*dt);b.vy*=Math.exp(-2.2*dt);b.life-=dt;if(scuttle&&!b.star&&distance(b,{x:scuttleX,y:scuttleY})<35)collect(b);if(b.star&&b.clicked){b.gone=true;starTime=15;message('Rare STAR CELL! Sparkle mode! 🌟',3)}if(b.life<=0)b.gone=true}bubbles=bubbles.filter(b=>!b.gone);
+if(scuttle){let nearest=null,best=Infinity;for(const b of bubbles){if(b.star||b.gone)continue;const d=distance(b,{x:scuttleX,y:scuttleY});if(d<best){best=d;nearest=b}}const goal=nearest||{x:450+210*Math.sin(elapsed*.31),y:310+160*Math.sin(elapsed*.47+.8)};const dx=goal.x-scuttleX,dy=goal.y-scuttleY,dist=Math.hypot(dx,dy);if(dist>3){const step=Math.min(dist,130*dt);scuttleX+=dx/dist*step;scuttleY+=dy/dist*step;const pos={x:scuttleX,y:scuttleY};keepGuardianInDish(pos);scuttleX=pos.x;scuttleY=pos.y}}
+for(const e of enemies){e.phase+=dt*3;e.cool-=dt;let target=null,min=Infinity;for(const g of globs){let d=distance(e,g);if(activeLevel>7&&g.eaten>=4)d-=(activeLevel>=15?160:55);if(d<min){min=d;target=g}}if(target){if(e.kind==='virus'){e.x+=(target.x-e.x)/Math.max(min,1)*e.speed*(.85+.15*Math.max(0,e.hp)/(e.maxHp||10))*dt;e.y+=(target.y-e.y)/Math.max(min,1)*e.speed*dt}else{e.x+=(target.x-e.x)/Math.max(min,1)*e.speed*(.85+.15*Math.max(0,e.hp)/(e.maxHp||10))*.18*dt;e.y+=(target.y-e.y)/Math.max(min,1)*e.speed*.18*dt;e.spread-=dt;if(e.spread<0&&enemies.filter(z=>z.kind==='mold').length<4){e.spread=14;enemies.push({kind:'mold',x:clamp(e.x+rnd(-55,55),45,W-45),y:clamp(e.y+rnd(-55,55),55,H-55),r:21,hp:Math.floor(rnd(5,11)),maxHp:10,speed:8,phase:0,cool:1,spread:22})}}if(min<radius(target)+e.r-6&&e.cool<=0){if(starTime<=0){target.hp-=1;target.hunger+=8;target.hurtTimer=1.25;if(e.kind==='mold'){target.poison=1;target.poisonFeed=0;message('Glob poisoned! Feed or buy Antidote! 💚',3)}emit(target.x,target.y,'#fb8aab',8);if(target.hp<=0){target.dead=true;message('A Glob was lost! Feed and protect the others!',3)}}e.cool=e.kind==='virus'?3:4.5;flash=.2}}else{e.y+=dt*20}if(e.y>H+70)e.dead=true}
+for(const guard of guardians){
+  guard.cool-=dt;guard.abilityCool-=dt;
+  let target=enemies.filter(e=>!e.dead).sort((a,b)=>distance(guard,a)-distance(guard,b))[0];
+  if(target){
+    let d=distance(guard,target)||1;
+    const step=Math.min(d,guard.id==='bouncer'?105*dt:65*dt);
+    guard.x+=(target.x-guard.x)/d*step;
+    guard.y+=(target.y-guard.y)/d*step;
+    if(guard.id==='bouncer'&&d<45&&guard.cool<=0){target.hp--;guard.cool=1.5;emit(target.x,target.y,'#73d5ee',6);if(target.hp<=0)target.dead=true}
+  }else{
+    // Patrol the entire dish when there is no threat instead of waiting at its bottom.
+    if(!guard.patrol||distance(guard,guard.patrol)<22){
+      const angle=rnd(0,Math.PI*2),radius=Math.sqrt(Math.random());
+      guard.patrol={x:450+radius*340*Math.cos(angle),y:310+radius*215*Math.sin(angle)};
+    }
+    const d=distance(guard,guard.patrol)||1;
+    const step=Math.min(d,62*dt);
+    guard.x+=(guard.patrol.x-guard.x)/d*step;
+    guard.y+=(guard.patrol.y-guard.y)/d*step;
+  }
+  keepGuardianInDish(guard);
+  if(guard.abilityCool<=0){guard.abilityCool=guard.id==='spark'?9:guard.id==='nursery'?12:guard.id==='feeder'?9:3;
+    if(guard.id==='nurse'){for(const g of globs){if(distance(guard,g)<210)g.hp=Math.min(maxhp(g),g.hp+.6)}sparkleBurst(guard.x,guard.y,10,'pink')}
+    if(guard.id==='feeder'&&water.length<10)water.push({x:guard.x,y:guard.y,r:17,life:6,phase:0,power:1.2});
+    if(guard.id==='spark')bubble(guard.x,guard.y,24);
+    if(guard.id==='nursery'){const g=globs.find(g=>stage(g)===2&&g.hunger<16);if(g){g.birth=Math.max(0,g.birth-9);sparkleBurst(g.x,g.y,8,'pink')}}
+  }
+}enemies=enemies.filter(e=>!e.dead);for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;p.vy+=18*dt}particles=particles.filter(p=>p.life>0);for(const t of floatingText){t.y-=34*dt;t.life-=dt}floatingText=floatingText.filter(t=>t.life>0);
 if(globs.length===0){if(rescue){rescue=false;let g=glob(W/2,H/2);g.hunger=0;globs.push(g);emit(g.x,g.y,'#ffb6d9',35);message('Rescue capsule activated! One baby saved! 🩹',5)}else{showMenu('lose');return}}
 uiTick-=dt;if(uiTick<=0){uiTick=.18;updateUI()}}
+function ell(x,y,rx,ry,color){ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill()}
+function drawBackground(){let grad=ctx.createRadialGradient(450,310,50,450,310,520);grad.addColorStop(0,'#fffaff');grad.addColorStop(.65,'#ffe8f4');grad.addColorStop(1,'#f5bfdb');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.strokeStyle='#df95be25';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.strokeStyle='#f08ebc88';ctx.lineWidth=7;ctx.beginPath();ctx.ellipse(450,310,435,292,0,0,7);ctx.stroke();ctx.strokeStyle='#ffffffa8';ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(450,310,423,280,0,0,7);ctx.stroke();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
+
+function drawGlob(g){
+ const st=stage(g),r=radius(g),dry=g.hunger>30,injured=g.hurtTimer>0,sick=g.poison>0;
+ const scared=!sick&&enemies.some(e=>!e.dead&&distance(e,g)<125);
+ const hungry=g.hunger>24,happy=g.heartTimer>0||g.moodTimer>0;
+ const blink=Math.sin(elapsed*2.25+g.face*7)>0.992;
+ const mood=sick?'sick':injured?'hurt':scared?'scared':hungry?'hungry':g.heartTimer>0?'love':happy?'happy':g.eaten>2&&Math.sin(elapsed*1.7+g.phase)>.65?'excited':'idle';
+ ctx.save();ctx.translate(g.x,g.y);ctx.rotate(Math.sin(g.phase)*.08+(injured?Math.sin(elapsed*27)*.1:0));
+ const wobble=Math.sin(g.phase*2.7)*.045;ctx.scale(1+wobble,1-wobble+(happy?.04:0));
+ ctx.shadowColor=sick?'#A7F0C5':'#E791BF';ctx.shadowBlur=16;
+ for(let i=0;i<8;i++){const a=i*Math.PI/4+g.phase*.05;ell(Math.cos(a)*r*.85,Math.sin(a)*r*.85,r*.3,r*.3,sick?'#B7DF72':dry?'#c5adbf':['#F7DAEA','#EFB6D4','#DF6DA9'][g.personality]);}
+ const grad=ctx.createRadialGradient(-r*.35,-r*.37,0,0,0,r*1.3);
+ grad.addColorStop(0,'#FFFFFF');grad.addColorStop(.42,sick?'#d6eea0':dry?'#e2c9d4':['#FFF3F9','#F7DAEA','#EFB6D4'][g.personality]);grad.addColorStop(1,sick?'#86bd61':dry?'#b49fac':['#EFB6D4','#E791BF','#D74894'][g.personality]);
+ ell(0,0,r,r*.9,grad);ctx.shadowBlur=0;
+ ctx.strokeStyle='#ffffffb8';ctx.lineWidth=2.6;ctx.beginPath();ctx.ellipse(-r*.15,-r*.27,r*.62,r*.4,-.6,3.4,5.48);ctx.stroke();
+ ell(-r*.55,r*.24,r*.16,r*.11,'#F879AB');ell(r*.55,r*.24,r*.16,r*.11,'#F879AB');
+ const ex=r*.29,ey=-r*.16,ew=r*.155,eh=r*.25;
+ function openEye(x,y,h=eh){ell(x,y,ew*1.1,h*1.09,'#FFFFFF');ell(x,y+h*.14,ew*.74,h*.78,'#5E9ED2');ell(x,y-h*.16,ew*.54,h*.5,'#382849');ell(x-ew*.19,y-h*.38,ew*.24,h*.2,'#FFFFFF')}
+ function closedEye(x,y,up=true){ctx.strokeStyle='#6E345E';ctx.lineWidth=Math.max(2,r*.08);ctx.lineCap='round';ctx.beginPath();ctx.arc(x,y,ew*.95,up?Math.PI:0,up?Math.PI*2:Math.PI);ctx.stroke()}
+ function brow(x,ang){ctx.save();ctx.translate(x,ey-eh*1.4);ctx.rotate(ang);ctx.strokeStyle='#6E345E';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-ew*.7,0);ctx.lineTo(ew*.7,0);ctx.stroke();ctx.restore()}
+ if(mood==='happy'||mood==='love'){closedEye(-ex,ey);closedEye(ex,ey)}
+ else if(mood==='hurt'){closedEye(-ex,ey,false);openEye(ex,ey,eh*.7);brow(-ex,.35)}
+ else if(mood==='sick'){openEye(-ex,ey,eh*.6);openEye(ex,ey,eh*.6);brow(-ex,-.2);brow(ex,.2)}
+ else if(mood==='scared'){openEye(-ex,ey,eh*1.35);openEye(ex,ey,eh*1.35);brow(-ex,.3);brow(ex,-.3)}
+ else if(blink){closedEye(-ex,ey,false);closedEye(ex,ey,false)}
+ else{openEye(-ex,ey);openEye(ex,ey);if(mood==='hungry'){brow(-ex,-.3);brow(ex,.3)}}
+ ctx.strokeStyle='#6E345E';ctx.lineWidth=Math.max(2,r*.08);ctx.lineCap='round';
+ if(mood==='happy'||mood==='love'||mood==='excited'){ell(0,r*.34,r*.21,r*.15,'#6E345E');ell(0,r*.41,r*.12,r*.06,'#F879AB')}
+ else if(mood==='scared'){ell(0,r*.34,r*.11,r*.17,'#6E345E')}
+ else if(mood==='hurt'||mood==='hungry'||mood==='sick'){ctx.beginPath();ctx.arc(0,r*.52,r*.17,Math.PI*1.1,Math.PI*1.9);ctx.stroke()}
+ else{ctx.beginPath();ctx.arc(0,r*.22,r*.16,.14,Math.PI-.14);ctx.stroke()}
+ if(sick){ctx.fillStyle='#7DAF55';ctx.font='bold '+Math.floor(r*.6)+'px Nunito';ctx.textAlign='center';ctx.fillText('◌',r*.7,-r*.65)}
+ if(mood==='scared'){ell(r*.82,-r*.27,r*.08,r*.15,'#8ED8FF')}
+ if(mood==='love'){ctx.fillStyle='#D74894';ctx.font='bold '+Math.floor(r*.7)+'px Nunito';ctx.textAlign='center';ctx.fillText('♥',r*.4,-r*1.14)}
+ if(st===2)starShape(0,-r-12,7,'#FFE37A',.8+.2*Math.sin(elapsed*6));
+ else if(st===1)starShape(r*.9,-r*.7,4,'#FFFFFF',.9);
+ if(hungry&&!sick){ctx.fillStyle='#6E345E';ctx.font='bold '+Math.floor(r*.45)+'px Nunito';ctx.textAlign='center';ctx.fillText('!',r*.82,-r*.72)}
+ ctx.restore();
+}
+function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}ctx.restore()}for(const g of globs)drawGlob(g);
+if(scuttle){ctx.save();ctx.translate(scuttleX,scuttleY);ell(0,12,37,17,'#e9a3b9');ell(11,0,23,22,'#ffd2c2');ell(13,-7,17,17,'#ffe5ce');ell(-23,1,13,12,'#e590d4');ell(-27,-3,4,5,'#64365b');ell(-16,-3,4,5,'#64365b');ctx.strokeStyle='#a7659e';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-28,-9);ctx.lineTo(-32,-24);ctx.moveTo(-17,-9);ctx.lineTo(-12,-24);ctx.stroke();ctx.restore()}
+for(const guard of guardians){ctx.save();ctx.translate(guard.x,guard.y);ctx.shadowColor='#3cb5ec';ctx.shadowBlur=12;ell(0,0,22,20,guard.id==='nurse'?'#ffb7cb':guard.id==='feeder'?'#9de1ff':guard.id==='spark'?'#ffe18a':guard.id==='nursery'?'#ffc7e7':'#89d8fa');ell(-6,-3,4,5,'#344c7d');ell(6,-3,4,5,'#344c7d');ctx.font='21px system-ui';ctx.textAlign='center';ctx.fillText(({nurse:'♥',feeder:'💧',spark:'✦',nursery:'♡'})[guard.id]||'🛡',0,-24);ctx.restore()}for(const e of enemies){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(Math.sin(e.phase)*.08);ctx.shadowColor='#a33e87';ctx.shadowBlur=14;if(e.kind==='virus'){for(let i=0;i<9;i++){let a=i*Math.PI*2/9;ell(Math.cos(a)*27,Math.sin(a)*27,7,7,'#8854d8')}ell(0,0,e.r,e.r,e.hp<=1?'#ff152c':e.hp<4?'#ffa64c':e.hp<7?'#ba85e7':'#8742d5')}else{for(let i=0;i<6;i++){let a=i*Math.PI/3;ell(Math.cos(a)*e.r*.55,Math.sin(a)*e.r*.55,e.r*.7,e.r*.64,'#af8dba')}ell(0,0,e.r,e.r,e.hp<=1?'#ff152c':e.hp<4?'#ffa64c':e.hp<7?'#c3d963':'#66b966')}ell(-7,-3,4,6,'#633255');ell(7,-3,4,6,'#633255');ctx.strokeStyle='#653455';ctx.lineWidth=2.7;ctx.beginPath();ctx.moveTo(-8,10);ctx.lineTo(8,10);ctx.stroke();ctx.restore()}for(const p of particles){ctx.globalAlpha=clamp(p.life*1.5,0,1);ell(p.x,p.y,p.r,p.r,p.color)}ctx.globalAlpha=1;ctx.textAlign='center';ctx.font='900 23px Trebuchet MS';for(const t of floatingText){ctx.globalAlpha=clamp(t.life,0,1);ctx.lineWidth=5;ctx.strokeStyle='#fff8e5';ctx.strokeText(t.text,t.x,t.y);ctx.fillStyle='#c97532';ctx.fillText(t.text,t.x,t.y)}ctx.globalAlpha=1;ctx.textAlign='left';drawSparkles();if(starTime>0){ctx.strokeStyle=`rgba(255,206,67,${.25+.15*Math.sin(elapsed*9)})`;ctx.lineWidth=8;ctx.strokeRect(5,5,W-10,H-10)}}
+function frame(t){let dt=Math.min(.04,(t-last)/1000||0);last=t;try{if(state==='playing')update(dt);draw()}catch(err){console.error(err);state='paused';message('An unexpected game error occurred. Please reload.',5)}requestAnimationFrame(frame)}
+canvas.addEventListener('pointerdown',e=>{e.preventDefault();let rect=canvas.getBoundingClientRect();click((e.clientX-rect.left)*W/rect.width,(e.clientY-rect.top)*H/rect.height)});
+$('shopToggle').addEventListener('click',()=>{if(state==='playing'){document.getElementById('supplyPanel').classList.add('shopping');message('Shop quickly! Your Globs are still moving! ⏱️',2)}});$('shopClose').addEventListener('click',()=>document.getElementById('supplyPanel').classList.remove('shopping'));$('guardianToggle').addEventListener('click',()=>{if(state!=='playing')return;renderCollection();$('guardianCollection').classList.remove('hidden');state='guardian-roster'});$('closeCollection').addEventListener('click',()=>{$('guardianCollection').classList.add('hidden');if(state==='guardian-roster')state='playing'});$('play').addEventListener('click',()=>{if(state==='paused'){pause()}else if(state==='menu'&&selected==='adventure'&&!guardianStep){openGuardianMenu()}else if(state==='win'&&!guardianStep){openGuardianMenu()}else begin()});$('guardianBack').addEventListener('click',()=>showMenu('menu'));$('returnMainMenu').addEventListener('click',()=>{if(state==='paused'){showMenu('menu');$('pause').textContent='☰ Menu';}});$('pause').addEventListener('click',()=>{if(state==='playing')pause();else if(state==='paused')pause();else showMenu('menu')});
+for(const m of document.querySelectorAll('[data-mode]'))m.addEventListener('click',()=>{selected=m.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b===m));$('modalTip').textContent=selected==='challenge'?'Challenge: 45 droplets and 2 minutes of survival.':selected==='lab'?'No enemies here. Just raise happy little Globs.':selected==='trial'?'You have 3 minutes to earn as many points as possible.':'Collect all three DNA fragments to complete the experiment.';if(selected==='adventure'){chosenLevel=save.level||1;openGuardianMenu()}});
+for(const b of document.querySelectorAll('[data-buy]'))b.addEventListener('click',()=>purchase(b.dataset.buy));$('mute').addEventListener('click',()=>{audioOn=!audioOn;$('mute').textContent=audioOn?'🔊 Sound on':'🔇 Sound off'});$('reset').addEventListener('click',()=>{if(confirm('Reset your permanent upgrades and Living Lab records?')){save={nutrition:0,regen:0,zap:0,slots:1,lab:0,level:1,scuttleUnlocked:false,selectedGuardian:'none',selectedGuardians:[]};chosenLevel=1;activeLevel=1;persist();renderGuardianPicker();$('modalTip').textContent='Progress reset. Fresh start!'}});document.addEventListener('keydown',e=>{if(e.code==='Space'||e.code==='Escape'){e.preventDefault();pause()}const keys=['glob','scuttle','nutrition','regen','zap','star','revive','dna'];if(/^Digit[1-8]$/.test(e.code))purchase(keys[Number(e.code.slice(5))-1])});
+// Rare star pickup must trigger on click, not BioBits collection.
+const originalClick=click;click=function(x,y){if(state==='playing'){let star=bubbles.find(b=>b.star&&!b.gone&&distance(b,{x,y})<35);if(star){star.gone=true;starTime=15;emit(x,y,'#ffdd69',30);message('RARE STAR CELL! Sparkle power activated! 🌟',4);sound(990);return}}originalClick(x,y)};
+// An iPad document preview can render HTML while blocking scripts entirely.
+// This status disappears ONLY when the game code has successfully initialized.
+$('runCheck').style.display='none';
+window.addEventListener('error',function(event){try{$('runCheck').style.display='block';$('runCheck').textContent='Game error: '+(event.message||'unknown issue')+'. Try opening the hosted HTTPS URL in Safari.';}catch(e){}});
+// Avoid false pauses when iOS Safari briefly loses focus during touch interactions.
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing')pause()});
+chosenLevel=clamp(save.level||1,1,21);updateUI();showMenu('menu');requestAnimationFrame(frame);
+})();</script></body></html>
