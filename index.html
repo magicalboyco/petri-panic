@@ -296,6 +296,29 @@ body.menu-open{overflow:hidden}
 .glob-inspect-details{font:600 13px Nunito,sans-serif;padding:4px 10px}.glob-inspect-details>strong{font-size:18px;color:#b5387d}
 .glob-inspect-details p{font-size:12px}.inspect-portrait{font-size:65px}.inspect-meter{background:white;border:2px solid #ebbad1;border-radius:15px;padding:7px;margin:6px 0;color:#854b73;font-weight:900}
 @media(max-width:560px){.game-actions{flex-wrap:wrap}.game-actions .shop-toggle{flex:1 1 30%;font-size:16px;min-height:46px;white-space:normal}.culture-status{margin-top:8px}}
+
+/* Guardian Gallery 2.0: distinctive sticker portraits, readable at touch sizes */
+.guardian-options{grid-template-columns:repeat(2,minmax(0,1fr));max-height:min(290px,30dvh);gap:8px}
+.guardian-choice{border-radius:16px;min-height:70px;padding:8px;transition:background .16s,transform .16s;border-bottom-width:4px;align-items:center}
+.guardian-choice .guardian-face{flex:0 0 45px;display:grid;place-items:center;min-width:45px;height:46px;border:2px solid #fff;border-radius:16px;
+ background:radial-gradient(circle at 28% 20%,white,var(--g-tone,#f8d5e8));box-shadow:inset 0 2px #fff9,0 3px #d7a0bd;font-size:24px}
+.guardian-copy{flex:1;min-width:0}.guardian-choice strong{font:900 13px/1.2 Nunito;color:#8C3C6A}.guardian-choice small{font:700 10px/1.3 Nunito;margin-top:2px;color:#A15C82}
+.guardian-choice.chosen{background:linear-gradient(#FFF1F8,#FFDAEE);border-color:#C84A94;box-shadow:0 3px #E5A1C7}
+.guardian-choice.locked{opacity:.57;filter:grayscale(.9)}.guardian-choice.locked .guardian-face{opacity:.64}
+.guardian-choice:focus-visible,.level-choice:focus-visible{outline:3px solid #8352b8;outline-offset:3px}
+.collection-card:has(#collectionContents){width:min(720px,100%);max-height:90dvh}
+#collectionContents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;text-align:left}
+.collection-progress{grid-column:1/-1;background:#fff9f8;border:2px solid #F3B7D4;border-radius:15px;padding:10px;text-align:center;color:#AB4380;font:900 13px Nunito}
+#collectionContents .collection-item{margin:0;min-height:73px;display:flex;align-items:center;gap:9px;padding:9px;border-radius:17px;border-bottom:4px solid #DCA0C1;min-width:0}
+.collection-face{display:grid;place-items:center;flex:0 0 43px;height:43px;background:radial-gradient(circle at 25% 20%,white,var(--g-tone,#F4DAEA));border-radius:15px;border:2px solid white;box-shadow:inset 0 2px white,0 3px #E4A8C7;font-size:24px}
+.collection-item>span:nth-child(2){flex:1;min-width:0}.collection-item strong,.collection-item small{display:block}
+.collection-item strong{font:900 12px/1.3 Nunito;color:#8B3B6A}.collection-item small{font:700 10px/1.35 Nunito;color:#9A6581}
+.collection-state{font:900 9px Nunito;color:#BC4C8B;white-space:nowrap}
+#collectionContents .collection-item.locked{opacity:.54;filter:grayscale(.95)}
+@media(max-width:690px){#collectionContents{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-card:has(#collectionContents){padding:12px}
+ .guardian-choice .guardian-face{flex-basis:36px;height:40px;min-width:36px;font-size:20px}.guardian-choice strong{font-size:11px}.guardian-choice small{font-size:9px}}
+@media(max-width:390px){#collectionContents{grid-template-columns:1fr}.guardian-options{grid-template-columns:1fr;max-height:190px}}
+@media(orientation:landscape) and (max-height:600px){.guardian-options{max-height:130px}#collectionContents{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style></head>
 <body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · CANDY CULTURE ALPHA 11</small></div></div><div class="level-chip" id="levelChip" aria-label="Current experiment"><span class="level-flower" aria-hidden="true">✿</span><div class="level-copy"><span class="level-eyebrow">CURRENT EXPERIMENT</span><strong id="levelNum">01 <span class="level-of">/ 21</span></strong><span id="regionName" class="region-name">Starter Culture</span></div><div class="level-track" aria-hidden="true"><span id="levelFill"></span></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div id="guardianPicker" class="hidden guardian-picker"><strong id="guardianSlotsLabel">✨ Your Guardian Team</strong><div id="guardianSlotDisplay" class="guardian-slots"></div><div id="guardianOptions" class="guardian-options"></div></div>
 <div id="levelPicker" class="hidden level-picker"><strong>🧬 Choose an Experiment</strong><p>Replay any unlocked experiment without losing your progress.</p><div id="levelOptions" class="level-options"></div></div><button type="button" class="secondary hidden" id="guardianBack">← Back to game modes</button><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span id="adventureLevel">Collect 3 DNA pieces</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><button type="button" class="secondary hidden" id="continueRun" style="display:block;margin:8px auto;min-height:48px">💾 Continue saved experiment</button><button type="button" class="secondary hidden" id="returnMainMenu" style="display:block;margin:8px auto">← Return to Main Menu</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button><button type="button" class="secondary" id="helpButton">❔ How to Play</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><nav class="game-actions" aria-label="Game menus"><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><button type="button" id="guardianToggle" class="shop-toggle guardian-action" aria-label="Open Guardian collection">🛡️ Guardians</button><button type="button" id="inspectToggle" class="shop-toggle inspect-action" aria-pressed="false">🔎 Inspect Glob</button></nav><div class="culture-status" id="cultureStatus" aria-label="Culture condition"><span id="cultureMood">💗 Your Globs are happy</span><span id="cultureWater">💧 0 / 10 droplets</span><span id="cultureThreat">✨ Peaceful for now</span></div><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
@@ -307,7 +330,7 @@ body.menu-open{overflow:hidden}
 <button class="buy" data-buy="star"><span class="emoji">🌟</span><span class="desc"><strong>Star Cell</strong><small>Temporary 15s power-up</small></span><em id="cost-star">230</em></button>
 <button class="buy" data-buy="revive"><span class="emoji">🩹</span><span class="desc"><strong>Rescue capsule</strong><small>One emergency baby revive</small></span><em id="cost-revive">130</em></button>
 <button class="buy" data-buy="antidote"><span class="emoji">💊</span><span class="desc"><strong>Antidote</strong><small>Cures poison instantly</small></span><em id="cost-antidote">100</em></button><button class="buy special" data-buy="dna"><span class="emoji">🧬</span><span class="desc"><strong>DNA fragment</strong><small>Collect 3 to finish</small></span><em id="cost-dna">260</em></button>
-</div><hr class="divider"><h2>🔬 Culture notes</h2><div id="notes" class="guide">💧 Tap to drop water. Globs swim to it.<br>💕 Feed to grow: Baby → Grown → Expert.<br>👶 Happy Experts sometimes reproduce.<br>✨ Tap BioBits bubbles to collect them.<br>🦠 Tap viruses; tap mold repeatedly.<br>💗 Feed hurt Globs to heal them.</div><p id="extra" class="note">Permanent upgrades save on this device. In-level creatures and DNA reset between experiments.</p></aside></div><div id="globInspectOverlay" class="collection-overlay hidden" role="dialog" aria-modal="true" aria-label="Glob details"><div class="collection-card"><h2>💗 Meet Your Glob</h2><div id="globInspectDetails" class="glob-inspect-details"></div><button type="button" class="secondary" id="globInspectClose">Back to dish ♡</button></div></div><div id="helpOverlay" class="collection-overlay hidden" role="dialog" aria-modal="true" aria-label="How to play Petri Panic"><div class="collection-card help-card"><h2>💖 How to Play</h2><div class="help-step"><strong>1. 💧 Keep your Globs hydrated</strong><p>Tap the dish to place a droplet. Up to 10 may be active at once. Your Globs swim toward the water and grow stronger.</p></div><div class="help-step"><strong>2. ✨ Catch BioBits</strong><p>Tap the sparkling coins before they disappear to earn BioBits for upgrades and DNA.</p></div><div class="help-step"><strong>3. 🦠 Defend your culture</strong><p>Tap invaders to sterilize them, or equip a Guardian that protects or heals your Globs.</p></div><div class="help-step"><strong>4. 🧬 Complete experiments</strong><p>Buy three DNA fragments to advance. You can replay any unlocked experiment and choose a new Guardian team.</p></div><button class="secondary" type="button" id="closeHelp">Got it! ♡</button></div></div><div id="guardianCollection" class="collection-overlay hidden" role="dialog" aria-modal="true" aria-label="Guardian collection"><div class="collection-card"><h2>🛡️ Guardian Corner</h2><p>View your team and unlock more Guardians by completing experiments. Choose your team before each adventure.</p><div id="collectionContents"></div><button type="button" class="secondary" id="closeCollection">Close ♡</button></div></div><div class="footer">⏱️ Shopping never pauses the game · ✨ Tuned BioBits rewards · Touch or mouse: tap to water / collect / zap · Space: pause · 1–8 shop shortcuts · Runs in a single browser file</div></div>
+</div><hr class="divider"><h2>🔬 Culture notes</h2><div id="notes" class="guide">💧 Tap to drop water. Globs swim to it.<br>💕 Feed to grow: Baby → Grown → Expert.<br>👶 Happy Experts sometimes reproduce.<br>✨ Tap BioBits bubbles to collect them.<br>🦠 Tap viruses; tap mold repeatedly.<br>💗 Feed hurt Globs to heal them.</div><p id="extra" class="note">Permanent upgrades save on this device. In-level creatures and DNA reset between experiments.</p></aside></div><div id="globInspectOverlay" class="collection-overlay hidden" role="dialog" aria-modal="true" aria-label="Glob details"><div class="collection-card"><h2>💗 Meet Your Glob</h2><div id="globInspectDetails" class="glob-inspect-details"></div><button type="button" class="secondary" id="globInspectClose">Back to dish ♡</button></div></div><div id="helpOverlay" class="collection-overlay hidden" role="dialog" aria-modal="true" aria-label="How to play Petri Panic"><div class="collection-card help-card"><h2>💖 How to Play</h2><div class="help-step"><strong>1. 💧 Keep your Globs hydrated</strong><p>Tap the dish to place a droplet. Up to 10 may be active at once. Your Globs swim toward the water and grow stronger.</p></div><div class="help-step"><strong>2. ✨ Catch BioBits</strong><p>Tap the sparkling coins before they disappear to earn BioBits for upgrades and DNA.</p></div><div class="help-step"><strong>3. 🦠 Defend your culture</strong><p>Tap invaders to sterilize them, or equip a Guardian that protects or heals your Globs.</p></div><div class="help-step"><strong>4. 🧬 Complete experiments</strong><p>Buy three DNA fragments to advance. You can replay any unlocked experiment and choose a new Guardian team.</p></div><button class="secondary" type="button" id="closeHelp">Got it! ♡</button></div></div><div id="guardianCollection" class="collection-overlay hidden" role="dialog" aria-modal="true" aria-label="Guardian collection"><div class="collection-card"><h2>🛡️ Guardian Corner</h2><p>Your own adorable lab companions. Unlock them in Adventure, then choose who to bring into each experiment.</p><div id="collectionContents"></div><button type="button" class="secondary" id="closeCollection">Close ♡</button></div></div><div class="footer">⏱️ Shopping never pauses the game · ✨ Tuned BioBits rewards · Touch or mouse: tap to water / collect / zap · Space: pause · 1–8 shop shortcuts · Runs in a single browser file</div></div>
 <script>
 (function(){'use strict';
 const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d');const W=900,H=620;const rnd=(a,b)=>a+Math.random()*(b-a),clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -459,7 +482,9 @@ function renderGuardianPicker(){
  for(const g of guardianCatalog){const owned=guardianUnlocked(g.id),selected=chosen.includes(g.id),button=document.createElement('button');
  button.type='button';button.className='guardian-choice'+(selected?' chosen':'')+(owned?'':' locked');
  button.disabled=!owned;button.setAttribute('aria-pressed',String(selected));
- button.innerHTML='<span class="guardian-face">'+g.icon+'</span><span><strong>'+g.name+'</strong><small>'+g.detail+'</small><small>'+(owned?(selected?'✓ Equipped':'Tap to equip'):'🔒 Unlock at experiment '+g.level)+'</small></span>';
+ const tint=(GUARDIAN_LOOKS[g.id]||GUARDIAN_LOOKS.bouncer).body;
+ button.style.setProperty('--g-tone',tint);
+ button.innerHTML='<span class="guardian-face">'+(owned?g.icon:'✦')+'</span><span class="guardian-copy"><strong>'+g.name+'</strong><small>'+g.detail+'</small><small>'+(owned?(selected?'✓ Equipped':'Tap to equip'):'🔒 Unlock at experiment '+g.level)+'</small></span>';
  button.addEventListener('click',()=>{let next=chosenGuardians();if(next.includes(g.id))next=next.filter(x=>x!==g.id);else if(next.length<unlockedSlots())next.push(g.id);else{next.shift();next.push(g.id)}save.selectedGuardians=next;save.selectedGuardian=next[0]||'none';persist();renderGuardianPicker()});options.appendChild(button)}
 }
 function renderLevelPicker(){
@@ -473,8 +498,13 @@ function renderLevelPicker(){
 }
 function renderCollection(){
  const wrap=$('collectionContents');wrap.innerHTML='';
+ const ownedCount=guardianCatalog.filter(g=>guardianUnlocked(g.id)).length;
+ const header=document.createElement('div');header.className='collection-progress';header.textContent='✦ '+ownedCount+' / '+guardianCatalog.length+' companions discovered · '+chosenGuardians().length+' / '+unlockedSlots()+' equipped';wrap.appendChild(header);
  for(const g of guardianCatalog){const owned=guardianUnlocked(g.id),item=document.createElement('div');item.className='collection-item'+(owned?'':' locked');
- item.textContent=(owned?g.icon:'🔒')+' '+g.name+' · '+(owned?g.detail:'Unlock at experiment '+g.level);wrap.appendChild(item)}
+ const tint=(GUARDIAN_LOOKS[g.id]||GUARDIAN_LOOKS.bouncer).body;item.style.setProperty('--g-tone',tint);
+ item.innerHTML='<span class="collection-face">'+(owned?g.icon:'✦')+'</span><span><strong>'+g.name+'</strong><small>'+(owned?g.detail:'🔒 Unlock at Experiment '+g.level)+'</small></span><span class="collection-state">'+(owned?(chosenGuardians().includes(g.id)?'✓ TEAM':'OWNED'):'🔒')+'</span>';
+ wrap.appendChild(item)}
+
 }
 function keepGuardianInDish(g){
   const dx=g.x-450,dy=g.y-310;
@@ -660,9 +690,90 @@ function drawGlob(g){
  if(hungry&&!sick){ctx.fillStyle='#6E345E';ctx.font='bold '+Math.floor(r*.45)+'px Nunito';ctx.textAlign='center';ctx.fillText('!',r*.82,-r*.72)}
  ctx.restore();
 }
+
+/* Distinctive, original hand-drawn Guardian companions. Each is an animated
+   little lab creature rather than a generic colored circle with an emoji. */
+const GUARDIAN_LOOKS={
+ bouncer:{body:'#89D8FA',shade:'#4B9ECF',highlight:'#E9FAFF',accessory:'shield',shape:'hero'},
+ nurse:{body:'#F7ACCE',shade:'#DE78AA',highlight:'#FFEBF4',accessory:'heart',shape:'cloud'},
+ feeder:{body:'#85D7EF',shade:'#61B7DD',highlight:'#E3FAFF',accessory:'drop',shape:'drop'},
+ spark:{body:'#FFE384',shade:'#E4AE57',highlight:'#FFF6C8',accessory:'star',shape:'star'},
+ nursery:{body:'#FFB6D9',shade:'#D977AB',highlight:'#FFF3FB',accessory:'love',shape:'petal'},
+ comfort:{body:'#FFD683',shade:'#E4AF65',highlight:'#FFF6C8',accessory:'flower',shape:'petal'},
+ moldguard:{body:'#C5A5ED',shade:'#9169C4',highlight:'#F0E5FF',accessory:'mop',shape:'hero'},
+ magnet:{body:'#AEA6F2',shade:'#7775C7',highlight:'#EFECFF',accessory:'orbit',shape:'moon'},
+ growth:{body:'#9FE9B8',shade:'#5DAE81',highlight:'#E9FFEE',accessory:'leaf',shape:'sprout'},
+ purify:{body:'#A4E9CF',shade:'#4FAF94',highlight:'#E7FFF7',accessory:'fern',shape:'sprout'},
+ ward:{body:'#C4E6FE',shade:'#83B4E5',highlight:'#F5FEFF',accessory:'cloud',shape:'cloud'},
+ shield:{body:'#A8D6F4',shade:'#76A0D1',highlight:'#F0FAFF',accessory:'shield',shape:'shell'},
+ savings:{body:'#F6DCC7',shade:'#D6A88C',highlight:'#FFF9EE',accessory:'pearl',shape:'shell'},
+ beacon:{body:'#CEC1FA',shade:'#A08BD7',highlight:'#F4EEFF',accessory:'moon',shape:'moon'},
+ forecast:{body:'#E0BCF4',shade:'#AC84D5',highlight:'#FAEFFF',accessory:'eye',shape:'hero'},
+ ray:{body:'#FFE88C',shade:'#DDB94F',highlight:'#FFFBD6',accessory:'bolt',shape:'star'},
+ float:{body:'#FFB6BF',shade:'#DE849A',highlight:'#FFF0F4',accessory:'balloon',shape:'drop'},
+ nectar:{body:'#FFC7A7',shade:'#E69A74',highlight:'#FFF4E7',accessory:'candy',shape:'petal'},
+ twirl:{body:'#DBB5F6',shade:'#A776D7',highlight:'#F6E8FF',accessory:'twirl',shape:'star'},
+ cookie:{body:'#F8D8BC',shade:'#D6A587',highlight:'#FFF8ED',accessory:'patch',shape:'cloud'},
+ breeze:{body:'#B8F0DB',shade:'#80C1A9',highlight:'#F0FFF7',accessory:'wind',shape:'sprout'},
+ wish:{body:'#FFE39E',shade:'#E5B56A',highlight:'#FFFAE0',accessory:'wish',shape:'star'},
+ mimic:{body:'#D5A8EE',shade:'#A375CA',highlight:'#F2DFFF',accessory:'mimic',shape:'hero'}
+};
+function drawGuardian(guard){
+ const p=GUARDIAN_LOOKS[guard.id]||GUARDIAN_LOOKS.bouncer;
+ const bob=Math.sin(elapsed*3.6+guard.x*.018+guard.y*.011)*2.5;
+ ctx.save();ctx.translate(guard.x,guard.y+bob);
+ ctx.rotate(Math.sin(elapsed*1.7+guard.y*.02)*.085);
+ ctx.scale(1+Math.sin(elapsed*3+guard.x*.02)*.035,1-Math.sin(elapsed*3+guard.x*.02)*.025);
+ ctx.shadowColor=p.shade;ctx.shadowBlur=16;
+ // Each family has a recognizable outer silhouette.
+ if(p.shape==='petal'||p.shape==='star'){
+  const points=p.shape==='star'?6:7;
+  for(let n=0;n<points;n++){
+   const a=n*Math.PI*2/points+elapsed*.06;
+   ell(Math.cos(a)*19,Math.sin(a)*18,11,14,p.shade);
+  }
+ }else if(p.shape==='cloud'){
+  for(let n=0;n<5;n++){
+   const a=n*Math.PI*2/5;
+   ell(Math.cos(a)*15,Math.sin(a)*13,14,12,p.highlight);
+  }
+ }else if(p.shape==='sprout'){
+  ctx.save();ctx.rotate(-.22);ell(-20,-22,13,8,'#74CDA5');ctx.rotate(.45);ell(19,-23,13,8,'#7ED7B0');ctx.restore();
+ }else if(p.shape==='drop'){
+  ell(0,-27,10,18,p.shade);
+ }else if(p.shape==='moon'){
+  ell(-12,-4,13,24,p.shade);ell(18,-10,12,12,p.highlight);
+ }else if(p.shape==='shell'){
+  for(let n=0;n<3;n++)ell(-15+n*15,15,12,8,p.shade);
+ }else{
+  ell(-24,-6,11,13,p.shade);ell(24,-6,11,13,p.shade);
+ }
+ const grad=ctx.createRadialGradient(-10,-14,0,1,4,36);
+ grad.addColorStop(0,p.highlight);grad.addColorStop(.40,p.body);grad.addColorStop(1,p.shade);
+ ctx.fillStyle=grad;ctx.beginPath();ctx.ellipse(0,0,24,22,0,0,Math.PI*2);ctx.fill();
+ // Soft candy-gloss and tiny shiny cheeks.
+ ell(-9,-11,8,5,'#FFFFFFA4');ell(-13,8,4,2,'#E98EBB85');ell(13,8,4,2,'#E98EBB85');
+ ctx.shadowBlur=0;
+ ell(-8,-3,3.8,5.6,'#493B66');ell(8,-3,3.8,5.6,'#493B66');
+ ell(-9.3,-5.5,1.6,2.1,'#FFFFFF');ell(6.7,-5.5,1.6,2.1,'#FFFFFF');
+ ctx.lineWidth=1.8;ctx.lineCap='round';ctx.strokeStyle='#714769';ctx.beginPath();ctx.arc(0,5,5,.18,Math.PI-.18);ctx.stroke();
+ // Each Guardian carries a signature charm. Small icons reinforce recognition
+ // without being the entire character design.
+ const charms={shield:'◆',heart:'♥',drop:'💧',star:'✦',love:'♡',flower:'✿',mop:'✣',orbit:'◌',
+ leaf:'♧',fern:'❦',cloud:'☁',pearl:'●',moon:'☾',eye:'◉',bolt:'ϟ',balloon:'○',
+ candy:'◆',twirl:'✧',patch:'✚',wind:'≈',wish:'★',mimic:'✳'};
+ ctx.save();ctx.translate(2,-31);ctx.rotate(Math.sin(elapsed*3+guard.x*.02)*.16);
+ ctx.fillStyle=p.accessory==='heart'||p.accessory==='love'?'#D74894':p.accessory==='bolt'?'#B88D2A':p.shade;
+ ctx.font='900 19px Nunito,system-ui';ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.fillText(charms[p.accessory]||'✦',0,0);ctx.restore();
+ if(guard.abilityCool>0&&guard.abilityCool<.3){starShape(25,-17,5,p.highlight,.75)}
+ if(guard.id==='beacon'&&guard.lureTime>0){ctx.strokeStyle='#D1A9F0A0';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,31,0,Math.PI*2);ctx.stroke()}
+ ctx.restore();
+}
+
 function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}ctx.restore()}for(const g of globs)drawGlob(g);
 if(scuttle){ctx.save();ctx.translate(scuttleX,scuttleY);ell(0,12,37,17,'#e9a3b9');ell(11,0,23,22,'#ffd2c2');ell(13,-7,17,17,'#ffe5ce');ell(-23,1,13,12,'#e590d4');ell(-27,-3,4,5,'#64365b');ell(-16,-3,4,5,'#64365b');ctx.strokeStyle='#a7659e';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-28,-9);ctx.lineTo(-32,-24);ctx.moveTo(-17,-9);ctx.lineTo(-12,-24);ctx.stroke();ctx.restore()}
-for(const guard of guardians){ctx.save();ctx.translate(guard.x,guard.y);ctx.shadowColor='#3cb5ec';ctx.shadowBlur=12;ell(0,0,22,20,guard.id==='nurse'?'#ffb7cb':guard.id==='feeder'?'#9de1ff':guard.id==='spark'?'#ffe18a':guard.id==='nursery'?'#ffc7e7':'#89d8fa');ell(-6,-3,4,5,'#344c7d');ell(6,-3,4,5,'#344c7d');ctx.font='21px system-ui';ctx.textAlign='center';ctx.fillText(({nurse:'♥',feeder:'💧',spark:'✦',nursery:'♡',comfort:'🌼',moldguard:'🧹',magnet:'✧',growth:'🌱',purify:'🍀',ward:'☁',shield:'🛡',savings:'✦',beacon:'☾',forecast:'👀',ray:'⚡',float:'🎈',nectar:'🍬',twirl:'🌀',cookie:'🩹',breeze:'🍃',wish:'✦',mimic:'🦎'})[guard.id]||'🛡',0,-24);ctx.restore()}for(const e of enemies){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(Math.sin(e.phase)*.08);ctx.shadowColor='#a33e87';ctx.shadowBlur=14;
+for(const guard of guardians)drawGuardian(guard);for(const e of enemies){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(Math.sin(e.phase)*.08);ctx.shadowColor='#a33e87';ctx.shadowBlur=14;
  if(e.kind==='boss'){
   const phase2=e.hp<e.maxHp*.5,r=e.r;let mainColor=e.variant==='prism'?'#ba8fff':e.variant==='serpent'?'#a9d177':e.variant==='moth'?'#799bcf':'#fa8fbf';
   ctx.shadowColor=mainColor;ctx.shadowBlur=25;
