@@ -433,6 +433,24 @@ body.menu-open{overflow:hidden}
 @media(orientation:landscape) and (max-height:600px){#overlay:not(.preparing) .mascot{height:49px}#overlay:not(.preparing) .kawaii-mascot{scale:.65}#overlay:not(.preparing) .mode{min-height:75px}#overlay:not(.preparing) .mode .mode-icon{width:27px;height:27px}#overlay:not(.preparing) .modes{margin:6px 0}}
 @media(prefers-reduced-motion:reduce){#overlay:not(.preparing) .mascot,#overlay:not(.preparing) .mode,#overlay:not(.preparing) #play,#overlay:not(.preparing) .modal:before{animation:none!important;transition:none!important}}
 
+
+/* Endgame celebration and credits */
+#endgameExtras{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:13px auto 7px;max-width:470px}
+#endgameExtras button{font:800 13px Nunito,sans-serif;border:2px solid #fff;border-bottom:5px solid #c77b9f;background:linear-gradient(#fff8fd,#ffd6e9);color:#8e3b69;border-radius:16px;padding:10px 14px;min-height:44px;box-shadow:0 4px 10px #b8679533;cursor:pointer}
+#endgameExtras button:active{transform:translateY(3px)}
+#endgamePanel{max-width:480px;margin:12px auto;padding:15px;border-radius:21px;border:3px solid #fff;background:linear-gradient(155deg,#fffdfb,#ffecf5);box-shadow:0 5px 0 #e2aac7;color:#733b5e;font:700 13px/1.5 Nunito,sans-serif;text-align:left}
+#endgamePanel h3{font:700 25px Fredoka,Nunito,sans-serif;text-align:center;color:#b93d80;margin:0 0 9px}
+#endgamePanel ol{margin:6px 0;padding-left:24px}
+#endgamePanel li{padding:4px 0;border-bottom:1px solid #f5d2e4}
+#endgamePanel .credit-line{text-align:center;margin:8px auto}
+#endgamePanel .credit-line strong{display:block;font:700 22px Fredoka,sans-serif;color:#ae3477}
+#endgamePanel .endgame-note{font-size:11px;opacity:.8}
+#endgamePanel a{color:#96368d;text-decoration:underline}
+#overlay.ending-celebration .modal{border-color:#ffdf75;box-shadow:0 0 0 5px #ffbd60,0 10px 0 #bc7a8e,0 22px 48px #9b568266}
+#overlay.ending-celebration #modalTitle{color:#a85b13;text-shadow:0 2px #fff,0 5px #ffd46b}
+@media(max-width:500px){#endgameExtras button{font-size:12px;padding:9px 10px}#endgamePanel{padding:10px}}
+@media(prefers-reduced-motion:reduce){#overlay.ending-celebration .modal{animation:none!important}}
+
 </style></head>
 <body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · CANDY CULTURE ALPHA 11</small></div></div><div class="level-chip" id="levelChip" aria-label="Current experiment"><span class="level-flower" aria-hidden="true">✿</span><div class="level-copy"><span class="level-eyebrow">CURRENT EXPERIMENT</span><strong id="levelNum">01 <span class="level-of">/ 21</span></strong><span id="regionName" class="region-name">Starter Culture</span></div><div class="level-track" aria-hidden="true"><span id="levelFill"></span></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div id="guardianPicker" class="hidden guardian-picker"><strong id="guardianSlotsLabel">✨ Your Guardian Team</strong><div id="guardianSlotDisplay" class="guardian-slots"></div><div id="guardianOptions" class="guardian-options"></div></div>
 <div id="levelPicker" class="hidden level-picker"><strong>🧬 Choose an Experiment</strong><p>Swipe between science eras, then choose an unlocked experiment.</p><div class="era-carousel" aria-label="Science eras"><button type="button" id="eraPrev" aria-label="Previous era">‹</button><div class="era-card" id="eraCard" aria-live="polite"><span class="era-icon" id="eraIcon">⚙️</span><strong id="eraName">Victorian Origins</strong><small id="eraYears">Experiments 01–05</small><span id="eraTheme">Steam & discovery</span></div><button type="button" id="eraNext" aria-label="Next era">›</button></div><div id="eraDots" class="era-dots"></div><div id="levelOptions" class="level-options"></div></div><button type="button" class="secondary hidden" id="guardianBack">← Back to game modes</button><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span id="adventureLevel">Collect 3 DNA pieces</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode hard-mode" data-mode="hard">🔥 Hard Mode<span>Fiercer invaders · rising shop prices · 3 DNA</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><button type="button" class="secondary hidden" id="continueRun" style="display:block;margin:8px auto;min-height:48px">💾 Continue saved experiment</button><button type="button" class="secondary hidden" id="returnMainMenu" style="display:block;margin:8px auto">← Return to Main Menu</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button><button type="button" class="secondary" id="helpButton">❔ How to Play</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><nav class="game-actions" aria-label="Game menus"><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><button type="button" id="guardianToggle" class="shop-toggle guardian-action" aria-label="Open Guardian collection">🛡️ Guardians</button><button type="button" id="inspectToggle" class="shop-toggle inspect-action" aria-pressed="false">🔎 Inspect Glob</button></nav><div class="culture-status" id="cultureStatus" aria-label="Culture condition"><span id="cultureMood">💗 Your Globs are happy</span><span id="cultureWater">💧 0 / 10 droplets</span><span id="cultureThreat">✨ Peaceful for now</span></div><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
@@ -1046,6 +1064,56 @@ $('runCheck').style.display='none';
 window.addEventListener('error',function(event){try{$('runCheck').style.display='block';$('runCheck').textContent='Game error: '+(event.message||'unknown issue')+'. Try opening the hosted HTTPS URL in Safari.';}catch(e){}});
 // Avoid false pauses when iOS Safari briefly loses focus during touch interactions.
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing'){saveCheckpoint();pause()}});
+
+/* Endgame: local score records, victory fanfare, verifiable credits. */
+const ENDGAME_SCORE_KEY='petri-panic-pink-lab-scores-v1';
+const endgameExtras=document.createElement('div');endgameExtras.id='endgameExtras';
+const scoresButton=document.createElement('button');scoresButton.type='button';scoresButton.textContent='🏆 High Scores';
+const creditsButton=document.createElement('button');creditsButton.type='button';creditsButton.textContent='🎬 Credits';
+const endgamePanel=document.createElement('section');endgamePanel.id='endgamePanel';endgamePanel.hidden=true;endgamePanel.setAttribute('aria-live','polite');
+endgameExtras.append(scoresButton,creditsButton);
+$('play').insertAdjacentElement('afterend',endgameExtras);
+endgameExtras.insertAdjacentElement('afterend',endgamePanel);
+function readHighScores(){try{const a=JSON.parse(localStorage.getItem(ENDGAME_SCORE_KEY)||'[]');return Array.isArray(a)?a.filter(x=>x&&typeof x.score==='number'&&Number.isFinite(x.score)).slice(0,100):[]}catch{return []}}
+function saveHighScore(kind){if(!['win','timeup','challengewin'].includes(kind))return;
+ const category=kind==='timeup'?'Time Trial':kind==='challengewin'?'Challenge':mode==='hard'?'Hard Mode':'Adventure';
+ const record={category,score:Math.max(0,Math.floor(score)),level:activeLevel,completed:kind==='win',date:new Date().toISOString().slice(0,10)};
+ try{const scores=readHighScores();scores.push(record);scores.sort((a,b)=>b.score-a.score);localStorage.setItem(ENDGAME_SCORE_KEY,JSON.stringify(scores.slice(0,100)))}catch(e){console.warn('High scores could not be saved',e)}
+}
+function scoreBoard(){endgamePanel.replaceChildren();const title=document.createElement('h3');title.textContent='🏆 Hall of Globs';endgamePanel.append(title);
+ const all=readHighScores();if(!all.length){const p=document.createElement('p');p.textContent='No recorded finishes yet. Your next victory will make the board!';endgamePanel.append(p);return}
+ for(const category of ['Adventure','Hard Mode','Time Trial','Challenge']){const rows=all.filter(x=>x.category===category).sort((a,b)=>b.score-a.score).slice(0,5);if(!rows.length)continue;
+ const h=document.createElement('strong');h.textContent=category;endgamePanel.append(h);const ol=document.createElement('ol');rows.forEach(x=>{const li=document.createElement('li');li.textContent=x.score.toLocaleString()+' points · '+(x.completed?'Experiment '+x.level:'Finished')+' · '+x.date;ol.append(li)});endgamePanel.append(ol)}
+ const p=document.createElement('p');p.className='endgame-note';p.textContent='Local high scores are stored only in this browser. Older victories cannot be recovered automatically.';endgamePanel.append(p);
+}
+function creditsPage(){endgamePanel.replaceChildren();const h=document.createElement('h3');h.textContent='🎬 Petri Panic Pink Lab';endgamePanel.append(h);
+ const creator=document.createElement('p');creator.className='credit-line';creator.textContent='Created by';const name=document.createElement('strong');name.textContent='Trung C Ho';creator.append(name);endgamePanel.append(creator);
+ const original=document.createElement('p');original.className='credit-line';original.textContent='Game design, characters, and Petri Lab world';endgamePanel.append(original);
+ const repo=document.createElement('p');repo.className='credit-line';repo.append('Source repository: ');const a=document.createElement('a');a.href='https://github.com/magicalboyco/petri-panic';a.target='_blank';a.rel='noopener noreferrer';a.textContent='magicalboyco/petri-panic';repo.append(a);endgamePanel.append(repo);
+ const fonts=document.createElement('p');fonts.className='credit-line';fonts.textContent='Typography: Google Fonts — Fredoka, Nunito, Cute Font, Press Start 2P';endgamePanel.append(fonts);
+ const soundCredit=document.createElement('p');soundCredit.className='credit-line';soundCredit.textContent='Victory music: original synthesized fanfare generated in-browser with Web Audio';endgamePanel.append(soundCredit);
+ const note=document.createElement('p');note.className='endgame-note';note.textContent='Additional third-party repository credits will be added when their use and licenses are verified.';endgamePanel.append(note);
+}
+function showEndgamePanel(which){endgamePanel.hidden=false;if(which==='scores')scoreBoard();else creditsPage()}
+scoresButton.addEventListener('click',()=>{if(!endgamePanel.hidden&&endgamePanel.dataset.view==='scores'){endgamePanel.hidden=true;return}endgamePanel.dataset.view='scores';showEndgamePanel('scores')});
+creditsButton.addEventListener('click',()=>{if(!endgamePanel.hidden&&endgamePanel.dataset.view==='credits'){endgamePanel.hidden=true;return}endgamePanel.dataset.view='credits';showEndgamePanel('credits')});
+function victoryFanfare(){try{if(typeof muted!=='undefined'&&muted)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const ac=new AC();const notes=[523.25,659.25,783.99,1046.5,783.99,1046.5,1318.51];const now=ac.currentTime+.04;notes.forEach((hz,i)=>{const start=now+i*.145;const osc=ac.createOscillator(),g=ac.createGain();osc.type='triangle';osc.frequency.setValueAtTime(hz,start);g.gain.setValueAtTime(.0001,start);g.gain.exponentialRampToValueAtTime(.10,start+.02);g.gain.exponentialRampToValueAtTime(.0001,start+.22);osc.connect(g);g.connect(ac.destination);osc.start(start);osc.stop(start+.23)});setTimeout(()=>ac.close().catch(()=>{}),2200)}catch(e){console.warn('Victory audio unavailable',e)}}
+const originalShowMenu=showMenu;
+showMenu=function(type='menu'){
+ const isFinish=['win','timeup','challengewin'].includes(type);
+ if(isFinish)saveHighScore(type);
+ originalShowMenu(type);
+ $('overlay').classList.toggle('ending-celebration',isFinish);
+ endgamePanel.hidden=true;endgamePanel.dataset.view='';
+ if(type==='win'&&activeLevel===21&&mode!=='hard'){
+   $('modalTitle').textContent='🏆 THE PINK LAB IS SAVED! 🏆';
+   $('modalBody').textContent='You completed all 21 experiments! The Globs are thriving, the lab is safe, and your legend is part of Petri history. Final score: '+Math.floor(score).toLocaleString()+' · Your next adventure starts whenever you are ready.';
+   scoresButton.textContent='🏆 View Your High Scores';
+   creditsButton.textContent='🎬 Roll Credits';
+ }else{scoresButton.textContent='🏆 High Scores';creditsButton.textContent='🎬 Credits'}
+ if(isFinish)victoryFanfare();
+};
+
 chosenLevel=clamp(save.level||1,1,21);updateUI();showMenu('menu');requestAnimationFrame(frame);
 })();</script><script>
 /* Non-destructive welcome polish. The existing game state, shop and save routines remain authoritative. */
