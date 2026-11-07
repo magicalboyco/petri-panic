@@ -452,10 +452,16 @@ body.menu-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){#overlay.ending-celebration .modal{animation:none!important}}
 
 
-#exp1TutorialBanner{position:relative;z-index:10;box-sizing:border-box;max-width:900px;margin:8px auto;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;border:2px solid #ff69b4;border-radius:12px;background:#fff0f7;color:#54344c;box-shadow:0 3px 10px #a83c7926}
-#exp1TutorialBanner[hidden]{display:none}
-#exp1TutorialBanner button{min-width:44px;min-height:44px;padding:6px 12px;border-radius:9px;cursor:pointer}
+#exp1TutorialBanner{position:relative;z-index:10;box-sizing:border-box;width:calc(100% - 20px);max-width:720px;margin:10px auto 14px;padding:10px 12px;display:flex;align-items:flex-end;gap:9px;border:1px solid #efbfd9;border-radius:18px;background:#fff9fd;color:#53334b;box-shadow:0 3px 0 #e9accd;font:inherit}
+#exp1TutorialBanner[hidden]{display:none!important}
+#exp1TutorialBanner .tutorial-avatar{width:56px;height:60px;flex:0 0 56px;border-radius:14px;background:#fce0ef;border:2px solid #e7a4c7;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#exp1TutorialBanner .tutorial-avatar svg{width:54px;height:60px;display:block}
+#exp1TutorialBanner .tutorial-message{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+#exp1TutorialBanner .tutorial-sender{font-size:12px;font-weight:900;color:#a33979;letter-spacing:.02em}
+#exp1TutorialBanner .tutorial-text-content{display:block;padding:9px 12px;border-radius:14px 14px 14px 3px;background:#f9e1f0;font-size:clamp(13px,3.4vw,16px);line-height:1.4;overflow-wrap:anywhere}
+#exp1TutorialBanner .tutorial-dismiss-btn{align-self:center;flex-shrink:0;border:1px solid #e9b3d0;border-radius:999px;background:#fff;color:#8e4c72;font:700 12px system-ui;padding:8px;min-height:40px;cursor:pointer}
 #exp1TutorialBanner button:focus-visible{outline:3px solid #9b1766;outline-offset:2px}
+@media(max-width:420px){#exp1TutorialBanner{padding:8px;gap:7px}.tutorial-dismiss-btn{font-size:11px!important;padding:6px!important}#exp1TutorialBanner .tutorial-avatar{width:48px;flex-basis:48px}}
 @media(prefers-reduced-motion:reduce){#exp1TutorialBanner{box-shadow:none}}
 
 /* Professor Pager: on-demand research notes, never pauses or blocks the dish */
@@ -840,11 +846,11 @@ const Exp1Tutorial={
  render(message,final=false){if(this.dismissedForSession)return;
   if(!this.bannerEl){const canvas=document.getElementById('game');if(!canvas)return;
    const el=document.createElement('div');el.id='exp1TutorialBanner';el.setAttribute('role','status');el.setAttribute('aria-live','polite');
-   const words=document.createElement('span');words.className='tutorial-text-content';
+   const avatar=document.createElement('div');avatar.className='tutorial-avatar';avatar.setAttribute('role','img');avatar.setAttribute('aria-label','Cartoon portrait of Professor Trung');avatar.innerHTML='<svg viewBox="0 0 64 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 73Q2 50 22 49H43Q62 51 63 73" fill="#fff" stroke="#a675a0" stroke-width="2"/><path d="M24 49L32 64L42 49" fill="#a3d8f2"/><path d="M11 54L25 70L19 54M53 54L40 70L46 54" fill="#fff5fd" stroke="#d6a3c3" stroke-width="1.5"/><ellipse cx="32" cy="31" rx="22" ry="25" fill="#edb18d" stroke="#a97879" stroke-width="1.7"/><path d="M9 26Q2 9 18 7Q30 -3 42 5Q57 6 56 26L51 20Q43 23 39 16Q27 24 15 20Z" fill="#b9b5c3" stroke="#655a6c" stroke-width="2"/><path d="M13 13Q26 1 34 11M31 10Q43 1 52 16" stroke="#fff" stroke-width="3" fill="none"/><rect x="13" y="25" width="17" height="13" rx="4" fill="#fff" fill-opacity=".25" stroke="#493747" stroke-width="2.4"/><rect x="34" y="25" width="17" height="13" rx="4" fill="#fff" fill-opacity=".25" stroke="#493747" stroke-width="2.4"/><path d="M30 31H34" stroke="#493747" stroke-width="2"/><circle cx="23" cy="32" r="2" fill="#392e39"/><circle cx="43" cy="32" r="2" fill="#392e39"/><path d="M23 45Q32 39 41 45M27 50Q32 56 37 50" stroke="#533b46" stroke-width="3" fill="none" stroke-linecap="round"/></svg>';const messageBox=document.createElement('div');messageBox.className='tutorial-message';const sender=document.createElement('span');sender.className='tutorial-sender';sender.textContent='Professor Trung · Lab message';const words=document.createElement('span');words.className='tutorial-text-content';messageBox.append(sender,words);
    const close=document.createElement('button');close.type='button';close.className='tutorial-dismiss-btn';close.textContent='Dismiss';close.addEventListener('click',()=>{this.dismissedForSession=true;this.reset()});
-   el.append(words,close);canvas.parentNode.insertBefore(el,canvas);this.bannerEl=el;
+   el.append(avatar,messageBox,close);canvas.parentNode.insertBefore(el,canvas);this.bannerEl=el;
   }
-  this.bannerEl.querySelector('.tutorial-text-content').textContent=message;
+  this.bannerEl.querySelector('.tutorial-text-content').textContent=message.replace(/^Prof\\. Trung:\\s*/, '');
   const close=this.bannerEl.querySelector('.tutorial-dismiss-btn');close.textContent=final?'Got it!':'Dismiss';close.setAttribute('aria-label',final?'Acknowledge tutorial completion':'Dismiss tutorial guidance');
   this.bannerEl.hidden=false;
  },
