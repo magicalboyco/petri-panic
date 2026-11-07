@@ -625,8 +625,9 @@ function renderCollection(){
 // Era-dependent physical cultures. The final arena cycles through earlier shapes.
 function dishShape(){
  if(!isDNAExperiment())return 'oval';
- if(activeLevel===21)return ['oval','hex','capsule','bottleneck'][Math.floor(elapsed/23)%4];
+ if(activeLevel===21)return ['oval','hex','plus','capsule','bottleneck'][Math.floor(elapsed/23)%5];
  if(activeLevel===13)return 'bottleneck';
+ if(activeLevel===18)return 'plus';
  if(activeLevel<=5)return 'oval';
  if(activeLevel<=10)return 'hex';
  if(activeLevel<=15)return 'capsule';
@@ -637,12 +638,15 @@ function dishPolygon(shape,margin=0){
  if(shape==='flower'){const pts=[];for(let i=0;i<96;i++){let a=i*Math.PI*2/96;const ripple=1+.085*Math.cos(6*a);pts.push([450+(378-margin)*ripple*Math.cos(a),310+(240-margin)*ripple*Math.sin(a)])}return pts}
  return null;
 }
+function plusRects(p=0){return [[380+p,520-p,63+p,557-p],[76+p,824-p,240+p,380-p]]}
+function plusOutline(){return [[380,63],[520,63],[520,240],[824,240],[824,380],[520,380],[520,557],[380,557],[380,380],[76,380],[76,240],[380,240]]}
 function ellipsePoint(entity,cx,cy,rx,ry){const dx=entity.x-cx,dy=entity.y-cy,k=Math.hypot(dx/rx,dy/ry);return k<=1?{x:entity.x,y:entity.y}:{x:cx+dx/k,y:cy+dy/k}}
 function insideDish(x,y,pad=0){
  const shape=dishShape();
  if(shape==='oval')return Math.hypot((x-450)/(405-pad),(y-310)/(262-pad))<=1;
  if(shape==='capsule'){const cx=clamp(x,270,630);return Math.hypot(x-cx,y-310)<=223-pad}
  if(shape==='bottleneck'){return Math.hypot(x-245,y-310)<=190-pad||Math.hypot(x-655,y-310)<=190-pad||(x>=390&&x<=510&&Math.abs(y-310)<=53-pad)}
+ if(shape==='plus'){return plusRects(pad).some(([x0,x1,y0,y1])=>x>=x0&&x<=x1&&y>=y0&&y<=y1)}
  const pts=dishPolygon(shape,pad);let inside=false;
  for(let i=0,j=pts.length-1;i<pts.length;j=i++){const a=pts[i],b=pts[j];if((a[1]>y)!==(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])inside=!inside}return inside;
 }
@@ -657,6 +661,8 @@ function keepInDish(entity,pad=30){
  }else if(shape==='bottleneck'){
   possibilities.push(ellipsePoint(entity,245,310,190-p,190-p),ellipsePoint(entity,655,310,190-p,190-p));
   possibilities.push({x:clamp(entity.x,390,510),y:clamp(entity.y,310-(53-p),310+(53-p))});
+ }else if(shape==='plus'){
+  for(const [x0,x1,y0,y1] of plusRects(p)){possibilities.push({x:clamp(entity.x,x0,x1),y:clamp(entity.y,y0,y1)})}
  }else{
   const pts=dishPolygon(shape,p);
   for(let i=0;i<pts.length;i++){let a=pts[i],b=pts[(i+1)%pts.length];let dx=b[0]-a[0],dy=b[1]-a[1];let t=clamp(((entity.x-a[0])*dx+(entity.y-a[1])*dy)/(dx*dx+dy*dy),0,1);possibilities.push({x:a[0]+t*dx,y:a[1]+t*dy})}
@@ -667,6 +673,16 @@ function keepInDish(entity,pad=30){
 }
 // Guide characters through the center of the pinch instead of straight into walls.
 function dishWaypoint(from,to){
+ if(dishShape()==='plus'){
+  // Every arm meets in the middle. A waypoint keeps creatures from chasing
+  // targets diagonally through the inaccessible corner quadrants.
+  const arm=p=>p.x<380?'left':p.x>520?'right':p.y<240?'top':p.y>380?'bottom':'center';
+  const source=arm(from),destination=arm(to);
+  if(source===destination||source==='center')return to;
+  if(destination==='center'){if(source==='left'||source==='right')return {x:450,y:310};return {x:450,y:310}}
+  // Cross-lane movement travels via a waypoint inside the hub.
+  return {x:450,y:310};
+ }
  if(dishShape()!=='bottleneck')return to;
  const opposite=(from.x<400&&to.x>500)||(from.x>500&&to.x<400);
  if(!opposite)return to;
@@ -678,7 +694,10 @@ function dishPath(begin=true){
  const sh=dishShape();if(begin)ctx.beginPath();
  if(sh==='oval'){ctx.ellipse(450,310,420,278,0,0,Math.PI*2)}
  else if(sh==='capsule'){const rad=238;ctx.moveTo(270,310-rad);ctx.lineTo(630,310-rad);ctx.arc(630,310,rad,-Math.PI/2,Math.PI/2);ctx.lineTo(270,310+rad);ctx.arc(270,310,rad,Math.PI/2,Math.PI*1.5)}
- else if(sh==='bottleneck'){
+ else if(sh==='plus'){
+  const pts=plusOutline();ctx.moveTo(pts[0][0],pts[0][1]);
+  for(const p of pts.slice(1))ctx.lineTo(p[0],p[1]);ctx.closePath();
+ }else if(sh==='bottleneck'){
   const a=Math.asin(58/199);ctx.moveTo(245+199*Math.cos(a),310-58);ctx.arc(245,310,199,-a,a,true);ctx.lineTo(655-199*Math.cos(a),310+58);ctx.arc(655,310,199,Math.PI-a,Math.PI+a,true);ctx.closePath();
  }else {const pts=dishPolygon(sh,-8);ctx.moveTo(pts[0][0],pts[0][1]);for(const p of pts.slice(1))ctx.lineTo(p[0],p[1]);ctx.closePath()}
 }
@@ -689,6 +708,7 @@ function drawDishRim(){
  ctx.strokeStyle='#ef88bb';ctx.lineWidth=8;dishPath();ctx.stroke();
  ctx.strokeStyle='#fff8ffdd';ctx.lineWidth=3;dishPath();ctx.stroke();
  ctx.restore();
+ if(dishShape()==='plus'){ctx.save();ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillStyle='#b46c98';ctx.fillText('✦ CROSS CULTURE ✦',450,212);ctx.restore()}
  if(dishShape()==='bottleneck'){ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillStyle='#9e5482';ctx.fillText('⇆ NARROW PASSAGE ⇆',450,238);ctx.textAlign='left'}
 }
 function resetWorld(){ lastShape='oval';bossDefeated=false;bossWeakTime=0;elapsed=0;coins=mode==='lab'?200:mode==='hard'?95:130;dna=0;score=0;wave=0;attackTimer=mode==='lab'?Infinity:mode==='hard'?26:43;warning=0;starTime=0;mitosisTime=0;starDropTimer=60;scuttle=chosenGuardians().includes('scuttle');rescue=false;challengeDrops=45;flash=0;globs=[glob(310,290),glob(550,350)];water=[];bubbles=[];enemies=[];particles=[];floatingText=[];sparkles=[];guardians=chosenGuardians().filter(id=>id!=='scuttle').map((id,i)=>({id,x:390+i*95,y:280+i*35,cool:0,abilityCool:1.5}));scuttleX=400;scuttleY=320;autoTick=0;globs.forEach(g=>g.hunger=6);updateUI();message(activeLevel===13&&isDNAExperiment()?'🧫 Two linked dishes! Globs must squeeze through the narrow passage.':activeLevel===21&&isDNAExperiment()?'🌌 FINAL EXPERIMENT! The chamber shifts shape every 23 seconds.':'Tap inside the dish to add a 💧 moisture droplet!',5)}
