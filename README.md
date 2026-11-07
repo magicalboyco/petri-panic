@@ -13,6 +13,7 @@ An original, candy-pink, single-file browser game about nurturing Globs, collect
 - **Adaptive play layout:** Petri dish stays clear of UI buttons; separate Shop / Guardian / Inspect controls and responsive portrait, landscape, tablet and desktop layouts.
 - **Adventure progression:** 21 selectable experiments, locked until unlocked, with replayable earlier experiments and progression preserved after replays. The Next Experiment action displays its actual destination level number. The Adventure mode tile does not show a level number.
 - **24 original Guardian companions:** All rendered in a dedicated collection with descriptive ability labels, grayed-out locked characters, level-based unlocking, and up to three selectable team slots. Current mechanics include roaming collectors and defenders, feeding, healing, calming, fertility support, shields, poison cures, coin powers, enemy control, warning, and rescue. They have original names and appearances; gameplay roles are broadly inspired by classic virtual-aquarium games. These are not copied character assets.
+- **Guardian artwork and collection update:** 23 roaming companions now have individually themed glossy colors, animated silhouettes, and signature charms instead of an identical blue blob; Scuttle retains its separate snail design. The Guardian Corner displays all 24 cards, grays out locked characters, highlights chosen team members, and uses compact scrolling grids for phones.
 - **Boss milestones:** Distinct bosses at experiments 4, 9, 15, and 21; each emerges when the player buys the second DNA fragment. Feed Globs for a brief weakness window, defeat the boss before buying the third fragment, and receive BioBits for winning.
 - **Better Blob motion:** Three pink personality types, individual movement speeds, gentle separation from crowds, glowing expressions and facial moods.
 - **BioBits:** Scatter outward and then swirl in circular paths within the petri dish; disappear after a short lifetime and blink before fading.
@@ -26,7 +27,7 @@ An original, candy-pink, single-file browser game about nurturing Globs, collect
 
 The last published AppDeploy build is older than the GitHub source. AppDeploy rejected a new deployment after hitting its daily publishing-credit budget, so the extended features above **must still be deployed and verified on actual devices**. Staging a source commit does not publish the game.
 
-All staged gameplay changes have been checked for JavaScript syntax errors. A mocked DOM gameplay smoke test of the latest script exercised all 24 Guardian loadouts, the four boss milestones (including their DNA gates and victories), and autosave/resume. Those tests passed, but are **not a substitute for real browser playtests**.
+All staged gameplay changes have been checked for JavaScript syntax errors. A mocked DOM gameplay smoke test exercised all 24 Guardian loadouts, all 24 on-screen creature drawings, the four boss milestones (including DNA gates and victories), and autosave/resume. The latest gallery also renders 24 cards and correctly displays locked versus unlocked companions in the simulated interface. Those tests passed, but are **not a substitute for real browser playtests**.
 
 ## Play controls
 
