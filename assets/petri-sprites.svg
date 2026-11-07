@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="288" height="192" viewBox="0 0 288 192" role="img" aria-label="Petri Panic original cute game sprites: three Globs, a Guardian, a BioBits coin and a water droplet">
+<defs><linearGradient id="coin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff2ae"/><stop offset=".6" stop-color="#ffcb53"/><stop offset="1" stop-color="#ee973f"/></linearGradient></defs>
+<!-- Pink Glob -->
+<g>
+<path d="M11 51Q6 40 18 32Q17 16 34 17Q41 5 56 15Q77 12 80 35Q93 40 86 58Q80 68 69 68Q59 83 44 73Q28 82 20 67Q8 67 11 51Z" fill="#ffa9ca" stroke="#523451" stroke-width="4" stroke-linejoin="round"/>
+<path d="M14 58Q22 72 39 68Q58 82 74 63Q84 60 87 52Q89 72 69 70Q57 83 44 73Q26 82 20 67Z" fill="#ef82b2" opacity=".72"/>
+<ellipse cx="32" cy="26" rx="14" ry="7" transform="rotate(-30 32 26)" fill="#fff8fc" opacity=".9"/><circle cx="17" cy="42" r="3" fill="#fff"/>
+<ellipse cx="37" cy="47" rx="5" ry="8" fill="#4e304e"/><ellipse cx="60" cy="47" rx="5" ry="8" fill="#4e304e"/><circle cx="38" cy="44" r="2.1" fill="#fff"/><circle cx="61" cy="44" r="2.1" fill="#fff"/>
+<ellipse cx="25" cy="55" rx="7" ry="4" fill="#f478a4"/><ellipse cx="72" cy="55" rx="7" ry="4" fill="#f478a4"/>
+<path d="M45 56Q49 67 54 56Z" fill="#713958" stroke="#713958" stroke-width="2" stroke-linejoin="round"/><path d="M47 63Q50 60 52 63" stroke="#ff90a6" stroke-width="2" fill="none"/>
+</g>
+<!-- Mint Glob -->
+<g transform="translate(96 0)">
+<path d="M13 62Q12 53 19 46L20 34Q22 17 37 14Q52 9 55 13Q48 6 55 3Q68 -1 70 9Q69 18 62 20Q78 24 81 43L82 54Q91 64 81 70Q69 79 56 73Q43 83 30 74Q16 75 13 62Z" fill="#b7ecb1" stroke="#523451" stroke-width="4" stroke-linejoin="round"/>
+<path d="M17 61Q34 74 51 69Q64 75 83 60Q87 71 70 75Q54 81 49 73Q28 82 17 69Z" fill="#7cceac" opacity=".72"/>
+<ellipse cx="39" cy="27" rx="13" ry="7" transform="rotate(-32 39 27)" fill="#fffef1"/><circle cx="23" cy="41" r="3" fill="#fff"/>
+<ellipse cx="39" cy="46" rx="5" ry="8" fill="#4e304e"/><ellipse cx="62" cy="46" rx="5" ry="8" fill="#4e304e"/><circle cx="40" cy="43" r="2" fill="#fff"/><circle cx="63" cy="43" r="2" fill="#fff"/>
+<ellipse cx="27" cy="56" rx="6" ry="4" fill="#ff8fac"/><ellipse cx="74" cy="56" rx="6" ry="4" fill="#ff8fac"/>
+<path d="M47 58Q51 68 55 58Z" fill="#713958" stroke="#713958" stroke-width="2"/>
+</g>
+<!-- Lilac Glob -->
+<g transform="translate(192 0)">
+<path d="M13 51Q2 38 19 31Q18 14 39 16Q46 3 63 16Q82 12 84 34Q99 44 85 58Q84 70 69 69Q62 82 46 73Q29 81 23 68Q10 68 13 51Z" fill="#d9b2f6" stroke="#523451" stroke-width="4" stroke-linejoin="round"/>
+<path d="M13 58Q30 72 42 69Q63 80 83 57Q91 75 69 72Q56 84 46 73Q27 81 22 68Z" fill="#a98be0" opacity=".65"/>
+<ellipse cx="40" cy="26" rx="12" ry="6" transform="rotate(-33 40 26)" fill="#fff5ff"/><ellipse cx="25" cy="35" rx="6" ry="4" fill="#fff5ff"/>
+<ellipse cx="38" cy="47" rx="5" ry="8" fill="#4e304e"/><ellipse cx="61" cy="47" rx="5" ry="8" fill="#4e304e"/><circle cx="39" cy="44" r="2" fill="#fff"/><circle cx="62" cy="44" r="2" fill="#fff"/>
+<ellipse cx="26" cy="56" rx="7" ry="4" fill="#ff8ca8"/><ellipse cx="73" cy="56" rx="7" ry="4" fill="#ff8ca8"/>
+<path d="M46 58Q50 68 54 58Z" fill="#713958" stroke="#713958" stroke-width="2"/>
+</g>
+<!-- Bouncer Guardian -->
+<g transform="translate(0 96)">
+<path d="M14 54L4 50Q0 45 10 42L21 47L23 31Q23 22 34 17L48 5L64 17Q76 23 75 32L78 46Q89 40 93 48Q96 56 80 59L70 76L48 88L25 76Z" fill="#7cdce5" stroke="#523451" stroke-width="4" stroke-linejoin="round"/>
+<path d="M22 30L48 11L74 30L70 58L48 79L26 58Z" fill="#49b6c6" stroke="#fff3fa" stroke-width="4" stroke-linejoin="round"/>
+<path d="M30 37L48 24L66 37L64 57L48 70L32 57Z" fill="#e5fbff" stroke="#4b8b9a" stroke-width="2"/>
+<path d="M48 16L52 25L61 27L52 32L48 41L43 32L35 27L43 24Z" fill="#ffe476" stroke="#e9b54e" stroke-width="1.4"/>
+<ellipse cx="39" cy="51" rx="4" ry="6" fill="#503450"/><ellipse cx="56" cy="51" rx="4" ry="6" fill="#503450"/><circle cx="39" cy="49" r="1.8" fill="#fff"/><circle cx="56" cy="49" r="1.8" fill="#fff"/>
+<ellipse cx="30" cy="57" rx="4" ry="3" fill="#ffb0c9"/><ellipse cx="64" cy="57" rx="4" ry="3" fill="#ffb0c9"/>
+<path d="M43 60Q48 67 52 60" stroke="#503450" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+</g>
+<!-- BioBits coin -->
+<g transform="translate(96 96)">
+<circle cx="48" cy="49" r="39" fill="#dc9342" stroke="#633c4a" stroke-width="4"/><circle cx="46" cy="44" r="37" fill="url(#coin)" stroke="#eab054" stroke-width="3"/><circle cx="46" cy="44" r="28" fill="#ffe18b" stroke="#e8a74b" stroke-width="3"/>
+<path d="M46 22L53 38L68 44L53 50L46 67L39 50L23 44L39 38Z" fill="#fff9d6" stroke="#a96e39" stroke-width="3" stroke-linejoin="round"/>
+<ellipse cx="29" cy="24" rx="12" ry="5" transform="rotate(-35 29 24)" fill="#fffef2" opacity=".95"/><circle cx="18" cy="42" r="3" fill="#fff"/>
+</g>
+<!-- Water drop -->
+<g transform="translate(192 96)">
+<path d="M48 7Q58 25 69 40Q80 53 80 65Q79 85 58 90Q34 96 19 78Q8 62 24 40Q37 24 48 7Z" fill="#6fcffa" stroke="#523c62" stroke-width="4" stroke-linejoin="round"/>
+<path d="M48 13Q64 36 73 52Q85 77 59 87Q32 93 23 70Q44 83 63 67Q78 53 48 13Z" fill="#40abe5" opacity=".58"/>
+<ellipse cx="36" cy="46" rx="11" ry="19" transform="rotate(23 36 46)" fill="#fff" opacity=".92"/><circle cx="29" cy="70" r="5" fill="#fff" opacity=".95"/>
+</g></svg>

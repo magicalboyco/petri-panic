@@ -398,9 +398,208 @@ body.menu-open{overflow:hidden}
  #overlay.preparing #guardianOptions{height:122px!important}
  #overlay.preparing .era-card{min-height:76px}
 }
-/* Optional Hard Mode */.modal .mode.hard-mode{grid-column:1/-1;min-height:63px;background:linear-gradient(120deg,#fff5f2,#fbd5d9);border-color:#f2bac3;border-bottom-color:#c87b91;color:#8a3655}.modal .mode.hard-mode.active{background:linear-gradient(#f6d4ee,#edaecb);border-color:#b23e86}.modal .mode.hard-mode span{color:#97546d}@media(max-width:600px){.modal .mode.hard-mode{min-height:52px;font-size:24px}}</style></head>
-<body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · CANDY CULTURE ALPHA 11</small></div></div><div class="level-chip" id="levelChip" aria-label="Current experiment"><span class="level-flower" aria-hidden="true">✿</span><div class="level-copy"><span class="level-eyebrow">CURRENT EXPERIMENT</span><strong id="levelNum">01 <span class="level-of">/ 21</span></strong><span id="regionName" class="region-name">Starter Culture</span></div><div class="level-track" aria-hidden="true"><span id="levelFill"></span></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div id="guardianPicker" class="hidden guardian-picker"><strong id="guardianSlotsLabel">✨ Your Guardian Team</strong><div id="guardianSlotDisplay" class="guardian-slots"></div><div id="guardianOptions" class="guardian-options"></div></div>
-<div id="levelPicker" class="hidden level-picker"><strong>🧬 Choose an Experiment</strong><p>Swipe between science eras, then choose an unlocked experiment.</p><div class="era-carousel" aria-label="Science eras"><button type="button" id="eraPrev" aria-label="Previous era">‹</button><div class="era-card" id="eraCard" aria-live="polite"><span class="era-icon" id="eraIcon">⚙️</span><strong id="eraName">Victorian Origins</strong><small id="eraYears">Experiments 01–05</small><span id="eraTheme">Steam & discovery</span></div><button type="button" id="eraNext" aria-label="Next era">›</button></div><div id="eraDots" class="era-dots"></div><div id="levelOptions" class="level-options"></div></div><button type="button" class="secondary hidden" id="guardianBack">← Back to game modes</button><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span id="adventureLevel">Collect 3 DNA pieces</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode hard-mode" data-mode="hard">🔥 Hard Mode<span>Fiercer invaders · rising shop prices · 3 DNA</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><button type="button" class="secondary hidden" id="continueRun" style="display:block;margin:8px auto;min-height:48px">💾 Continue saved experiment</button><button type="button" class="secondary hidden" id="returnMainMenu" style="display:block;margin:8px auto">← Return to Main Menu</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button><button type="button" class="secondary" id="helpButton">❔ How to Play</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><nav class="game-actions" aria-label="Game menus"><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><button type="button" id="guardianToggle" class="shop-toggle guardian-action" aria-label="Open Guardian collection">🛡️ Guardians</button><button type="button" id="inspectToggle" class="shop-toggle inspect-action" aria-pressed="false">🔎 Inspect Glob</button></nav><div class="culture-status" id="cultureStatus" aria-label="Culture condition"><span id="cultureMood">💗 Your Globs are happy</span><span id="cultureWater">💧 0 / 10 droplets</span><span id="cultureThreat">✨ Peaceful for now</span></div><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
+/* Optional Hard Mode */.modal .mode.hard-mode{grid-column:1/-1;min-height:63px;background:linear-gradient(120deg,#fff5f2,#fbd5d9);border-color:#f2bac3;border-bottom-color:#c87b91;color:#8a3655}.modal .mode.hard-mode.active{background:linear-gradient(#f6d4ee,#edaecb);border-color:#b23e86}.modal .mode.hard-mode span{color:#97546d}@media(max-width:600px){.modal .mode.hard-mode{min-height:52px;font-size:24px}}/* Candy UI improvement — preserved gameplay engine */
+/* Candy menu polish, scoped to the welcome modal; gameplay remains untouched. */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap');
+#overlay:not(.preparing) .modal{background:linear-gradient(155deg,#fff9fd 0%,#ffeaf4 57%,#f7c4dd 100%);border:6px solid #fffafc;border-radius:38px;box-shadow:inset 0 0 0 3px #efb6d3,inset 0 5px #fff,0 10px 0 #bd78a0,0 25px 46px #85446c55;padding-bottom:clamp(17px,3vh,28px)}
+#overlay:not(.preparing) #modalTitle{font:700 clamp(32px,5.9vw,51px)/1.04 'Fredoka','Nunito',sans-serif;color:#ba3c7d;letter-spacing:-.025em;text-shadow:0 2px 0 #fff9fc,0 4px 7px #bd7e9d48;margin:6px 0 9px}
+#overlay:not(.preparing) #modalBody{font:700 clamp(12px,1.9vw,15px)/1.45 'Nunito',sans-serif;color:#784262;max-width:470px;margin:4px auto 17px}
+#overlay:not(.preparing) .mascot{height:103px;filter:drop-shadow(0 5px 5px #b65b9259)}
+#overlay:not(.preparing) .kawaii-mascot{scale:1.12}
+#overlay:not(.preparing) .modes{gap:13px;margin:18px 0 21px;overflow:visible;padding:8px 5px}
+#overlay:not(.preparing) .mode{position:relative;isolation:isolate;overflow:visible;min-height:102px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;font:700 clamp(18px,3vw,24px)/1.08 'Fredoka',sans-serif;color:#91426e;background:linear-gradient(145deg,#fffefc,#ffe5f1);border:3px solid #fff;border-bottom:7px solid #d999b9;border-radius:23px;box-shadow:inset 0 3px 0 #fffffffa,0 6px 12px #b5578530;transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s,background .2s;transform-origin:center;cursor:pointer;touch-action:manipulation}
+#overlay:not(.preparing) .mode:before{content:'';position:absolute;inset:4px 6px auto;height:35%;border-radius:18px;background:linear-gradient(#fff9,transparent);pointer-events:none}
+#overlay:not(.preparing) .mode:after{content:' ';display:none}
+#overlay:not(.preparing) .mode .mode-icon{display:grid;place-items:center;width:37px;height:37px;margin-bottom:4px;color:white;border:2px solid #fffc;border-radius:14px;background:linear-gradient(145deg,#f3a9d7,#c66cae);box-shadow:inset 0 2px #fff7,0 4px #ad739e5c}
+#overlay:not(.preparing) .mode[data-mode="trial"] .mode-icon{background:linear-gradient(145deg,#79d7ef,#668ddc)}
+#overlay:not(.preparing) .mode[data-mode="challenge"] .mode-icon{background:linear-gradient(145deg,#7bdbb4,#35ac8c)}
+#overlay:not(.preparing) .mode[data-mode="hard"] .mode-icon{background:linear-gradient(145deg,#ffc07d,#e87485)}
+#overlay:not(.preparing) .mode[data-mode="lab"] .mode-icon{background:linear-gradient(145deg,#ffd47e,#e59b63)}
+#overlay:not(.preparing) .mode .mode-icon svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#overlay:not(.preparing) .mode span{position:relative;font:800 11px/1.3 'Nunito',sans-serif;color:#95637f;margin-top:2px}
+#overlay:not(.preparing) .mode.active{z-index:1;transform:scale(1.035) translateY(-2px);background:linear-gradient(145deg,#fffefa,#fff0f6);border-color:#ffc73d;border-bottom-color:#d29a1e;box-shadow:0 0 0 2px #ffe17a,0 7px 0 #cb9b35,0 13px 18px #c28e3b4b}
+#overlay:not(.preparing) .mode.active:after{content:'★';display:grid;place-items:center;position:absolute;top:-13px;right:-10px;width:30px;height:30px;border-radius:50%;border:3px solid white;background:#ffca3e;color:#fff;text-shadow:0 1px #ba8616;font:900 18px 'Nunito',sans-serif;box-shadow:0 3px 0 #d39723,0 5px 12px #c3843459}
+@media(hover:hover){#overlay:not(.preparing) .mode:hover:not(.active){transform:translateY(-3px);box-shadow:inset 0 3px white,0 8px 0 #d999b9,0 14px 16px #b5578538}}
+#overlay:not(.preparing) .mode:active{transform:translateY(4px) scale(.99)!important;box-shadow:0 2px 0 #d999b9!important}
+#overlay:not(.preparing) #play{width:min(440px,100%);min-height:68px;font:700 clamp(24px,5.7vw,37px)/1.08 'Fredoka',sans-serif;letter-spacing:.01em;background:linear-gradient(120deg,#ff7d8c,#ff7aa5 52%,#ffae78);border:3px solid #fff8f0;border-bottom:8px solid #ce5267;border-radius:24px;box-shadow:inset 0 4px #ffffff77,0 7px 0 #bd5c79,0 13px 19px #a7527755;transition:transform .18s cubic-bezier(.175,.885,.32,1.275),box-shadow .18s}
+#overlay:not(.preparing) #play:active{transform:translateY(6px);box-shadow:inset 0 2px #fff7,0 2px 0 #bd5c79}
+#overlay:not(.preparing) #mute,#overlay:not(.preparing) #reset,#overlay:not(.preparing) #helpButton{font:800 12px/1.2 'Nunito',sans-serif;border:2px solid #ebafcf;border-bottom:4px solid #d690b7;border-radius:99px;min-height:42px;padding:9px 13px;transition:transform .18s}
+#overlay:not(.preparing) #mute:active,#overlay:not(.preparing) #reset:active,#overlay:not(.preparing) #helpButton:active{transform:translateY(2px)}
+#overlay:not(.preparing) .retro-controller{display:none}
+#overlay:not(.preparing) .modal:before{font-family:'Nunito',sans-serif;letter-spacing:4px;font-size:17px}
+#overlay:not(.preparing) #mascot:focus-visible{outline:3px solid #a648a1;outline-offset:5px;border-radius:28px}
+#overlay:not(.preparing) .mode:focus-visible,#overlay:not(.preparing) button:focus-visible{outline:4px solid #8047c0;outline-offset:3px}
+@media(max-width:600px){#overlay:not(.preparing) .modal{padding:12px 12px 17px}#overlay:not(.preparing) #modalTitle{font-size:clamp(29px,7.8vw,39px)}#overlay:not(.preparing) #modalBody{font-size:12px;margin-bottom:8px}#overlay:not(.preparing) .mascot{height:84px}#overlay:not(.preparing) .modes{gap:10px;padding:6px;margin:8px 0 14px}#overlay:not(.preparing) .mode{min-height:92px;padding:10px 5px;font-size:18px}#overlay:not(.preparing) .mode span{font-size:10px}#overlay:not(.preparing) .mode .mode-icon{width:33px;height:33px}#overlay:not(.preparing) #play{min-height:61px}}
+@media(orientation:landscape) and (max-height:600px){#overlay:not(.preparing) .mascot{height:49px}#overlay:not(.preparing) .kawaii-mascot{scale:.65}#overlay:not(.preparing) .mode{min-height:75px}#overlay:not(.preparing) .mode .mode-icon{width:27px;height:27px}#overlay:not(.preparing) .modes{margin:6px 0}}
+@media(prefers-reduced-motion:reduce){#overlay:not(.preparing) .mascot,#overlay:not(.preparing) .mode,#overlay:not(.preparing) #play,#overlay:not(.preparing) .modal:before{animation:none!important;transition:none!important}}
+
+
+/* Endgame celebration and credits */
+#endgameExtras{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:13px auto 7px;max-width:470px}
+#endgameExtras button{font:800 13px Nunito,sans-serif;border:2px solid #fff;border-bottom:5px solid #c77b9f;background:linear-gradient(#fff8fd,#ffd6e9);color:#8e3b69;border-radius:16px;padding:10px 14px;min-height:44px;box-shadow:0 4px 10px #b8679533;cursor:pointer}
+#endgameExtras button:active{transform:translateY(3px)}
+#endgamePanel{max-width:480px;margin:12px auto;padding:15px;border-radius:21px;border:3px solid #fff;background:linear-gradient(155deg,#fffdfb,#ffecf5);box-shadow:0 5px 0 #e2aac7;color:#733b5e;font:700 13px/1.5 Nunito,sans-serif;text-align:left}
+#endgamePanel h3{font:700 25px Fredoka,Nunito,sans-serif;text-align:center;color:#b93d80;margin:0 0 9px}
+#endgamePanel ol{margin:6px 0;padding-left:24px}
+#endgamePanel li{padding:4px 0;border-bottom:1px solid #f5d2e4}
+#endgamePanel .credit-line{text-align:center;margin:8px auto}
+#endgamePanel .credit-line strong{display:block;font:700 22px Fredoka,sans-serif;color:#ae3477}
+#endgamePanel .endgame-note{font-size:11px;opacity:.8}
+#endgamePanel a{color:#96368d;text-decoration:underline}
+#overlay.ending-celebration .modal{border-color:#ffdf75;box-shadow:0 0 0 5px #ffbd60,0 10px 0 #bc7a8e,0 22px 48px #9b568266}
+#overlay.ending-celebration #modalTitle{color:#a85b13;text-shadow:0 2px #fff,0 5px #ffd46b}
+@media(max-width:500px){#endgameExtras button{font-size:12px;padding:9px 10px}#endgamePanel{padding:10px}}
+@media(prefers-reduced-motion:reduce){#overlay.ending-celebration .modal{animation:none!important}}
+
+
+#exp1TutorialBanner{position:relative;z-index:10;box-sizing:border-box;width:calc(100% - 20px);max-width:720px;margin:10px auto 14px;padding:10px 12px;display:flex;align-items:flex-end;gap:9px;border:1px solid #efbfd9;border-radius:18px;background:#fff9fd;color:#53334b;box-shadow:0 3px 0 #e9accd;font:inherit}
+#exp1TutorialBanner[hidden]{display:none!important}
+#exp1TutorialBanner .tutorial-avatar{width:56px;height:60px;flex:0 0 56px;border-radius:14px;background:#fce0ef;border:2px solid #e7a4c7;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#exp1TutorialBanner .tutorial-avatar svg{width:54px;height:60px;display:block}
+#exp1TutorialBanner .tutorial-message{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+#exp1TutorialBanner .tutorial-sender{font-size:12px;font-weight:900;color:#a33979;letter-spacing:.02em}
+#exp1TutorialBanner .tutorial-text-content{display:block;padding:9px 12px;border-radius:14px 14px 14px 3px;background:#f9e1f0;font-size:clamp(13px,3.4vw,16px);line-height:1.4;overflow-wrap:anywhere}
+#exp1TutorialBanner .tutorial-dismiss-btn{align-self:center;flex-shrink:0;border:1px solid #e9b3d0;border-radius:999px;background:#fff;color:#8e4c72;font:700 12px system-ui;padding:8px;min-height:40px;cursor:pointer}
+#exp1TutorialBanner button:focus-visible{outline:3px solid #9b1766;outline-offset:2px}
+@media(max-width:420px){#exp1TutorialBanner{padding:8px;gap:7px}.tutorial-dismiss-btn{font-size:11px!important;padding:6px!important}#exp1TutorialBanner .tutorial-avatar{width:48px;flex-basis:48px}}
+@media(prefers-reduced-motion:reduce){#exp1TutorialBanner{box-shadow:none}}
+
+/* Professor Pager: on-demand research notes, never pauses or blocks the dish */
+#profPagerDock{max-width:900px;margin:8px auto;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px}
+#profPagerButton{min-height:44px;padding:8px 15px;border:2px solid #ec8fbd;border-radius:12px;background:#fff1f8;color:#773354;cursor:pointer;font:inherit;font-weight:700}
+#profPagerNotes{flex-basis:100%;padding:12px 16px;border:2px solid #ec8fbd;border-radius:14px;background:#fff8fc;color:#57364a}
+#profPagerNotes[hidden]{display:none}
+#profPagerNotes h3{margin:0 0 6px;font-size:1.05rem}#profPagerNotes p{margin:5px 0;line-height:1.45}
+#profPagerButton:focus-visible{outline:3px solid #8b1d5b;outline-offset:2px}
+#profPagerNotes:not([hidden]){display:flex;align-items:flex-start;flex-wrap:wrap;gap:12px}#profPagerNotes .prof-notes-copy{flex:1 1 210px}#profPagerNotes #profPagerHelp{flex-basis:100%}#profChapterSelect{display:block;width:100%;min-height:44px;margin-top:5px;border-radius:10px;border:1px solid #bb78a0;background:white;color:#64344f;padding:7px;font:inherit}#profPagerNotes label{font-size:.82rem;font-weight:700}#profPagerNotes .prof-portrait{position:relative;flex:0 0 90px;width:90px;height:112px;background:linear-gradient(#ffe3f2,#f7b8d5);border:2px solid #db80ac;border-radius:18px;overflow:hidden}#profPagerNotes .prof-face{position:absolute;left:21px;top:26px;width:48px;height:53px;background:#e8b596;border-radius:44% 44% 48% 48%;z-index:2}#profPagerNotes .prof-hair{position:absolute;left:17px;top:15px;width:57px;height:39px;background:#31252b;border-radius:55% 55% 30% 30%;z-index:3;clip-path:polygon(0 0,100% 0,100% 60%,80% 35%,45% 55%,15% 45%,0 90%)}#profPagerNotes .prof-eye{position:absolute;top:24px;width:5px;height:6px;background:#29232a;border-radius:50%}#profPagerNotes .prof-eye.left{left:13px}#profPagerNotes .prof-eye.right{right:13px}#profPagerNotes .prof-goatee{position:absolute;bottom:-6px;left:17px;width:15px;height:14px;background:#30252c;border-radius:25% 25% 65% 65%}#profPagerNotes .prof-coat{position:absolute;bottom:-13px;left:9px;width:72px;height:49px;border-radius:28px 28px 0 0;background:#fff;border:2px solid #d4a7c2;text-align:right;padding:8px;font-size:15px;z-index:1}#internOrientation .prof-portrait{position:relative;flex:0 0 90px;width:90px;height:112px;background:linear-gradient(#ffe3f2,#f7b8d5);border:2px solid #db80ac;border-radius:18px;overflow:hidden}#internOrientation .prof-face{position:absolute;left:21px;top:26px;width:48px;height:53px;background:#e8b596;border-radius:44% 44% 48% 48%;z-index:2}#internOrientation .prof-hair{position:absolute;left:17px;top:15px;width:57px;height:39px;background:#31252b;border-radius:55% 55% 30% 30%;z-index:3;clip-path:polygon(0 0,100% 0,100% 60%,80% 35%,45% 55%,15% 45%,0 90%)}#internOrientation .prof-eye{position:absolute;top:24px;width:5px;height:6px;background:#29232a;border-radius:50%}#internOrientation .prof-eye.left{left:13px}#internOrientation .prof-eye.right{right:13px}#internOrientation .prof-goatee{position:absolute;bottom:-6px;left:17px;width:15px;height:14px;background:#30252c;border-radius:25% 25% 65% 65%}#internOrientation .prof-coat{position:absolute;bottom:-13px;left:9px;width:72px;height:49px;border-radius:28px 28px 0 0;background:#fff;border:2px solid #d4a7c2;text-align:right;padding:8px;font-size:15px;z-index:1}
+#internOrientation input[hidden],#internOrientation label[hidden]{display:none!important}
+#internOrientation .intern-card{max-width:440px;padding:22px 20px}#internOrientation .intern-dialogue{min-height:0;margin:12px 0;font-size:16px}#internOrientation .intern-avatar svg{max-height:150px}#internOrientation #internProgress{letter-spacing:.08em;font-weight:800}#internOrientation #internNameInput[hidden],#internOrientation #internNameLabel[hidden]{display:none!important}
+#internOrientation .intern-avatar svg{display:block;max-width:100%;height:auto;margin:auto}#internOrientation .intern-avatar{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;margin:0 auto 14px;font-size:initial;line-height:normal}
+#internOrientation .intern-avatar .prof-portrait{flex:none;width:126px;height:150px;border-radius:24px;box-shadow:0 5px 0 #d78db2}
+#internOrientation .intern-avatar .prof-face{transform:scale(1.35);transform-origin:top left;left:31px;top:39px}
+#internOrientation .intern-avatar .prof-hair{transform:scale(1.35);transform-origin:top left;left:27px;top:25px}
+#internOrientation .intern-avatar .prof-coat{width:100px;height:63px;left:11px;bottom:-15px;font-size:20px}
+#internOrientation .intern-avatar-caption{font:800 12px Nunito,system-ui,sans-serif;letter-spacing:.12em;color:#9b4b78}
+#internOrientation .intern-avatar .maple-badge{font-size:18px}
+
+
+#labHub{margin:14px auto;padding:13px;border:2px solid #f1a5cb;border-radius:16px;background:#fff6fb;max-width:650px;color:#67334f}#labHub[hidden]{display:none}#labHub h3{margin:0 0 5px}#labHub p{margin:6px 0;font-size:.9rem}#labHub .lab-hub-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}#labHub .lab-hub-actions button{min-height:48px;padding:8px;border-radius:10px;border:1px solid #d989b1;background:white;color:#703954;font:inherit;font-weight:700;cursor:pointer}#labHub .lab-hub-actions button:focus-visible{outline:3px solid #96366e;outline-offset:2px}#labHub .lab-hub-hint{font-size:.8rem}@media(max-width:430px){#labHub .lab-hub-actions{grid-template-columns:1fr}}
+#storyMoment{max-width:900px;margin:8px auto;padding:12px 15px;border:2px solid #e994be;border-radius:14px;background:#fff4fa;color:#68364f;display:flex;align-items:center;gap:12px;justify-content:space-between}#storyMoment[hidden]{display:none}#storyMoment p{margin:0;line-height:1.4}#storyMoment button{flex-shrink:0;border:1px solid #d58cb2;border-radius:9px;background:white;color:#713b57;padding:9px;min-height:44px;font:inherit;cursor:pointer}@media(max-width:480px){#storyMoment{flex-direction:column;align-items:stretch}}/* Cohesive, simple all-ages visual language for the lab */
+:root{--ink:#603950;--pinkdark:#b43c7f;--border:#edabcc}
+#profPagerButton,.lab-hub-actions button,.smallbtn{box-shadow:0 3px 0 #e3b7d0}
+#profPagerButton:hover,.lab-hub-actions button:hover{background:#ffe6f3}
+#game{touch-action:none}
+@media(max-width:480px){#profPagerButton{font-size:14px}}
+
+/* Illustrated calls: look like a compact incoming message, not another modal. */
+#storyMoment{width:calc(100% - 20px);max-width:760px;box-sizing:border-box;margin:10px auto 14px;padding:10px;display:flex;flex-direction:row;align-items:center;gap:12px;background:#fff9fd;border:2px solid #ebb1d2;border-radius:19px;box-shadow:0 4px 0 #dca9c5;color:#51384f}
+#storyMoment[hidden]{display:none!important}
+#storyMomentPortrait{flex:0 0 76px;width:76px;height:84px;display:block;object-fit:cover;object-position:50% 20%;background:#f6dbec;border:2px solid #e7a4ca;border-radius:14px}
+#storyMoment .story-moment-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+#storyMomentLabel{font:900 13px Nunito,system-ui,sans-serif;color:#a13d7c;letter-spacing:.01em}
+#storyMoment #storyMomentText{margin:0;line-height:1.4;font-size:clamp(13px,3.4vw,16px);overflow-wrap:anywhere}
+#storyMoment .story-moment-close{align-self:center;flex:0 0 auto;padding:9px 11px;min-height:44px;white-space:nowrap;color:#754160;background:#fff;border:1px solid #e2acc9;border-radius:12px;font:700 12px Nunito,system-ui,sans-serif}
+@media(max-width:420px){#storyMoment{gap:8px;padding:8px}#storyMomentPortrait{flex-basis:60px;width:60px;height:70px}#storyMoment .story-moment-close{padding:7px 8px;font-size:11px}#storyMomentLabel{font-size:12px}}
+
+/* PINK LAB: illustrated game-hud polish. Interactive hitboxes stay unchanged. */
+body{
+ background:radial-gradient(ellipse at 19% 5%,#fff1fb 0%,transparent 45%),
+ linear-gradient(145deg,#a78fbd 0%,#c398be 30%,#8f739f 100%);
+}
+.top{
+ position:relative;isolation:isolate;
+ border:3px solid rgba(255,249,254,.95);
+ background:linear-gradient(115deg,#fff7fd 0%,#ffe9f7 46%,#f4def5 100%);
+ box-shadow:0 4px 0 #b579a5,0 13px 30px rgba(67,38,86,.29),inset 0 3px 0 #fff;
+}
+.top:before{content:"";pointer-events:none;position:absolute;inset:5px;border:1px solid rgba(191,112,164,.35);border-radius:18px}
+.brand h1{font-family:Fredoka,'Trebuchet MS',system-ui,sans-serif;color:#98417f;letter-spacing:-.05em;text-shadow:0 2px 0 white,1px 3px 0 #ecc0df}
+.brand small{color:#855c7c;font-size:10px;letter-spacing:.07em}
+.level-chip,.stat{
+ background:linear-gradient(165deg,#fff 0%,#fff7fd 40%,#fce0f1 100%);
+ border-color:#dfa6cd;
+ box-shadow:0 3px 0 #c98fba,0 6px 14px rgba(129,66,109,.15),inset 0 2px 0 #fff;
+}
+.stat small{color:#895d80;font-size:10px}
+.stat strong{color:#723c78;font-family:Fredoka,system-ui,sans-serif;font-size:21px}
+.smallbtn{background:linear-gradient(180deg,#fffcff 0%,#f8d8eb 100%);border-color:#ce91bc;box-shadow:0 4px 0 #bb7daa,0 6px 12px #7c437632}
+.dishwrap{
+ border:7px solid #fff4ff;border-radius:30px;
+ background:linear-gradient(145deg,#c5a0cc,#f7d3e9);
+ box-shadow:0 5px 0 #996e9c,0 18px 37px rgba(62,30,80,.4),inset 0 1px 0 #fff;
+}
+.dishwrap:before{inset:4px;border:2px solid rgba(255,255,255,.6);border-radius:24px}
+.dishwrap canvas{background:linear-gradient(135deg,#dbc3e3,#edbdd8)}
+.ribbon{
+ color:#854e78;border-color:#dca2c4;
+ background:linear-gradient(#fffafd,#ffe8f4);
+ box-shadow:0 2px 0 #c798be,0 5px 16px #b785ad30;
+}
+.panel{
+ background:linear-gradient(170deg,rgba(255,250,255,.98),rgba(255,229,246,.96));
+ border:3px solid #fff6ff;border-radius:24px;
+ box-shadow:0 5px 0 #ad7ea7,0 14px 29px rgba(63,37,83,.25),inset 0 2px 0 #fff;
+}
+.panel h2{font-family:Fredoka,'Trebuchet MS',sans-serif;color:#8a407b;font-size:16px;letter-spacing:.025em}
+.buy{
+ position:relative;
+ background:linear-gradient(158deg,#fff 0%,#fff6fd 48%,#ffe6f4 100%);
+ border:2px solid #e2b1d1;border-bottom:4px solid #be88b0;
+ border-radius:16px;padding:10px;min-height:60px;
+ box-shadow:0 2px 9px rgba(127,72,118,.11),inset 0 1px 0 #fff;
+ transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
+}
+.buy:hover:not(:disabled),.buy:focus-visible{
+ background:linear-gradient(150deg,#fff,#ffe6f1);
+ transform:translateY(-2px);box-shadow:0 5px 14px rgba(142,75,123,.22);
+}
+.buy:active:not(:disabled){transform:translateY(1px)}
+.buy strong{font-size:13px;color:#55364e}
+.buy small{font-size:11px;line-height:1.25;color:#9b708c}
+.buy em{font-size:13px;min-width:34px;text-align:right;color:#74416b;font-family:Fredoka,system-ui}
+.buy .emoji{
+ flex:0 0 40px;width:40px;height:40px;
+ display:grid;place-items:center;font-size:23px;
+ border-radius:12px;border:1px solid #f4c6dc;
+ background:linear-gradient(150deg,#fff,#fbe0f3);
+ box-shadow:inset 0 1px 0 #fff,0 2px 0 #e8b0d0;
+}
+.buy[data-buy="glob"] .emoji,
+.buy[data-buy="nutrition"] .emoji,
+.buy[data-buy="dna"] .emoji{
+ background-image:url('assets/petri-sprites.svg');
+ background-repeat:no-repeat;
+ background-size:120px 80px;
+ font-size:0;color:transparent;border:0;
+ box-shadow:none;border-radius:0;
+}
+.buy[data-buy="glob"] .emoji{background-position:0 0}
+.buy[data-buy="nutrition"] .emoji{background-position:-80px -40px}
+.buy[data-buy="dna"] .emoji{background-position:-40px -40px}
+.buy.special{background:linear-gradient(160deg,#fffdf4,#fff1ce);border-color:#efc97b;border-bottom-color:#d1a551}
+#exp1TutorialBanner{
+ max-width:760px;align-items:center;
+ background:linear-gradient(160deg,#fffaff 0%,#f9e1f3 100%);
+ border:2px solid #e6b8d5;
+ border-radius:19px;box-shadow:0 4px 0 #cc98ba,0 8px 15px rgba(101,48,95,.13);
+}
+#exp1TutorialBanner .tutorial-avatar{background:#f9d3ea;border-color:#dfa8c9;border-radius:13px}
+#exp1TutorialBanner .tutorial-text-content{background:#fff6fc;border:1px solid #f2d2e6;color:#633f60;border-radius:15px 15px 15px 4px}
+#profPagerButton{
+ background:linear-gradient(175deg,#fffafd,#f7d8ed);
+ border:2px solid #d9a0c3;border-radius:14px;
+ box-shadow:0 4px 0 #b67eab,0 6px 12px rgba(112,60,112,.2);
+}
+#supplyPanel .note{background:rgba(255,247,251,.7);border-radius:10px;padding:7px}
+@media(max-width:680px){
+ .top{border-radius:18px;padding:10px}
+ .dishwrap{border-width:5px;border-radius:22px}
+ .panel{border-radius:19px}
+}
+@media(prefers-reduced-motion:reduce){.buy{transition:none}}
+</style></head>
+<body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · CANDY CULTURE ALPHA 11</small></div></div><div class="level-chip" id="levelChip" aria-label="Current experiment"><span class="level-flower" aria-hidden="true">✿</span><div class="level-copy"><span class="level-eyebrow">CURRENT EXPERIMENT</span><strong id="levelNum">01 <span class="level-of">/ 21</span></strong><span id="regionName" class="region-name">Starter Culture</span></div><div class="level-track" aria-hidden="true"><span id="levelFill"></span></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><div id="profPagerDock"><button type="button" id="profPagerButton" aria-expanded="false" aria-controls="profPagerNotes">📟 Professor Pager · Research Notes</button><section id="profPagerNotes" hidden aria-label="Professor Trung research notes"><img class="professor-mini-portrait" src="assets/professor-trung-approved.jpg" alt="Professor Trung" width="92" height="104" decoding="async"><div class="prof-notes-copy"><h3 id="profPagerTitle"></h3><p id="profPagerStory"></p><label for="profChapterSelect">Research journal · unlocked chapters</label><select id="profChapterSelect" aria-label="Read an unlocked research chapter"></select></div><p id="profPagerHelp"></p></section></div><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div id="guardianPicker" class="hidden guardian-picker"><strong id="guardianSlotsLabel">✨ Your Guardian Team</strong><div id="guardianSlotDisplay" class="guardian-slots"></div><div id="guardianOptions" class="guardian-options"></div></div>
+<div id="levelPicker" class="hidden level-picker"><strong>🧬 Choose an Experiment</strong><p>Swipe between science eras, then choose an unlocked experiment.</p><div class="era-carousel" aria-label="Science eras"><button type="button" id="eraPrev" aria-label="Previous era">‹</button><div class="era-card" id="eraCard" aria-live="polite"><span class="era-icon" id="eraIcon">⚙️</span><strong id="eraName">Victorian Origins</strong><small id="eraYears">Experiments 01–05</small><span id="eraTheme">Steam & discovery</span></div><button type="button" id="eraNext" aria-label="Next era">›</button></div><div id="eraDots" class="era-dots"></div><div id="levelOptions" class="level-options"></div></div><button type="button" class="secondary hidden" id="guardianBack">← Back to game modes</button><section id="labHub" aria-label="Pink Laboratories hub"><h3>🏠 Your Lab Hub</h3><p id="labHubGreeting">Welcome to the lab! Choose an experiment or resume your research.</p><div class="lab-hub-actions"><button type="button" id="hubContinue">💾 Continue Research</button><button type="button" id="hubModes">🧬 Choose a Mode</button><button type="button" id="hubNotes">📟 Research Notes</button><button type="button" id="hubScores">🏆 Hall of Globs</button></div><p class="lab-hub-hint">🛍️ The supply shelf opens during an experiment. 🛡️ Choose Guardians before Adventure and Hard Mode.</p></section><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span id="adventureLevel">Collect 3 DNA pieces</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode hard-mode" data-mode="hard">🔥 Hard Mode<span>Fiercer invaders · rising shop prices · 3 DNA</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><button type="button" class="secondary hidden" id="continueRun" style="display:block;margin:8px auto;min-height:48px">💾 Continue saved experiment</button><button type="button" class="secondary hidden" id="returnMainMenu" style="display:block;margin:8px auto">← Return to Main Menu</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button><button type="button" class="secondary" id="helpButton">❔ How to Play</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><nav class="game-actions" aria-label="Game menus"><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><button type="button" id="guardianToggle" class="shop-toggle guardian-action" aria-label="Open Guardian collection">🛡️ Guardians</button><button type="button" id="inspectToggle" class="shop-toggle inspect-action" aria-pressed="false">🔎 Inspect Glob</button></nav><div class="culture-status" id="cultureStatus" aria-label="Culture condition"><span id="cultureMood">💗 Your Globs are happy</span><span id="cultureWater">💧 0 / 10 droplets</span><span id="cultureThreat">✨ Peaceful for now</span></div><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
 <button class="buy" data-buy="glob"><span class="emoji">🦠</span><span class="desc"><strong>Baby Glob</strong><small>Another little producer</small></span><em id="cost-glob">70</em></button>
 <p class="note">🛡️ Choose Guardians on the Adventure preparation screen, not in the shop.</p>
 <button class="buy" data-buy="nutrition"><span class="emoji">💧</span><span class="desc"><strong>Rich droplets</strong><small>Permanent feeding upgrade</small></span><em id="cost-nutrition">140</em></button>
@@ -703,15 +902,31 @@ function dishPath(begin=true){
 }
 function drawDishRim(){
  ctx.save();
- // An opaque outside makes the chamber's distinctive silhouette immediately clear.
- ctx.fillStyle='#e9c5d9';ctx.beginPath();ctx.rect(0,0,W,H);dishPath(false);ctx.fill('evenodd');
- ctx.strokeStyle='#ef88bb';ctx.lineWidth=8;dishPath();ctx.stroke();
- ctx.strokeStyle='#fff8ffdd';ctx.lineWidth=3;dishPath();ctx.stroke();
+ // Illustrated glass rim: the lab remains faintly visible outside the culture chamber.
+ ctx.fillStyle='rgba(79,47,89,.16)';
+ ctx.beginPath();ctx.rect(0,0,W,H);dishPath(false);ctx.fill('evenodd');
  ctx.restore();
- if(dishShape()==='plus'){ctx.save();ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillStyle='#b46c98';ctx.fillText('✦ CROSS CULTURE ✦',450,212);ctx.restore()}
+ ctx.save();
+ // Soft raised shadow and thick outer edge create an actual dish silhouette.
+ ctx.shadowColor='rgba(69,37,78,.45)';
+ ctx.shadowBlur=23;ctx.shadowOffsetY=13;
+ ctx.strokeStyle='rgba(91,52,104,.6)';ctx.lineWidth=18;dishPath();ctx.stroke();
+ ctx.restore();
+ ctx.save();
+ ctx.strokeStyle='rgba(235,196,244,.88)';ctx.lineWidth=15;dishPath();ctx.stroke();
+ ctx.strokeStyle='#a96ca8';ctx.lineWidth=7;dishPath();ctx.stroke();
+ ctx.strokeStyle='rgba(255,251,255,.95)';ctx.lineWidth=3.5;dishPath();ctx.stroke();
+ // A few crisp highlights give the surface illustration-like depth.
+ ctx.save();dishPath();ctx.clip();
+ ctx.strokeStyle='rgba(255,255,255,.71)';ctx.lineWidth=12;ctx.lineCap='round';
+ ctx.beginPath();ctx.ellipse(450,310,404,264,0,3.56,4.55);ctx.stroke();
+ ctx.strokeStyle='rgba(255,255,255,.42)';ctx.lineWidth=4;
+ ctx.beginPath();ctx.ellipse(450,310,386,246,0,3.6,4.37);ctx.stroke();
+ ctx.restore();ctx.restore();
+ if(dishShape()==='plus'){ctx.save();ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillStyle='#9a578a';ctx.fillText('✦ CROSS CULTURE ✦',450,212);ctx.restore()}
  if(dishShape()==='bottleneck'){ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillStyle='#9e5482';ctx.fillText('⇆ NARROW PASSAGE ⇆',450,238);ctx.textAlign='left'}
 }
-function resetWorld(){ lastShape='oval';bossDefeated=false;bossWeakTime=0;elapsed=0;coins=mode==='lab'?200:mode==='hard'?95:130;dna=0;score=0;wave=0;attackTimer=mode==='lab'?Infinity:mode==='hard'?26:43;warning=0;starTime=0;mitosisTime=0;starDropTimer=60;scuttle=chosenGuardians().includes('scuttle');rescue=false;challengeDrops=45;flash=0;globs=[glob(310,290),glob(550,350)];water=[];bubbles=[];enemies=[];particles=[];floatingText=[];sparkles=[];guardians=chosenGuardians().filter(id=>id!=='scuttle').map((id,i)=>({id,x:390+i*95,y:280+i*35,cool:0,abilityCool:1.5}));scuttleX=400;scuttleY=320;autoTick=0;globs.forEach(g=>g.hunger=6);updateUI();message(activeLevel===13&&isDNAExperiment()?'🧫 Two linked dishes! Globs must squeeze through the narrow passage.':activeLevel===21&&isDNAExperiment()?'🌌 FINAL EXPERIMENT! The chamber shifts shape every 23 seconds.':'Tap inside the dish to add a 💧 moisture droplet!',5)}
+function resetWorld(){Exp1Tutorial.reset(); lastShape='oval';bossDefeated=false;bossWeakTime=0;elapsed=0;coins=mode==='lab'?200:mode==='hard'?95:130;dna=0;score=0;wave=0;attackTimer=mode==='lab'?Infinity:mode==='hard'?26:43;warning=0;starTime=0;mitosisTime=0;starDropTimer=60;scuttle=chosenGuardians().includes('scuttle');rescue=false;challengeDrops=45;flash=0;globs=[glob(310,290),glob(550,350)];water=[];bubbles=[];enemies=[];particles=[];floatingText=[];sparkles=[];guardians=chosenGuardians().filter(id=>id!=='scuttle').map((id,i)=>({id,x:390+i*95,y:280+i*35,cool:0,abilityCool:1.5}));scuttleX=400;scuttleY=320;autoTick=0;globs.forEach(g=>g.hunger=6);updateUI();message(activeLevel===13&&isDNAExperiment()?'🧫 Two linked dishes! Globs must squeeze through the narrow passage.':activeLevel===21&&isDNAExperiment()?'🌌 FINAL EXPERIMENT! The chamber shifts shape every 23 seconds.':'Tap inside the dish to add a 💧 moisture droplet!',5)}
 let guardianStep=false;
 function openGuardianMenu(){
   guardianStep=true;
@@ -729,8 +944,79 @@ function openGuardianMenu(){
   $('modalTip').textContent='Guardians are chosen here, separately from the Supply Shelf.';
   renderGuardianPicker();
 }
-function begin(){inspecting=false;clearCheckpoint();$('overlay').classList.remove('preparing');activeLevel=clamp(chosenLevel,1,save.level||1);guardianStep=false;document.body.classList.remove('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');mode=selected;resetWorld();state='playing';$('overlay').classList.add('hidden');$('pause').textContent='Ⅱ Pause';updateUI();sound(630);startMusic();saveCheckpoint()}
-function showMenu(type='menu'){$('overlay').classList.remove('preparing');if(state==='playing'&&(type==='paused'||type==='menu'))saveCheckpoint();if(['win','lose','timeup','challengewin'].includes(type))clearCheckpoint();guardianStep=false;$('levelPicker').classList.add('hidden');$('returnMainMenu').classList.toggle('hidden',type!=='paused');$('guardianBack').classList.add('hidden');$('guardianPicker').classList.add('hidden');$('guardianPicker').style.display='none';document.body.classList.add('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');state=type;$('overlay').classList.remove('hidden');$('modes').classList.toggle('hidden',type==='paused');$('reset').classList.toggle('hidden',type!=='menu');$('modalTip').textContent=type==='menu'?'Permanent upgrades and your Living Lab collection save in this browser.':`Mode: ${mode==='trial'?'Time Trial':mode==='challenge'?'Challenge':mode==='lab'?'Living Lab':'Adventure'}`;
+
+/* Optional first-care guidance observes existing mechanics without changing rewards. */
+/* Story moments appear in the dish without blocking gameplay or replaying on resume. */
+/* Nonblocking illustrated story calls: Scott joins after first Glob care, then during milestones. */
+const StoryMoments={
+ milestones:{
+  5:{speaker:'trung',label:'Professor Trung · Research update',line:'Those Globs are changing faster than my calculations! Keep a careful record of their DNA.'},
+  10:{speaker:'scott',label:'Incoming call · Scott',line:'Trung keeps talking about your discoveries. He is so proud of you. Keep going!'},
+  15:{speaker:'trung',label:'Professor Trung · Urgent lab call',line:'The contamination is spreading! Trust your Guardians and protect the Globs.'},
+  20:{speaker:'scott',label:'Incoming call · Scott',line:'We are almost home! Trung says your research could change everything.'},
+  21:{speaker:'trung',label:'Professor Trung · Final experiment',line:'One last experiment, my brilliant intern! Scott and I are cheering for you.'}
+ },
+ banner:null,seen:new Set(),firstCallKey:'petri-panic-scott-first-call-v1',
+ onExperimentStart(level){
+  const moment=this.milestones[level];
+  if(!moment||this.seen.has(level)||state!=='playing')return;
+  this.seen.add(level);this.show(moment);
+ },
+ onFirstCareComplete(){
+  if(state!=='playing'||mode!=='adventure'||activeLevel!==1)return;
+  try{if(localStorage.getItem(this.firstCallKey)==='seen')return}catch(e){}
+  this.show({speaker:'scott',label:'Incoming call · Scott',line:'Hi there! I’m Scott, Trung’s husband. He gets so absorbed in his experiments. Thanks for taking care of the Globs!'});
+  try{localStorage.setItem(this.firstCallKey,'seen')}catch(e){}
+ },
+ show(moment){
+  if(state!=='playing')return;
+  if(!this.banner){
+   const ribbon=document.getElementById('ribbon');if(!ribbon)return;
+   const el=document.createElement('aside');el.id='storyMoment';el.setAttribute('role','status');el.setAttribute('aria-live','polite');
+   const portrait=document.createElement('img');portrait.id='storyMomentPortrait';portrait.width=76;portrait.height=84;portrait.decoding='async';
+   const copy=document.createElement('div');copy.className='story-moment-copy';
+   const label=document.createElement('strong');label.id='storyMomentLabel';
+   const text=document.createElement('p');text.id='storyMomentText';copy.append(label,text);
+   const close=document.createElement('button');close.type='button';close.className='story-moment-close';close.textContent='Close';close.setAttribute('aria-label','Close character message');close.addEventListener('click',()=>this.hide());
+   el.append(portrait,copy,close);ribbon.insertAdjacentElement('afterend',el);this.banner=el;
+  }
+  const who=moment.speaker==='scott'?'Scott':'Professor Trung';
+  const img=this.banner.querySelector('#storyMomentPortrait');
+  img.src=moment.speaker==='scott'?'assets/scott-lab-call.jpg':'assets/professor-trung-approved.jpg';
+  img.alt=who+' cartoon portrait';
+  this.banner.querySelector('#storyMomentLabel').textContent=moment.label;
+  this.banner.querySelector('#storyMomentText').textContent=moment.line;
+  this.banner.hidden=false;
+ },
+ hide(){if(this.banner)this.banner.hidden=true}
+};
+const Exp1Tutorial={
+ step:0,bannerEl:null,dismissedForSession:false,
+ init(){this.reset();if(this.dismissedForSession||mode!=='adventure'||activeLevel!==1||state!=='playing')return;
+  let profile;try{profile=JSON.parse(localStorage.getItem('petri-panic-intern-v1'))}catch(e){return}
+  if(!profile||!profile.orientationDone||profile.exp1TutorialDone)return;
+  this.step=1;this.render('Prof. Trung: Tap inside the Petri dish near your Globs to place a water droplet!');
+ },
+ onWaterAction(){if(this.step!==1||state!=='playing')return;this.step=2;this.render('Prof. Trung: Lovely! Keep caring for your Globs. Watch for sparkling BioBits bubbles and tap one to collect it!')},
+ onCoinsEarned(){if(this.step!==2||state!=='playing')return;this.step=0;
+  try{const raw=localStorage.getItem('petri-panic-intern-v1');if(raw){const p=JSON.parse(raw);if(p&&typeof p==='object'&&!Array.isArray(p)){p.exp1TutorialDone=true;localStorage.setItem('petri-panic-intern-v1',JSON.stringify(p))}}}catch(e){}
+  this.render('Prof. Trung: You collected BioBits! Save up for a Baby Glob (70 BioBits) or a permanent Rich Droplets upgrade (140 BioBits) on the supply shelf. You choose when to shop!',true);
+ },
+ render(message,final=false){if(this.dismissedForSession)return;this.completed=final;
+  if(!this.bannerEl){const canvas=document.getElementById('game');if(!canvas)return;
+   const el=document.createElement('div');el.id='exp1TutorialBanner';el.setAttribute('role','status');el.setAttribute('aria-live','polite');
+   const avatar=document.createElement('div');avatar.className='tutorial-avatar';const portrait=document.createElement('img');portrait.src='assets/professor-trung-approved.jpg';portrait.alt='Professor Trung';portrait.width=60;portrait.height=60;portrait.decoding='async';avatar.appendChild(portrait);const messageBox=document.createElement('div');messageBox.className='tutorial-message';const sender=document.createElement('span');sender.className='tutorial-sender';sender.textContent='Professor Trung · Lab message';const words=document.createElement('span');words.className='tutorial-text-content';messageBox.append(sender,words);
+   const close=document.createElement('button');close.type='button';close.className='tutorial-dismiss-btn';close.textContent='Dismiss';close.addEventListener('click',()=>{const finished=this.completed===true;this.dismissedForSession=true;this.reset();if(finished)StoryMoments.onFirstCareComplete()});
+   el.append(avatar,messageBox,close);canvas.parentNode.insertBefore(el,canvas);this.bannerEl=el;
+  }
+  this.bannerEl.querySelector('.tutorial-text-content').textContent=message.replace(/^Prof\. Trung:\s*/, '');
+  const close=this.bannerEl.querySelector('.tutorial-dismiss-btn');close.textContent=final?'Got it!':'Dismiss';close.setAttribute('aria-label',final?'Acknowledge tutorial completion':'Dismiss tutorial guidance');
+  this.bannerEl.hidden=false;
+ },
+ reset(){this.step=0;this.completed=false;if(this.bannerEl)this.bannerEl.hidden=true}
+};
+function begin(){inspecting=false;clearCheckpoint();$('overlay').classList.remove('preparing');activeLevel=clamp(chosenLevel,1,save.level||1);guardianStep=false;document.body.classList.remove('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');mode=selected;resetWorld();state='playing';$('overlay').classList.add('hidden');$('pause').textContent='Ⅱ Pause';updateUI();sound(630);startMusic();saveCheckpoint();Exp1Tutorial.init();if(mode==='adventure')StoryMoments.onExperimentStart(activeLevel)}
+function showMenu(type='menu'){StoryMoments.hide();Exp1Tutorial.reset();$('overlay').classList.remove('preparing');if(state==='playing'&&(type==='paused'||type==='menu'))saveCheckpoint();if(['win','lose','timeup','challengewin'].includes(type))clearCheckpoint();guardianStep=false;$('levelPicker').classList.add('hidden');$('returnMainMenu').classList.toggle('hidden',type!=='paused');$('guardianBack').classList.add('hidden');$('guardianPicker').classList.add('hidden');$('guardianPicker').style.display='none';document.body.classList.add('menu-open');document.getElementById('supplyPanel').classList.remove('shopping');state=type;$('overlay').classList.remove('hidden');$('modes').classList.toggle('hidden',type==='paused');$('reset').classList.toggle('hidden',type!=='menu');$('modalTip').textContent=type==='menu'?'Permanent upgrades and your Living Lab collection save in this browser.':`Mode: ${mode==='trial'?'Time Trial':mode==='challenge'?'Challenge':mode==='lab'?'Living Lab':'Adventure'}`;
 let title='Welcome to the Pink Lab!',body='Water the dish, nurture Globs to Expert level, collect BioBits, and survive contamination. Choose a mode!',action="Let's grow! ♡",icon='🌸🦠🌸';
 if(type==='paused'){title='Taking a tiny break?';body='Everything is frozen exactly where you left it.';action='Resume ♡';icon='💖'}
 if(type==='win'){const wasHard=mode==='hard';const finalLevel=activeLevel===21;const nextLevel=clamp(activeLevel+1,1,21);chosenLevel=wasHard?activeLevel:nextLevel;title=wasHard?'🔥 Hard Mode conquered!':finalLevel?'Pink Lab Adventure Complete!':'Experiment complete!';body=wasHard?'You survived Experiment '+activeLevel+' with tougher contamination, shorter coin lifetimes, and rising shop prices! Hard clears: '+(save.hardWins?.length||1)+'/21.':finalLevel?'You assembled all 21 experiments! Revisit your favorite levels and try new Guardian teams.':'Three DNA fragments assembled! Experiment '+nextLevel+' is ready. Choose your Guardians for the next level!';action=wasHard?'Replay Hard Experiment '+String(activeLevel).padStart(2,'0')+' 🔥':finalLevel?'Replay Experiment 21 ✨':'Next: Experiment '+String(nextLevel).padStart(2,'0')+' ✨';icon='🎉🧬🎉'}
@@ -754,14 +1040,14 @@ function starShape(x,y,r,color,alpha=1){ctx.save();ctx.translate(x,y);ctx.global
 function drawSparkles(){for(const p of sparkles)starShape(p.x,p.y,p.size,p.color,p.life/.9)}
 
 function bubble(x,y,value){const a=rnd(0,Math.PI*2),v=rnd(90,170),life=value>=60?6.5:value>=27?5.5:4.5;bubbles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,value,life,phase:rnd(0,6),orbit:Math.random()<.5?-1:1,r:value>=60?16:value>=27?13:10})}
-function collect(b){if(b.gone)return;b.gone=true;coins+=b.value;score+=b.value;emit(b.x,b.y,'#ffd675',15);floatingText.push({x:b.x,y:b.y,text:'+'+b.value,life:1.1});sparkleBurst(b.x,b.y,b.value>=60?14:7,'gold');sound(740);updateUI()}
+function collect(b){if(b.gone)return;b.gone=true;coins+=b.value;Exp1Tutorial.onCoinsEarned();score+=b.value;emit(b.x,b.y,'#ffd675',15);floatingText.push({x:b.x,y:b.y,text:'+'+b.value,life:1.1});sparkleBurst(b.x,b.y,b.value>=60?14:7,'gold');sound(740);updateUI()}
 function click(x,y){if(state!=='playing')return;if(!insideDish(x,y,5)){message('Tap inside the culture chamber! 🧫',1.5);return}if(inspecting){inspecting=false;$('inspectToggle').setAttribute('aria-pressed','false');$('inspectToggle').classList.remove('selected');const pick=globs.filter(g=>!g.dead).sort((a,b)=>distance(a,{x,y})-distance(b,{x,y}))[0];if(pick&&distance(pick,{x,y})<radius(pick)+22){showGlobDetails(pick)}else message('Tap directly on a Glob to inspect its personality!',2);return}for(let i=enemies.length-1;i>=0;i--){let e=enemies[i];if(distance(e,{x,y})<e.r+15){const hit=1+save.zap+(starTime>0?2:0)+(e.kind==='boss'&&bossWeakTime>0?2:0);e.hp-=hit;emit(x,y,'#ffd4eb',9);
  if(e.hp<=0){if(e.kind==='boss')defeatBoss(e);else{e.dead=true;score+=30;emit(e.x,e.y,'#fc83b9',25);sparkleBurst(e.x,e.y,12,'mint');message(e.kind==='virus'?'Virus neutralized!':'Mold cleaned!',1.5)}}
  else message(e.kind==='boss'?(bossWeakTime>0?'✨ Weak spot hit!':'⚔️ '+bossNames[activeLevel]+' · '+Math.ceil(e.hp)+' hits left'):'Keep tapping to sterilize!',1.1);
  sound(e.kind==='boss'?290:410);updateUI();return}}
 for(let i=bubbles.length-1;i>=0;i--){let b=bubbles[i];if(distance(b,{x,y})<b.r+22){collect(b);return}}
 if(mode==='challenge'&&challengeDrops<=0){message('Out of droplets! Keep your culture alive!',2);return}
-if(water.length>=10){message('💧 Ten drops max! Wait for one to disappear.',1.2);return}if(!insideDish(x,y,18))return;sparkleBurst(x,y,5,'blue');water.push({x,y,r:12+save.nutrition*2,life:8+save.nutrition*1.5,phase:rnd(0,7),power:1+save.nutrition*.55});if(mode==='challenge')challengeDrops--;emit(x,y,'#9dd8ff',7);sound(540);updateUI()}
+if(water.length>=10){message('💧 Ten drops max! Wait for one to disappear.',1.2);return}if(!insideDish(x,y,18))return;sparkleBurst(x,y,5,'blue');water.push({x,y,r:12+save.nutrition*2,life:8+save.nutrition*1.5,phase:rnd(0,7),power:1+save.nutrition*.55});Exp1Tutorial.onWaterAction();if(mode==='challenge')challengeDrops--;emit(x,y,'#9dd8ff',7);sound(540);updateUI()}
 function showGlobDetails(g){const name=['Shy little petal','Friendly sweetheart','Energetic bubble'][g.personality],stageName=['Baby','Grown','Expert'][stage(g)];const hp=Math.ceil(Math.max(0,g.hp)/maxhp(g)*100),thirst=Math.round(Math.max(0,g.hunger)/48*100);$('globInspectDetails').innerHTML='<div class="inspect-portrait">'+(['🌸','💖','💗'][g.personality])+'</div><strong>'+name+'</strong><p>'+stageName+' Glob · '+(g.poison?'💚 Needs antidote':g.hp<maxhp(g)?'💗 Healing needed':g.hunger>25?'💧 Thirsty':'✨ Feeling loved')+'</p><div class="inspect-meter">Health: '+hp+'%</div><div class="inspect-meter">Thirst: '+thirst+'%</div><div class="inspect-meter">Growth: '+Math.min(100,Math.round(g.eaten/9*100))+'%</div><p>'+(['Earns fewer BioBits but likes taking things slow.','Loves company and gentle care.','Fast, busy and always looking for water.'][g.personality])+'</p>';$('globInspectOverlay').classList.remove('hidden');state='inspect'}
 function closeGlobDetails(){$('globInspectOverlay').classList.add('hidden');if(state==='inspect')state='playing'}
 function purchase(k){if(state!=='playing')return;if((k==='scuttle'&&save.scuttleUnlocked)||(k==='revive'&&rescue)||(k==='nutrition'&&save.nutrition>=3)||(k==='regen'&&save.regen>=3)||(k==='zap'&&save.zap>=3)){message('Already owned or fully upgraded!',2);return}if((k==='dna'&&!isDNAExperiment())){message('DNA fragments are collected in Adventure and Hard Mode.',2);return}if(k==='dna'&&dna===2&&hasBossLevel()&&!bossDefeated){message('Defeat '+bossNames[activeLevel]+' before finishing DNA! ⚔️',3);return}let price=getCost(k);if(coins<price){message(`Need ${price-coins} more BioBits for that!`,2);sound(230);return}coins-=price;sparkleBurst(740,115,12,'pink');
@@ -852,14 +1138,75 @@ if(globs.length===0){if(rescue){rescue=false;let g=glob(W/2,H/2);g.hunger=0;glob
 checkpointTimer+=dt;if(checkpointTimer>=4){checkpointTimer=0;saveCheckpoint()}
 uiTick-=dt;if(uiTick<=0){uiTick=.18;updateUI()}}
 function ell(x,y,rx,ry,color){ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill()}
-function drawBackground(){let grad=ctx.createRadialGradient(450,310,50,450,310,520);grad.addColorStop(0,'#fffaff');grad.addColorStop(.65,'#ffe8f4');grad.addColorStop(1,'#f5bfdb');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.strokeStyle='#df95be25';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}drawDishRim();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
-
+/* Static illustrated workbench, locally hosted. A drawn fallback remains for offline loads. */
+const LabScene={image:new Image(),ready:false};
+LabScene.image.addEventListener('load',()=>{LabScene.ready=LabScene.image.naturalWidth>0});
+LabScene.image.addEventListener('error',()=>{LabScene.ready=false});
+LabScene.image.src='assets/lab-environment.svg';
+function drawBackground(){
+ if(LabScene.ready)ctx.drawImage(LabScene.image,0,0,W,H);
+ else{
+  const wall=ctx.createLinearGradient(0,0,900,620);
+  wall.addColorStop(0,'#cdb4db');wall.addColorStop(.5,'#fbe0ed');wall.addColorStop(1,'#af86bb');
+  ctx.fillStyle=wall;ctx.fillRect(0,0,W,H);
+ }
+ // The culture chamber must remain high contrast and easy to tap.
+ ctx.save();dishPath();ctx.clip();
+ const fluid=ctx.createRadialGradient(390,235,28,450,310,565);
+ fluid.addColorStop(0,'rgba(255,252,255,.95)');
+ fluid.addColorStop(.67,'rgba(255,235,247,.91)');
+ fluid.addColorStop(1,'rgba(252,184,219,.88)');
+ ctx.fillStyle=fluid;ctx.fillRect(0,0,W,H);
+ ctx.strokeStyle='rgba(159,92,145,.105)';ctx.lineWidth=1;
+ for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+ for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+ const glimmer=ctx.createLinearGradient(80,75,750,565);
+ glimmer.addColorStop(0,'rgba(255,255,255,.16)');
+ glimmer.addColorStop(.5,'rgba(255,255,255,0)');
+ glimmer.addColorStop(1,'rgba(225,111,174,.11)');
+ ctx.fillStyle=glimmer;ctx.fillRect(0,0,W,H);
+ ctx.restore();
+ drawDishRim();
+ for(let i=0;i<26;i++){const x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,1.8+i%3,1.8+i%3,'rgba(250,141,190,.20)')}
+ ctx.font='900 13px Trebuchet MS';ctx.fillStyle='#a35c86';ctx.fillText('P E T R I   P A N I C',37,580);
+ ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';
+ if(flash>0){ctx.fillStyle='rgba(255,70,124,'+(flash*.18)+')';ctx.fillRect(0,0,W,H)}
+}
+/* Shared hand-drawn, locally hosted game art. Canvas keeps its procedural fallback until loaded. */
+const PetriArt={
+ image:new Image(),
+ ready:false,
+ draw(col,row,x,y,size){
+  if(!this.ready)return false;
+  ctx.drawImage(this.image,col*96,row*96,96,96,x-size/2,y-size/2,size,size);
+  return true;
+ }
+};
+PetriArt.image.addEventListener('load',()=>{PetriArt.ready=PetriArt.image.naturalWidth>=288});
+PetriArt.image.addEventListener('error',()=>{PetriArt.ready=false});
+PetriArt.image.src='assets/petri-sprites.svg';
 function drawGlob(g){
  const st=stage(g),r=radius(g),dry=g.hunger>30,injured=g.hurtTimer>0,sick=g.poison>0;
  const scared=!sick&&enemies.some(e=>!e.dead&&distance(e,g)<125);
  const hungry=g.hunger>24,happy=g.heartTimer>0||g.moodTimer>0;
  const blink=Math.sin(elapsed*2.25+g.face*7)>0.992;
  const mood=sick?'sick':injured?'hurt':scared?'scared':hungry?'hungry':g.heartTimer>0?'love':happy?'happy':g.eaten>2&&Math.sin(elapsed*1.7+g.phase)>.65?'excited':'idle';
+ // The simplified sprite preserves the original movement and hitboxes.
+ // Distress expressions still use the animated procedural drawing below.
+ if((mood==='idle'||mood==='happy'||mood==='love'||mood==='excited')&&PetriArt.ready){
+  const wobble=1+Math.sin(g.phase*2.7)*.045;
+  ctx.save();ctx.translate(g.x,g.y);ctx.rotate(Math.sin(g.phase)*.08);
+  ctx.scale(wobble,1/wobble);
+  ctx.shadowColor='#bd77a7';ctx.shadowBlur=8;
+  PetriArt.draw(Math.abs(g.personality||0)%3,0,0,0,r*3.05);
+  ctx.shadowBlur=0;
+  if(mood==='love')starShape(r*.83,-r*.95,7,'#f575a4',1);
+  if(st===2)starShape(0,-r-12,7,'#ffe37a',.8+.2*Math.sin(elapsed*6));
+  else if(st===1)starShape(r*.9,-r*.7,4,'#fff',.9);
+  if(g.shieldTime>0){ctx.strokeStyle='#83d5ee';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,r*1.25,0,Math.PI*2);ctx.stroke()}
+  ctx.restore();return;
+ }
+
  ctx.save();ctx.translate(g.x,g.y);ctx.rotate(Math.sin(g.phase)*.08+(injured?Math.sin(elapsed*27)*.1:0));
  const wobble=Math.sin(g.phase*2.7)*.045;ctx.scale(1+wobble,1-wobble+(happy?.04:0));
  ctx.shadowColor=sick?'#A7F0C5':'#E791BF';ctx.shadowBlur=16;
@@ -964,6 +1311,11 @@ function guardianOutline(id,p){
 function drawGuardian(guard){
  const p=GUARDIAN_LOOKS[guard.id]||GUARDIAN_LOOKS.bouncer;
  const bob=Math.sin(elapsed*3.6+guard.x*.018+guard.y*.011)*2.5;
+ if(guard.id==='bouncer'&&PetriArt.ready){
+  ctx.save();ctx.translate(guard.x,guard.y+bob);ctx.rotate(Math.sin(elapsed*1.7+guard.y*.02)*.065);
+  ctx.shadowColor='#8acbd8';ctx.shadowBlur=10;
+  PetriArt.draw(0,1,0,0,83);ctx.restore();return;
+ }
  ctx.save();ctx.translate(guard.x,guard.y+bob);
  ctx.rotate(Math.sin(elapsed*1.7+guard.y*.02)*.07);
  ctx.shadowColor=p.shade;ctx.shadowBlur=12;
@@ -983,7 +1335,7 @@ function drawGuardian(guard){
  if(guard.id==='beacon'&&guard.lureTime>0){ctx.strokeStyle='#D1A9F0A0';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,37,0,Math.PI*2);ctx.stroke()}
  ctx.restore();
 }
-function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}ctx.restore()}for(const g of globs)drawGlob(g);
+function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';if(!PetriArt.draw(2,1,w.x,w.y,Math.max(27,w.r*2.65))){ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');}ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;if(!PetriArt.draw(1,1,0,0,r*2.75)){ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}}ctx.restore()}for(const g of globs)drawGlob(g);
 if(scuttle){ctx.save();ctx.translate(scuttleX,scuttleY);ell(0,12,37,17,'#e9a3b9');ell(11,0,23,22,'#ffd2c2');ell(13,-7,17,17,'#ffe5ce');ell(-23,1,13,12,'#e590d4');ell(-27,-3,4,5,'#64365b');ell(-16,-3,4,5,'#64365b');ctx.strokeStyle='#a7659e';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-28,-9);ctx.lineTo(-32,-24);ctx.moveTo(-17,-9);ctx.lineTo(-12,-24);ctx.stroke();ctx.restore()}
 for(const guard of guardians)drawGuardian(guard);for(const e of enemies){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(Math.sin(e.phase)*.08);ctx.shadowColor='#a33e87';ctx.shadowBlur=14;
  if(e.kind==='boss'){
@@ -1011,5 +1363,239 @@ $('runCheck').style.display='none';
 window.addEventListener('error',function(event){try{$('runCheck').style.display='block';$('runCheck').textContent='Game error: '+(event.message||'unknown issue')+'. Try opening the hosted HTTPS URL in Safari.';}catch(e){}});
 // Avoid false pauses when iOS Safari briefly loses focus during touch interactions.
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing'){saveCheckpoint();pause()}});
+
+/* Endgame: local score records, victory fanfare, verifiable credits. */
+const ENDGAME_SCORE_KEY='petri-panic-pink-lab-scores-v1';
+const endgameExtras=document.createElement('div');endgameExtras.id='endgameExtras';
+const scoresButton=document.createElement('button');scoresButton.type='button';scoresButton.textContent='🏆 High Scores';
+const creditsButton=document.createElement('button');creditsButton.type='button';creditsButton.textContent='🎬 Credits';
+const endgamePanel=document.createElement('section');endgamePanel.id='endgamePanel';endgamePanel.hidden=true;endgamePanel.setAttribute('aria-live','polite');
+endgameExtras.append(scoresButton,creditsButton);
+$('play').insertAdjacentElement('afterend',endgameExtras);
+endgameExtras.insertAdjacentElement('afterend',endgamePanel);
+function readHighScores(){try{const a=JSON.parse(localStorage.getItem(ENDGAME_SCORE_KEY)||'[]');return Array.isArray(a)?a.filter(x=>x&&typeof x.score==='number'&&Number.isFinite(x.score)).slice(0,100):[]}catch{return []}}
+function saveHighScore(kind){if(!['win','timeup','challengewin'].includes(kind))return;
+ const category=kind==='timeup'?'Time Trial':kind==='challengewin'?'Challenge':mode==='hard'?'Hard Mode':'Adventure';
+ const internProfile=(()=>{try{return JSON.parse(localStorage.getItem('petri-panic-intern-v1')||'null')}catch{return null}})();const record={category,score:Math.max(0,Math.floor(score)),level:activeLevel,completed:kind==='win',date:new Date().toISOString().slice(0,10),internName:internProfile&&internProfile.name||'Anonymous Intern',internId:internProfile&&internProfile.id||null};
+ try{const scores=readHighScores();scores.push(record);scores.sort((a,b)=>b.score-a.score);localStorage.setItem(ENDGAME_SCORE_KEY,JSON.stringify(scores.slice(0,100)))}catch(e){console.warn('High scores could not be saved',e)}
+}
+function scoreBoard(){endgamePanel.replaceChildren();const title=document.createElement('h3');title.textContent='🏆 Hall of Globs';endgamePanel.append(title);
+ const all=readHighScores();if(!all.length){const p=document.createElement('p');p.textContent='No recorded finishes yet. Your next victory will make the board!';endgamePanel.append(p);return}
+ for(const category of ['Adventure','Hard Mode','Time Trial','Challenge']){const rows=all.filter(x=>x.category===category).sort((a,b)=>b.score-a.score).slice(0,5);if(!rows.length)continue;
+ const h=document.createElement('strong');h.textContent=category;endgamePanel.append(h);const ol=document.createElement('ol');rows.forEach(x=>{const li=document.createElement('li');li.textContent=(x.internName||'Anonymous Intern')+' · '+x.score.toLocaleString()+' points · '+(x.completed?'Experiment '+x.level:'Finished')+' · '+x.date;ol.append(li)});endgamePanel.append(ol)}
+ const p=document.createElement('p');p.className='endgame-note';p.textContent='Local high scores are stored only in this browser. Older victories cannot be recovered automatically.';endgamePanel.append(p);
+}
+function creditsPage(){endgamePanel.replaceChildren();const h=document.createElement('h3');h.textContent='🎬 Petri Panic Pink Lab';endgamePanel.append(h);
+ const creator=document.createElement('p');creator.className='credit-line';creator.textContent='Original Vision · Game Concept · Creative Direction · Creator';const name=document.createElement('strong');name.textContent='Trung C. Ho';creator.append(name);endgamePanel.append(creator);
+ const original=document.createElement('p');original.className='credit-line';original.textContent='The original vision and creative foundation for Petri Panic Pink Lab, including its playful world and overall game direction';endgamePanel.append(original);
+ const repo=document.createElement('p');repo.className='credit-line';repo.append('Source repository: ');const a=document.createElement('a');a.href='https://github.com/magicalboyco/petri-panic';a.target='_blank';a.rel='noopener noreferrer';a.textContent='magicalboyco/petri-panic';repo.append(a);endgamePanel.append(repo);
+ const fonts=document.createElement('p');fonts.className='credit-line';fonts.textContent='Typography: Google Fonts — Fredoka, Nunito, Cute Font, Press Start 2P';endgamePanel.append(fonts);
+ const soundCredit=document.createElement('p');soundCredit.className='credit-line';soundCredit.textContent='Victory music: original synthesized fanfare generated in-browser with Web Audio';endgamePanel.append(soundCredit);
+ const note=document.createElement('p');note.className='endgame-note';note.textContent='Additional third-party repository credits will be added when their use and licenses are verified.';endgamePanel.append(note);
+}
+function showEndgamePanel(which){endgamePanel.hidden=false;if(which==='scores')scoreBoard();else creditsPage()}
+scoresButton.addEventListener('click',()=>{if(!endgamePanel.hidden&&endgamePanel.dataset.view==='scores'){endgamePanel.hidden=true;return}endgamePanel.dataset.view='scores';showEndgamePanel('scores')});
+creditsButton.addEventListener('click',()=>{if(!endgamePanel.hidden&&endgamePanel.dataset.view==='credits'){endgamePanel.hidden=true;return}endgamePanel.dataset.view='credits';showEndgamePanel('credits')});
+function victoryFanfare(){try{if(typeof muted!=='undefined'&&muted)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const ac=new AC();const notes=[523.25,659.25,783.99,1046.5,783.99,1046.5,1318.51];const now=ac.currentTime+.04;notes.forEach((hz,i)=>{const start=now+i*.145;const osc=ac.createOscillator(),g=ac.createGain();osc.type='triangle';osc.frequency.setValueAtTime(hz,start);g.gain.setValueAtTime(.0001,start);g.gain.exponentialRampToValueAtTime(.10,start+.02);g.gain.exponentialRampToValueAtTime(.0001,start+.22);osc.connect(g);g.connect(ac.destination);osc.start(start);osc.stop(start+.23)});setTimeout(()=>ac.close().catch(()=>{}),2200)}catch(e){console.warn('Victory audio unavailable',e)}}
+const originalShowMenu=showMenu;
+showMenu=function(type='menu'){
+ const isFinish=['win','timeup','challengewin'].includes(type);
+ if(isFinish)saveHighScore(type);
+ originalShowMenu(type);
+ $('overlay').classList.toggle('ending-celebration',isFinish);
+ endgamePanel.hidden=true;endgamePanel.dataset.view='';
+ if(type==='menu'){
+   $('modalTitle').textContent='Welcome to Professor Trung’s Pink Lab!';
+   $('modalBody').textContent='First day at the Pink Lab! Professor Trung C. Ho has accidentally scheduled your internship orientation on the same day as important plans with his husband, Scott. He rushes out, leaving YOU in charge of his greatest experiment: grow a brand-new species of Globs. Water them, collect DNA, and watch out for contamination. You’ll be fine. Probably!';
+ }
+ if(type==='win'&&activeLevel===21&&mode!=='hard'){
+   $('modalTitle').textContent='🏆 THE PINK LAB IS SAVED! 🏆';
+   $('modalBody').textContent='EUREKA! Professor Trung shouts: “WE DID IT! A brand-new species—and they’re adorable! This is OUR greatest scientific achievement!” You arrived as the new intern on your very first day. While Professor Trung hurried off to meet Scott, you raised the first Globs, saved the lab, and completed all 21 experiments. Scott arrives at the lab with a proud smile. “I knew you two would make a wonderful team.” Professor Trung beams: “Then it is official! You are no longer my intern. You are our LEAD GLOB RESEARCHER!” Your internship has become a scientific legend. Final score: '+Math.floor(score).toLocaleString()+' · Your next adventure starts whenever you are ready.';
+   scoresButton.textContent='🏆 View Your High Scores';
+   creditsButton.textContent='🎬 Roll Credits';
+ }else{scoresButton.textContent='🏆 High Scores';creditsButton.textContent='🎬 Credits'}
+ if(isFinish)victoryFanfare();
+};
+
+
+/* Menu-only Lab Hub: shortcuts reuse existing actions and do not alter runs. */
+(function(){
+ const hub=document.getElementById('labHub');if(!hub)return;
+ const existingContinue=document.getElementById('continueRun');
+ document.getElementById('hubContinue').addEventListener('click',()=>{if(loadCheckpoint())existingContinue.click();else{document.getElementById('hubModes').click()}});
+ document.getElementById('hubModes').addEventListener('click',()=>{const modes=document.getElementById('modes');modes.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});const first=modes.querySelector('button:not([disabled])');if(first)first.focus({preventScroll:true})});
+ document.getElementById('hubNotes').addEventListener('click',()=>{const panel=document.getElementById('profPagerNotes'),button=document.getElementById('profPagerButton');if(panel.hidden)button.click();button.scrollIntoView({block:'center'});button.focus({preventScroll:true})});
+ document.getElementById('hubScores').addEventListener('click',()=>{if(typeof scoresButton!=='undefined'&&scoresButton)scoresButton.click()});
+ const original=showMenu;
+ showMenu=function(type='menu'){original(type);hub.hidden=type!=='menu';if(type==='menu'){let p=null;try{p=JSON.parse(localStorage.getItem('petri-panic-intern-v1'))}catch(e){}const name=p&&typeof p.name==='string'?p.name:'Intern';document.getElementById('labHubGreeting').textContent='Welcome back, '+name+'! Your Globs are counting on you.';const has=!!loadCheckpoint();document.getElementById('hubContinue').textContent=has?'💾 Continue Saved Research':'🧬 Start Your Research';}};
+})();
 chosenLevel=clamp(save.level||1,1,21);updateUI();showMenu('menu');requestAnimationFrame(frame);
-})();</script></body></html>
+})();</script><script>
+/* Non-destructive welcome polish. The existing game state, shop and save routines remain authoritative. */
+(()=>{
+ const icons={
+ adventure:'<path d="M5 4c12 0 2 16 14 16M19 4C7 4 17 20 5 20"/><path d="M7 8h10M7 16h10"/>',
+ trial:'<circle cx="12" cy="13" r="8"/><path d="M12 8v5l3 2M9 2h6"/>',
+ challenge:'<path d="M12 21V4M12 11H7a3 3 0 0 1-3-3V6m8 9h5a3 3 0 0 0 3-3v-2"/>',
+ hard:'<path d="M12 22c5 0 8-4 8-9 0-3-2-6-5-9 0 4-3 5-3 8-2-1-3-3-3-5-3 3-5 7-5 10 0 3 3 5 8 5Z"/>',
+ lab:'<path d="m12 3 2.5 5.5L20 11l-5.5 3L12 21l-2.5-7L4 11l5.5-2.5L12 3Z"/>'
+ };
+ const modes=document.getElementById('modes');
+ if(!modes)return;
+ const cards=Array.from(modes.querySelectorAll('button[data-mode]'));
+ cards.forEach(card=>{
+  const k=card.dataset.mode;
+  if(!card.querySelector('.mode-icon')){
+   const badge=document.createElement('span');badge.className='mode-icon';badge.setAttribute('aria-hidden','true');
+   badge.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+(icons[k]||icons.lab)+'</svg>';
+   card.insertBefore(badge,card.firstChild);
+  }
+  card.setAttribute('aria-pressed',String(card.classList.contains('active')));
+ });
+ const sync=()=>cards.forEach(card=>card.setAttribute('aria-pressed',String(card.classList.contains('active'))));
+ modes.addEventListener('click',()=>queueMicrotask(sync));
+ modes.addEventListener('keydown',event=>{
+  if(!['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(event.key))return;
+  event.preventDefault();
+  const i=cards.indexOf(document.activeElement);
+  const d=event.key==='ArrowRight'||event.key==='ArrowDown'?1:-1;
+  const next=cards[(Math.max(i,0)+d+cards.length)%cards.length];
+  next.focus();next.click();sync();
+ });
+ const mascot=document.getElementById('mascot');
+ if(mascot){
+  mascot.setAttribute('role','button');mascot.setAttribute('tabindex','0');mascot.setAttribute('aria-label','Give the Pink Lab mascot a little bounce');
+  const bounce=()=>{
+   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+   mascot.animate([{transform:'scale(1)'},{transform:'scale(1.16) rotate(5deg)'},{transform:'scale(1)'}],{duration:400,easing:'cubic-bezier(.175,.885,.32,1.275)'});
+  };
+  mascot.addEventListener('click',bounce);
+  mascot.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();bounce()}});
+ }
+})();
+
+</script>
+<style>
+#internOrientation{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:18px;background:rgba(40,18,56,.8);backdrop-filter:blur(8px)}
+#internOrientation[hidden]{display:none!important}
+#internOrientation .intern-card{width:min(100%,490px);max-height:90dvh;overflow:auto;border:5px solid #fff;border-radius:28px;background:linear-gradient(160deg,#fff8fc,#ffe0f0);color:#593351;box-shadow:0 18px 60px #2c123b77;padding:24px;text-align:center;font-family:Nunito,system-ui,sans-serif}
+#internOrientation .intern-avatar{font-size:58px;line-height:1.3}
+#internOrientation h2{font-family:Fredoka,system-ui,sans-serif;color:#b83d80;margin:8px 0}
+#internOrientation .intern-dialogue{font-size:17px;line-height:1.5;min-height:100px;margin:16px 0;white-space:pre-line}
+#internOrientation input{display:block;width:100%;box-sizing:border-box;border:2px solid #e69bc2;border-radius:12px;background:#fff;color:#452b42;padding:13px;font:inherit;margin:12px 0}
+#internOrientation button{border:0;border-radius:14px;background:#f36ba6;color:#fff;padding:12px 20px;font:800 16px Nunito,system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 0 #b93e7c}
+#internOrientation button:disabled{opacity:.5;cursor:not-allowed}
+#internOrientation button{min-width:44px;min-height:44px;touch-action:manipulation}
+#internOrientation .intern-card{overscroll-behavior:contain}
+#internOrientation .intern-skip{background:transparent;color:#855977;box-shadow:none;font-size:13px}
+#internOrientation .intern-progress{font-size:12px;color:#946a84;margin-top:14px}
+
+/* Approved Professor Trung art: use the exact illustrated character in every context. */
+#internOrientation .intern-card{
+ width:min(100%,420px);max-height:calc(100dvh - 30px);overflow-y:auto;
+ padding:0 18px 18px;border:3px solid #fff;border-radius:26px;
+ background:#fff8fd;box-shadow:0 16px 55px #351c4177;
+ display:flex;flex-direction:column;align-items:center;gap:7px;
+}
+#internOrientation .intern-avatar{
+ position:relative;width:calc(100% + 36px);max-width:none;margin:0 0 8px!important;
+ display:block;flex:none;font-size:initial;line-height:normal;
+}
+#internOrientation .intern-avatar img{
+ display:block;width:100%;height:clamp(185px,34dvh,288px);
+ object-fit:cover;object-position:50% 32%;
+ border-radius:22px 22px 0 0;
+}
+#internOrientation .intern-avatar-caption{
+ display:block;position:relative;margin:-15px auto 0;padding:5px 12px;
+ width:max-content;max-width:calc(100% - 20px);
+ border:1px solid #e7b1cf;border-radius:999px;background:#fff8fd;
+ font:900 10px Nunito,system-ui,sans-serif;letter-spacing:.11em;color:#98517b;
+ box-shadow:0 2px 0 #f0d2e4;
+}
+#internOrientation h2{margin:4px auto 0;line-height:1.12;font-size:clamp(23px,6vw,31px);max-width:340px}
+#internOrientation .intern-dialogue{min-height:0;margin:8px 0 10px;line-height:1.45;font-size:clamp(14px,3.9vw,16px);max-width:350px}
+#internOrientation input{margin:4px 0 8px}
+#internOrientation #internNext{margin:3px 0}
+#internOrientation #internProgress{margin:4px 0 0}
+#profPagerNotes .professor-mini-portrait{
+ flex:0 0 92px;width:92px;height:104px;display:block;object-fit:cover;
+ object-position:50% 22%;border:2px solid #d9a0bc;border-radius:15px;background:#f8deee;
+}
+#exp1TutorialBanner .tutorial-avatar img{
+ width:100%;height:100%;display:block;object-fit:cover;object-position:50% 18%;
+ transform:scale(1.55);transform-origin:center 38%;
+}
+@media(max-width:390px){
+ #internOrientation{padding:9px}
+ #internOrientation .intern-card{padding:0 14px 13px}
+ #internOrientation .intern-avatar{width:calc(100% + 28px)}
+ #internOrientation .intern-avatar img{height:clamp(170px,31dvh,238px)}
+ #internOrientation h2{font-size:24px}
+ #internOrientation .intern-dialogue{font-size:14px}
+}
+</style>
+<div id="internOrientation" hidden role="dialog" aria-modal="true" aria-labelledby="internHeading">
+ <div class="intern-card">
+  <div class="intern-avatar"><img src="assets/professor-trung-approved.jpg" alt="Professor Trung smiles and welcomes you to the lab, holding a petri dish filled with adorable pink Globs." width="340" height="290" decoding="async" fetchpriority="high"><span class="intern-avatar-caption">MEET PROFESSOR TRUNG</span></div>
+  <h2 id="internHeading">Welcome to Pink Laboratories!</h2>
+  <p id="internDialogue" class="intern-dialogue" aria-live="polite"></p>
+  <label id="internNameLabel" for="internNameInput" hidden>Your intern name</label>
+  <input id="internNameInput" maxlength="16" autocomplete="nickname" placeholder="Enter your name" hidden>
+  <button id="internNext" type="button">Continue ♡</button>
+  <button id="internSkip" type="button" class="intern-skip">Skip story</button>
+  <div id="internProgress" class="intern-progress"></div>
+ </div>
+</div>
+<script>
+(()=>{'use strict';
+const KEY='petri-panic-intern-v1',el=document.getElementById('internOrientation'),dialogue=document.getElementById('internDialogue'),input=document.getElementById('internNameInput'),label=document.getElementById('internNameLabel'),next=document.getElementById('internNext'),skip=document.getElementById('internSkip'),progress=document.getElementById('internProgress');
+const lines=['Welcome to Pink Laboratories! I’m Professor Trung. These little creatures are Globs, and they need your help!','What should I call you, my new research intern?'];
+let step=0,profile=null,previousFocus=null,previousOverflow='';
+try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved&&typeof saved.name==='string'&&saved.name.trim())profile=saved}catch(e){}
+function save(name){const trimmed=String(name||'').trim().slice(0,16)||'Intern';profile={...(profile&&typeof profile==='object'?profile:{}),id:profile&&profile.id||('intern-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8)),name:trimmed,orientationDone:true};try{localStorage.setItem(KEY,JSON.stringify(profile))}catch(e){}}
+function close(){el.hidden=true;document.body.style.overflow=previousOverflow;if(previousFocus&&previousFocus.isConnected&&typeof previousFocus.focus==='function')previousFocus.focus();const main=document.getElementById('modalTitle');if(main&&profile)main.textContent='Welcome, '+profile.name+'!';}
+function render(){if(el.hidden){previousFocus=document.activeElement;previousOverflow=document.body.style.overflow}el.hidden=false;document.body.style.overflow='hidden';const isName=step===1;dialogue.textContent=lines[step].replaceAll('{name}',input.value.trim()||profile&&profile.name||'Intern');input.hidden=!isName;label.hidden=!isName;input.style.display=isName?'block':'none';label.style.display=isName?'block':'none';next.disabled=isName&&!input.value.trim();next.textContent=isName?'Start My Adventure ♡':'Continue ♡';progress.textContent=step===0?'MEET YOUR PROFESSOR':'YOUR INTERN NAME';skip.textContent=isName?'Use “Intern” instead':'Skip intro';if(isName)input.focus();else next.focus()}
+function finish(){save(input.value.trim()||profile&&profile.name||'Intern');close()}
+next.addEventListener('click',()=>{if(step===1&&!input.value.trim())return;if(step===lines.length-1){finish();return}step++;render()});
+skip.addEventListener('click',finish);
+input.addEventListener('input',()=>{next.disabled=!input.value.trim()});
+input.addEventListener('keydown',e=>{if(e.key==='Enter'&&input.value.trim()){e.preventDefault();next.click()}});
+document.addEventListener('keydown',e=>{if(el.hidden)return;if(e.key==='Tab'){const controls=[input,next,skip].filter(node=>!node.hidden&&!node.disabled);const first=controls[0],last=controls[controls.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}else if(!el.contains(document.activeElement)){e.preventDefault();first.focus()}}else if(e.key==='Escape'){e.preventDefault();finish()}e.stopPropagation()},true);
+if(!profile)render();
+else{const main=document.getElementById('modalTitle');if(main)main.textContent='Welcome back, '+profile.name+'!'}
+window.petriIntern={get:()=>profile,rename:(name)=>{save(name);return profile},replay:()=>{step=0;render()}};
+
+/* Professor Pager: optional chapter lore and mechanics reference. No gameplay mutations. */
+const ProfessorPager={
+ chapters:[
+  {at:1,title:'Act I · A New Intern',story:'Professor Trung left in a hurry when Scott called. Your assignment: keep the Globs safe and document every discovery.'},
+  {at:5,title:'Experiment 05 · A Curious Discovery',story:'The Globs are changing faster than Professor Trung predicted. His notes suggest their DNA may hold the answer.'},
+  {at:10,title:'Experiment 10 · The DNA Mystery',story:'Three DNA fragments are more than a research target. Something in the culture is responding to them.'},
+  {at:15,title:'Experiment 15 · Trouble in the Lab',story:'Contamination has spread through the research chambers. The Guardians were built for a reason.'},
+  {at:20,title:'Experiment 20 · Almost a Breakthrough',story:'The research is coming together. One last experiment stands between the lab and a new scientific era.'},
+  {at:21,title:'Experiment 21 · The Final Breakthrough',story:'Professor Trung and Scott are on their way back. Protect the culture and finish the work you began together.'}
+ ],
+ level(){return Math.max(1,Math.min(21,Number(state==='playing'||state==='paused'?activeLevel:chosenLevel)||1))},
+ help(){
+  if(state==='playing'){
+   if(mode==='adventure'&&activeLevel===1){if(Exp1Tutorial.step===1)return 'First task: tap inside the dish near a Glob to place water.';if(Exp1Tutorial.step===2)return 'Next: tap a sparkling BioBits bubble to collect it.'}
+   if(enemies.length)return 'Contamination alert: tap an invader to fight it. Keep your Globs watered and healthy. Guardians help defend your culture.';
+   if(globs.some(g=>g.poison>0))return 'A Glob is poisoned. Check the supply shelf for an antidote, and keep the culture healthy.';
+   if(globs.some(g=>g.hunger>=24))return 'Your Globs are thirsty. Tap inside the dish to place water droplets near them.';
+   if(isDNAExperiment()&&dna<3)return 'Research objective: collect three DNA fragments ('+dna+'/3). Care for your Globs and protect the dish. Some experiments also have a boss to defeat.';
+   if(coins>=70)return 'You have '+Math.floor(coins)+' BioBits. Open the supply shelf to buy a Baby Glob or save for a permanent upgrade. Shopping is optional.';
+   return 'Keep your Globs healthy, collect glowing BioBits, and use Inspect to discover their personalities.';
+  }
+  if(state==='guardian-roster')return 'Choose your Guardian team before starting Adventure or Hard Mode. Your selection determines which helpers join the dish.';
+  return 'Care: tap inside the dish to place water. BioBits: tap glowing bubbles. Supply shelf: Baby Glob costs 70 BioBits; permanent Rich Droplets start at 140 BioBits. DNA: collect three fragments in DNA experiments. Guardians: choose a team before starting. Inspect: learn about your Globs.'
+ },
+ refresh(){const level=this.level();const available=this.chapters.filter(c=>c.at<=level);const picker=document.getElementById('profChapterSelect');const prior=Number(picker.value);picker.replaceChildren();available.forEach(c=>{const opt=document.createElement('option');opt.value=String(c.at);opt.textContent=c.title;picker.append(opt)});const chapter=available.find(c=>c.at===prior)||available[available.length-1];picker.value=String(chapter.at);this.showChapter(chapter);document.getElementById('profPagerHelp').textContent=this.help()},
+ showChapter(chapter){document.getElementById('profPagerTitle').textContent=chapter.title;document.getElementById('profPagerStory').textContent=chapter.story},
+ close(){const panel=document.getElementById('profPagerNotes');panel.hidden=true;document.getElementById('profPagerButton').setAttribute('aria-expanded','false')},
+ init(){document.getElementById('profChapterSelect').addEventListener('change',e=>{const chapter=this.chapters.find(c=>c.at===Number(e.target.value));if(chapter&&chapter.at<=this.level())this.showChapter(chapter)});document.getElementById('profPagerButton').addEventListener('click',()=>{const panel=document.getElementById('profPagerNotes');if(!panel.hidden){this.close();return}this.refresh();panel.hidden=false;document.getElementById('profPagerButton').setAttribute('aria-expanded','true')})}
+};
+ProfessorPager.init();
+const credits=document.getElementById('endgameExtras');if(credits){const button=document.createElement('button');button.type='button';button.textContent='👨🏻‍🔬 Professor’s Story';button.addEventListener('click',()=>{if(typeof state!=='undefined'&&state==='playing')return;step=0;render()});credits.append(button)}
+})();
+</script></body></html>
