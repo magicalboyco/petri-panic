@@ -1,36 +1,55 @@
 # Petri Panic — Pink Lab
 
-A cute, top-down, browser-playable microscopic arcade game inspired by the *gameplay genre* of nurturing and defending an ecosystem. All game code and visuals here are original.
+An original, candy-pink, single-file browser game about nurturing Globs, collecting BioBits, defending a living petri dish, and experimenting with unique Guardian companions.
 
-## Play now
+## Play the last published build
+
 **https://petri-panic-pink-lab-o02kge.v2.appdeploy.ai/**
 
-## Current development build
-**Alpha 07 — Culture Quest** (November 2026)
+**IMPORTANT:** The GitHub `main` branch contains significant *staged / unpublished* updates beyond the currently hosted AppDeploy version. Do not describe the features below as live until the new deployment has been completed and confirmed ready.
 
-- Tap or click inside the dish to add moisture droplets and feed Globs.
-- Three pink Glob personality types: shy (light pink, reduced BioBits output), affectionate (mid-pink), energetic (dark pink, faster movement and higher hunger).
-- Expert, well-fed Globs produce babies.
-- Catch BioBits that burst outward and disappear after seconds.
-- Buy upgrades without pausing the simulation. Buy new Globs, Scuttle, antidotes, temporary defenders, and Star Cells.
-- Attack purple virus and green mold by tapping; enemies have randomly assigned 5–10 hit durability and change color as they weaken. Enemies do not drop BioBits.
-- Poison from mold is cured by repeated feeding or the 100-BioBit antidote.
-- Buy three equally priced DNA fragments to complete an Adventure experiment.
-- Bouncer guardian starts automatically from Adventure experiment 2. Temporary extra Bouncers cost 250 BioBits.
-- Adventure, Time Trial, Challenge, and Living Lab modes are prototypes.
+## Development branch: Alpha 12, awaiting AppDeploy publishing
 
-## Hosting
-The project is a standalone `index.html` file. It can be uploaded to any static web server. The shareable production copy is hosted via AppDeploy.
+- **Adaptive play layout:** Petri dish stays clear of UI buttons; separate Shop / Guardian / Inspect controls and responsive portrait, landscape, tablet and desktop layouts.
+- **Adventure progression:** 21 selectable experiments, locked until unlocked, with replayable earlier experiments and progression preserved after replays. The Next Experiment action displays its actual destination level number. The Adventure mode tile does not show a level number.
+- **24 original Guardian companions:** All rendered in a dedicated collection with descriptive ability labels, grayed-out locked characters, level-based unlocking, and up to three selectable team slots. Current mechanics include roaming collectors and defenders, feeding, healing, calming, fertility support, shields, poison cures, coin powers, enemy control, warning, and rescue. They have original names and appearances; gameplay roles are broadly inspired by classic virtual-aquarium games. These are not copied character assets.
+- **Boss milestones:** Distinct bosses at experiments 4, 9, 15, and 21; each emerges when the player buys the second DNA fragment. Feed Globs for a brief weakness window, defeat the boss before buying the third fragment, and receive BioBits for winning.
+- **Better Blob motion:** Three pink personality types, individual movement speeds, gentle separation from crowds, glowing expressions and facial moods.
+- **BioBits:** Scatter outward and then swirl in circular paths within the petri dish; disappear after a short lifetime and blink before fading.
+- **Other core systems:** Maximum 10 active droplets; shorter-lived droplets; purple viruses, spreading green mold, poisoning, healing, feeding stages, babies, Star Cell power-up, defender behavior.
+- **Save and continue:** In-progress cultures checkpoint locally about every four seconds, including Globs, coins, bosses, time, and active Guardians. Resume from the menu after accidentally closing the browser. Finished/failed runs clear their checkpoint; permanent progression saves separately.
+- **UI and tutorial:** Live culture-condition indicators, a separate How to Play guide, and opt-in Glob inspection showing personality, thirst, health and growth. Pause offers Resume and Return to Main Menu.
+- **Audio:** Multi-section, original synthesized chiptune with a mute toggle.
+- **Modes:** Adventure, Time Trial, Challenge and Living Lab. The latter three remain prototypes.
 
-## Status and limitations
-This is an actively developed **alpha**. The 21-stage campaign is planned, not fully authored: the build currently advances a stage counter and unlocks Bouncer, but new environments, additional species, story milestones, bosses, and full Living Lab persistence remain future work. The initial game should be play-tested on iPad Safari and desktop browsers. Permanent upgrade and progress data are held in local browser storage.
+## Current status
 
-## Development priorities
-1. Animation polish: clearer emotions, feeding anticipation, growth, and budding.
-2. Dedicated stage content, unlocks, and scripted boss encounters.
-3. Balancing BioBits rewards, timers, poison and difficulty.
-4. Rich companion roster and pre-stage loadouts (up to three slots).
-5. Improved audio, accessibility, and touchscreen QA.
+The last published AppDeploy build is older than the GitHub source. AppDeploy rejected a new deployment after hitting its daily publishing-credit budget, so the extended features above **must still be deployed and verified on actual devices**. Staging a source commit does not publish the game.
+
+All staged gameplay changes have been checked for JavaScript syntax errors. A mocked DOM gameplay smoke test of the latest script exercised all 24 Guardian loadouts, the four boss milestones (including their DNA gates and victories), and autosave/resume. Those tests passed, but are **not a substitute for real browser playtests**.
 
 ## Play controls
-Tap/click the Petri dish to drop water, collect BioBits, or fight contaminants. The Shop button opens a live overlay on mobile. Use Pause explicitly if needed.
+
+- Tap the open Petri dish to drop water, collect floating BioBits, or attack contaminants.
+- The Shop, Guardians and Inspect buttons sit outside the dish. Press Inspect and then tap an individual Glob to see its profile.
+- The active pause menu lets you Resume or return to the main menu.
+- From the main menu, choose Adventure to select an unlocked experiment and equip your Guardian team.
+- Permanent upgrades and progress are saved in local browser storage, not in an online account. Clearing Safari site data removes the save. Browser privacy modes may not persist progress.
+
+## Hosting and test plan
+
+The working game is `index.html`. It can run on any static website, using HTTPS for normal Safari and mobile testing.
+
+When AppDeploy publishing is available:
+1. Deploy the latest `main/index.html` source into the existing Petri Panic app, preserving the app ID.
+2. Confirm AppDeploy says **ready** with no frontend or network errors.
+3. Verify mobile portrait and landscape, iPad rotation, desktop, tap targets and modal scrolling.
+4. In Adventure, verify Guardian selection and locked slots, later unlocks, replaying earlier stages, and next-level labels.
+5. Play through each boss milestone. Ensure defeating each boss grants BioBits and the third DNA fragment is gated until victory.
+6. Test every Guardian's on-screen appearance, movement constraints, and actual mechanical effects, including special-case interactions.
+7. Test save/resume in Safari after closing and reopening the tab, and clear checkpoints after loss or victory.
+8. Rebalance game economy, enemy pacing and ability timing from actual playtesting.
+
+## Road to release
+
+The current 21-level content still needs distinctive challenges and stage art, full Living Lab persistence, a stronger onboarding flow, deeper character art and animations, audio balancing, and extensive real-device QA. Despite the implemented 24-Guardian roster, this remains an **alpha**, not a finished game.
