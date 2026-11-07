@@ -1289,8 +1289,19 @@ const ProfessorPager={
   {at:21,title:'Experiment 21 · The Final Breakthrough',story:'Professor Trung and Scott are on their way back. Protect the culture and finish the work you began together.'}
  ],
  level(){return Math.max(1,Math.min(21,Number(state==='playing'||state==='paused'?activeLevel:chosenLevel)||1))},
- help(){if(state==='playing'&&mode==='adventure'&&activeLevel===1){if(Exp1Tutorial.step===1)return 'First task: tap inside the dish to place water near a Glob.';if(Exp1Tutorial.step===2)return 'Next: tap a glowing BioBits bubble to collect it.'}
-  return 'Care: tap inside the dish to place water. BioBits: tap glowing bubbles. Supply shelf: Baby Glob costs 70 BioBits; permanent Rich Droplets start at 140 BioBits. Purchases are optional. DNA: collect three fragments to finish DNA experiments. Guardians: choose your team before starting. Inspect: use Inspect to learn about Globs.'},
+ help(){
+  if(state==='playing'){
+   if(mode==='adventure'&&activeLevel===1){if(Exp1Tutorial.step===1)return 'First task: tap inside the dish near a Glob to place water.';if(Exp1Tutorial.step===2)return 'Next: tap a sparkling BioBits bubble to collect it.'}
+   if(enemies.length)return 'Contamination alert: tap an invader to fight it. Keep your Globs watered and healthy. Guardians help defend your culture.';
+   if(globs.some(g=>g.poison>0))return 'A Glob is poisoned. Check the supply shelf for an antidote, and keep the culture healthy.';
+   if(globs.some(g=>g.hunger>=24))return 'Your Globs are thirsty. Tap inside the dish to place water droplets near them.';
+   if(isDNAExperiment()&&dna<3)return 'Research objective: collect three DNA fragments ('+dna+'/3). Care for your Globs and protect the dish. Some experiments also have a boss to defeat.';
+   if(coins>=70)return 'You have '+Math.floor(coins)+' BioBits. Open the supply shelf to buy a Baby Glob or save for a permanent upgrade. Shopping is optional.';
+   return 'Keep your Globs healthy, collect glowing BioBits, and use Inspect to discover their personalities.';
+  }
+  if(state==='guardian-roster')return 'Choose your Guardian team before starting Adventure or Hard Mode. Your selection determines which helpers join the dish.';
+  return 'Care: tap inside the dish to place water. BioBits: tap glowing bubbles. Supply shelf: Baby Glob costs 70 BioBits; permanent Rich Droplets start at 140 BioBits. DNA: collect three fragments in DNA experiments. Guardians: choose a team before starting. Inspect: learn about your Globs.'
+ },
  refresh(){const level=this.level();const chapter=this.chapters.filter(c=>c.at<=level).slice(-1)[0];document.getElementById('profPagerTitle').textContent=chapter.title+' · Experiment '+String(level).padStart(2,'0');document.getElementById('profPagerStory').textContent=chapter.story;document.getElementById('profPagerHelp').textContent=this.help()},
  close(){const panel=document.getElementById('profPagerNotes');panel.hidden=true;document.getElementById('profPagerButton').setAttribute('aria-expanded','false')},
  init(){document.getElementById('profPagerButton').addEventListener('click',()=>{const panel=document.getElementById('profPagerNotes');if(!panel.hidden){this.close();return}this.refresh();panel.hidden=false;document.getElementById('profPagerButton').setAttribute('aria-expanded','true')})}
