@@ -1107,11 +1107,11 @@ showMenu=function(type='menu'){
  endgamePanel.hidden=true;endgamePanel.dataset.view='';
  if(type==='menu'){
    $('modalTitle').textContent='Welcome to Professor Trung’s Pink Lab!';
-   $('modalBody').textContent='Professor Trung C. Ho, a lovable mad scientist, has almost discovered how to grow a brand-new species: the Globs! Become his lab assistant, nurture your tiny creatures, collect DNA, and help him complete 21 wonderfully unpredictable experiments.';
+   $('modalBody').textContent='First day at the Pink Lab! Professor Trung C. Ho has accidentally scheduled your internship orientation on the same day as important plans with his husband, Scott. He rushes out, leaving YOU in charge of his greatest experiment: grow a brand-new species of Globs. Water them, collect DNA, and watch out for contamination. You’ll be fine. Probably!';
  }
  if(type==='win'&&activeLevel===21&&mode!=='hard'){
    $('modalTitle').textContent='🏆 THE PINK LAB IS SAVED! 🏆';
-   $('modalBody').textContent='EUREKA! Professor Trung shouts: “WE DID IT! A brand-new species—and they’re adorable! This is OUR greatest scientific achievement!” You helped raise the first Globs, saved the lab, and completed all 21 experiments. Final score: '+Math.floor(score).toLocaleString()+' · Your next adventure starts whenever you are ready.';
+   $('modalBody').textContent='EUREKA! Professor Trung shouts: “WE DID IT! A brand-new species—and they’re adorable! This is OUR greatest scientific achievement!” You arrived as the new intern on your very first day. While Professor Trung hurried off to meet Scott, you raised the first Globs, saved the lab, and completed all 21 experiments. Your internship has become a scientific legend. Final score: '+Math.floor(score).toLocaleString()+' · Your next adventure starts whenever you are ready.';
    scoresButton.textContent='🏆 View Your High Scores';
    creditsButton.textContent='🎬 Roll Credits';
  }else{scoresButton.textContent='🏆 High Scores';creditsButton.textContent='🎬 Credits'}
