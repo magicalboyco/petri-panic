@@ -484,7 +484,13 @@ body.menu-open{overflow:hidden}
 
 
 #labHub{margin:14px auto;padding:13px;border:2px solid #f1a5cb;border-radius:16px;background:#fff6fb;max-width:650px;color:#67334f}#labHub[hidden]{display:none}#labHub h3{margin:0 0 5px}#labHub p{margin:6px 0;font-size:.9rem}#labHub .lab-hub-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}#labHub .lab-hub-actions button{min-height:48px;padding:8px;border-radius:10px;border:1px solid #d989b1;background:white;color:#703954;font:inherit;font-weight:700;cursor:pointer}#labHub .lab-hub-actions button:focus-visible{outline:3px solid #96366e;outline-offset:2px}#labHub .lab-hub-hint{font-size:.8rem}@media(max-width:430px){#labHub .lab-hub-actions{grid-template-columns:1fr}}
-#storyMoment{max-width:900px;margin:8px auto;padding:12px 15px;border:2px solid #e994be;border-radius:14px;background:#fff4fa;color:#68364f;display:flex;align-items:center;gap:12px;justify-content:space-between}#storyMoment[hidden]{display:none}#storyMoment p{margin:0;line-height:1.4}#storyMoment button{flex-shrink:0;border:1px solid #d58cb2;border-radius:9px;background:white;color:#713b57;padding:9px;min-height:44px;font:inherit;cursor:pointer}@media(max-width:480px){#storyMoment{flex-direction:column;align-items:stretch}}</style></head>
+#storyMoment{max-width:900px;margin:8px auto;padding:12px 15px;border:2px solid #e994be;border-radius:14px;background:#fff4fa;color:#68364f;display:flex;align-items:center;gap:12px;justify-content:space-between}#storyMoment[hidden]{display:none}#storyMoment p{margin:0;line-height:1.4}#storyMoment button{flex-shrink:0;border:1px solid #d58cb2;border-radius:9px;background:white;color:#713b57;padding:9px;min-height:44px;font:inherit;cursor:pointer}@media(max-width:480px){#storyMoment{flex-direction:column;align-items:stretch}}/* Cohesive, simple all-ages visual language for the lab */
+:root{--ink:#603950;--pinkdark:#b43c7f;--border:#edabcc}
+#profPagerButton,.lab-hub-actions button,.smallbtn{box-shadow:0 3px 0 #e3b7d0}
+#profPagerButton:hover,.lab-hub-actions button:hover{background:#ffe6f3}
+#game{touch-action:none}
+@media(max-width:480px){#profPagerButton{font-size:14px}}
+</style></head>
 <body><div class="pixel-sky" aria-hidden="true"><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><span class="cloud cloud-c"></span><span class="sky-spark sp-a">✦</span><span class="sky-spark sp-b">✧</span><span class="sky-spark sp-c">✦</span></div><div class="app"><header class="top"><div class="brand"><span class="brandicon">🧫</span><div><h1>Petri <span class="logo-panic">Panic</span> <span class="logo-heart">♥</span></h1><small>THE PINK LAB · CANDY CULTURE ALPHA 11</small></div></div><div class="level-chip" id="levelChip" aria-label="Current experiment"><span class="level-flower" aria-hidden="true">✿</span><div class="level-copy"><span class="level-eyebrow">CURRENT EXPERIMENT</span><strong id="levelNum">01 <span class="level-of">/ 21</span></strong><span id="regionName" class="region-name">Starter Culture</span></div><div class="level-track" aria-hidden="true"><span id="levelFill"></span></div></div><div class="stats"><div class="stat"><small>✨ BioBits</small><strong id="money">120</strong></div><div class="stat"><small>🧬 DNA</small><strong id="dna">0/3</strong></div><div class="stat"><small>🦠 Globs</small><strong id="count">2</strong></div><button class="smallbtn" id="pause">☰ Menu</button></div></header><div class="layout"><section class="dishwrap"><canvas id="game" width="900" height="620" aria-label="Interactive microscopic petri dish"></canvas><div class="ribbon" id="ribbon">Tap the dish to add a sparkling moisture droplet!</div><div id="profPagerDock"><button type="button" id="profPagerButton" aria-expanded="false" aria-controls="profPagerNotes">📟 Professor Pager · Research Notes</button><section id="profPagerNotes" hidden aria-label="Professor Trung research notes"><div class="prof-portrait" aria-hidden="true"><span class="prof-hair"></span><span class="prof-face"><i class="prof-eye left"></i><i class="prof-eye right"></i><i class="prof-goatee"></i></span><span class="prof-coat">🍁</span></div><div class="prof-notes-copy"><h3 id="profPagerTitle"></h3><p id="profPagerStory"></p><label for="profChapterSelect">Research journal · unlocked chapters</label><select id="profChapterSelect" aria-label="Read an unlocked research chapter"></select></div><p id="profPagerHelp"></p></section></div><div class="overlay" id="overlay"><div class="modal"><div class="screen-spark left" aria-hidden="true">✦</div><div class="screen-spark right" aria-hidden="true">✧</div><div class="mascot" id="mascot"><span class="kawaii-mascot" aria-hidden="true"><i class="m-eye m-left"></i><i class="m-eye m-right"></i><i class="m-blush b-left"></i><i class="m-blush b-right"></i><i class="m-smile"></i><i class="m-shine"></i></span></div><h2 id="modalTitle">Welcome to the Pink Lab!</h2><p id="modalBody">Moisten the dish, raise adorable Globs, collect BioBits, and assemble three DNA fragments. Healthy expert Globs can make babies!</p><div id="guardianPicker" class="hidden guardian-picker"><strong id="guardianSlotsLabel">✨ Your Guardian Team</strong><div id="guardianSlotDisplay" class="guardian-slots"></div><div id="guardianOptions" class="guardian-options"></div></div>
 <div id="levelPicker" class="hidden level-picker"><strong>🧬 Choose an Experiment</strong><p>Swipe between science eras, then choose an unlocked experiment.</p><div class="era-carousel" aria-label="Science eras"><button type="button" id="eraPrev" aria-label="Previous era">‹</button><div class="era-card" id="eraCard" aria-live="polite"><span class="era-icon" id="eraIcon">⚙️</span><strong id="eraName">Victorian Origins</strong><small id="eraYears">Experiments 01–05</small><span id="eraTheme">Steam & discovery</span></div><button type="button" id="eraNext" aria-label="Next era">›</button></div><div id="eraDots" class="era-dots"></div><div id="levelOptions" class="level-options"></div></div><button type="button" class="secondary hidden" id="guardianBack">← Back to game modes</button><section id="labHub" aria-label="Pink Laboratories hub"><h3>🏠 Your Lab Hub</h3><p id="labHubGreeting">Welcome to the lab! Choose an experiment or resume your research.</p><div class="lab-hub-actions"><button type="button" id="hubContinue">💾 Continue Research</button><button type="button" id="hubModes">🧬 Choose a Mode</button><button type="button" id="hubNotes">📟 Research Notes</button><button type="button" id="hubScores">🏆 Hall of Globs</button></div><p class="lab-hub-hint">🛍️ The supply shelf opens during an experiment. 🛡️ Choose Guardians before Adventure and Hard Mode.</p></section><div class="modes" id="modes"><button class="mode active" data-mode="adventure">🧬 Adventure<span id="adventureLevel">Collect 3 DNA pieces</span></button><button class="mode" data-mode="trial">⏱️ Time Trial<span>Earn a big score in 3 min</span></button><button class="mode" data-mode="challenge">🌵 Challenge<span>Survive with limited droplets</span></button><button class="mode hard-mode" data-mode="hard">🔥 Hard Mode<span>Fiercer invaders · rising shop prices · 3 DNA</span></button><button class="mode" data-mode="lab">🎀 Living Lab<span>A peaceful, collectible dish</span></button></div><button type="button" class="primary" id="play">Let's grow! ♡</button><button type="button" class="secondary hidden" id="continueRun" style="display:block;margin:8px auto;min-height:48px">💾 Continue saved experiment</button><button type="button" class="secondary hidden" id="returnMainMenu" style="display:block;margin:8px auto">← Return to Main Menu</button><div><button class="secondary" id="mute">🔊 Sound on</button><button class="secondary" id="reset">Reset saved upgrades</button><button type="button" class="secondary" id="helpButton">❔ How to Play</button></div><div class="retro-controller" aria-hidden="true"><span class="dpad">✚</span><span class="game-label">♡ PETRI LAB ♡<small>PRESS START TO GROW</small></span><span class="ab-buttons"><i>A</i><i>B</i></span></div><div class="tip" id="modalTip">Starting game…</div><div class="tip" id="runCheck" role="status" style="margin-top:8px;padding:8px;background:#ffe3f0;border:1px solid #e79abc;border-radius:12px"><strong>Preview mode detected?</strong> If this message stays visible, the file viewer is not running the game. Upload index.html to your website and open its HTTPS address in Safari.</div></div></div></section><nav class="game-actions" aria-label="Game menus"><button type="button" id="shopToggle" class="shop-toggle" aria-label="Open live shop">🛍️ Shop <span>LIVE!</span></button><button type="button" id="guardianToggle" class="shop-toggle guardian-action" aria-label="Open Guardian collection">🛡️ Guardians</button><button type="button" id="inspectToggle" class="shop-toggle inspect-action" aria-pressed="false">🔎 Inspect Glob</button></nav><div class="culture-status" id="cultureStatus" aria-label="Culture condition"><span id="cultureMood">💗 Your Globs are happy</span><span id="cultureWater">💧 0 / 10 droplets</span><span id="cultureThreat">✨ Peaceful for now</span></div><aside class="panel" id="supplyPanel"><button type="button" class="shop-close" id="shopClose">✕ Back to dish</button><h2>🎀 The supply shelf <small>⏱ GAME KEEPS RUNNING</small></h2><div class="shop">
 <button class="buy" data-buy="glob"><span class="emoji">🦠</span><span class="desc"><strong>Baby Glob</strong><small>Another little producer</small></span><em id="cost-glob">70</em></button>
@@ -791,8 +797,8 @@ function drawDishRim(){
  ctx.save();
  // An opaque outside makes the chamber's distinctive silhouette immediately clear.
  ctx.fillStyle='#e9c5d9';ctx.beginPath();ctx.rect(0,0,W,H);dishPath(false);ctx.fill('evenodd');
- ctx.strokeStyle='#ef88bb';ctx.lineWidth=8;dishPath();ctx.stroke();
- ctx.strokeStyle='#fff8ffdd';ctx.lineWidth=3;dishPath();ctx.stroke();
+ ctx.strokeStyle='#ad608e';ctx.lineWidth=6;dishPath();ctx.stroke();
+ ctx.strokeStyle='#fff9fe';ctx.lineWidth=3;dishPath();ctx.stroke();
  ctx.restore();
  if(dishShape()==='plus'){ctx.save();ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillStyle='#b46c98';ctx.fillText('✦ CROSS CULTURE ✦',450,212);ctx.restore()}
  if(dishShape()==='bottleneck'){ctx.font='900 12px Nunito';ctx.textAlign='center';ctx.fillStyle='#9e5482';ctx.fillText('⇆ NARROW PASSAGE ⇆',450,238);ctx.textAlign='left'}
@@ -979,14 +985,43 @@ if(globs.length===0){if(rescue){rescue=false;let g=glob(W/2,H/2);g.hunger=0;glob
 checkpointTimer+=dt;if(checkpointTimer>=4){checkpointTimer=0;saveCheckpoint()}
 uiTick-=dt;if(uiTick<=0){uiTick=.18;updateUI()}}
 function ell(x,y,rx,ry,color){ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill()}
-function drawBackground(){let grad=ctx.createRadialGradient(450,310,50,450,310,520);grad.addColorStop(0,'#fffaff');grad.addColorStop(.65,'#ffe8f4');grad.addColorStop(1,'#f5bfdb');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.strokeStyle='#df95be25';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}drawDishRim();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
+function drawBackground(){let grad=ctx.createRadialGradient(450,310,50,450,310,520);grad.addColorStop(0,'#fffdfd');grad.addColorStop(.65,'#fff1fa');grad.addColorStop(1,'#f7d5e9');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.strokeStyle='#c783ad16';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}drawDishRim();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
 
+/* Shared hand-drawn, locally hosted game art. Canvas keeps its procedural fallback until loaded. */
+const PetriArt={
+ image:new Image(),
+ ready:false,
+ draw(col,row,x,y,size){
+  if(!this.ready)return false;
+  ctx.drawImage(this.image,col*96,row*96,96,96,x-size/2,y-size/2,size,size);
+  return true;
+ }
+};
+PetriArt.image.addEventListener('load',()=>{PetriArt.ready=PetriArt.image.naturalWidth>=288});
+PetriArt.image.addEventListener('error',()=>{PetriArt.ready=false});
+PetriArt.image.src='assets/petri-sprites.svg';
 function drawGlob(g){
  const st=stage(g),r=radius(g),dry=g.hunger>30,injured=g.hurtTimer>0,sick=g.poison>0;
  const scared=!sick&&enemies.some(e=>!e.dead&&distance(e,g)<125);
  const hungry=g.hunger>24,happy=g.heartTimer>0||g.moodTimer>0;
  const blink=Math.sin(elapsed*2.25+g.face*7)>0.992;
  const mood=sick?'sick':injured?'hurt':scared?'scared':hungry?'hungry':g.heartTimer>0?'love':happy?'happy':g.eaten>2&&Math.sin(elapsed*1.7+g.phase)>.65?'excited':'idle';
+ // The simplified sprite preserves the original movement and hitboxes.
+ // Distress expressions still use the animated procedural drawing below.
+ if((mood==='idle'||mood==='happy'||mood==='love'||mood==='excited')&&PetriArt.ready){
+  const wobble=1+Math.sin(g.phase*2.7)*.045;
+  ctx.save();ctx.translate(g.x,g.y);ctx.rotate(Math.sin(g.phase)*.08);
+  ctx.scale(wobble,1/wobble);
+  ctx.shadowColor='#bd77a7';ctx.shadowBlur=8;
+  PetriArt.draw(Math.abs(g.personality||0)%3,0,0,0,r*3.05);
+  ctx.shadowBlur=0;
+  if(mood==='love')starShape(r*.83,-r*.95,7,'#f575a4',1);
+  if(st===2)starShape(0,-r-12,7,'#ffe37a',.8+.2*Math.sin(elapsed*6));
+  else if(st===1)starShape(r*.9,-r*.7,4,'#fff',.9);
+  if(g.shieldTime>0){ctx.strokeStyle='#83d5ee';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,r*1.25,0,Math.PI*2);ctx.stroke()}
+  ctx.restore();return;
+ }
+
  ctx.save();ctx.translate(g.x,g.y);ctx.rotate(Math.sin(g.phase)*.08+(injured?Math.sin(elapsed*27)*.1:0));
  const wobble=Math.sin(g.phase*2.7)*.045;ctx.scale(1+wobble,1-wobble+(happy?.04:0));
  ctx.shadowColor=sick?'#A7F0C5':'#E791BF';ctx.shadowBlur=16;
@@ -1091,6 +1126,11 @@ function guardianOutline(id,p){
 function drawGuardian(guard){
  const p=GUARDIAN_LOOKS[guard.id]||GUARDIAN_LOOKS.bouncer;
  const bob=Math.sin(elapsed*3.6+guard.x*.018+guard.y*.011)*2.5;
+ if(guard.id==='bouncer'&&PetriArt.ready){
+  ctx.save();ctx.translate(guard.x,guard.y+bob);ctx.rotate(Math.sin(elapsed*1.7+guard.y*.02)*.065);
+  ctx.shadowColor='#8acbd8';ctx.shadowBlur=10;
+  PetriArt.draw(0,1,0,0,83);ctx.restore();return;
+ }
  ctx.save();ctx.translate(guard.x,guard.y+bob);
  ctx.rotate(Math.sin(elapsed*1.7+guard.y*.02)*.07);
  ctx.shadowColor=p.shade;ctx.shadowBlur=12;
@@ -1110,7 +1150,7 @@ function drawGuardian(guard){
  if(guard.id==='beacon'&&guard.lureTime>0){ctx.strokeStyle='#D1A9F0A0';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,37,0,Math.PI*2);ctx.stroke()}
  ctx.restore();
 }
-function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}ctx.restore()}for(const g of globs)drawGlob(g);
+function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';if(!PetriArt.draw(2,1,w.x,w.y,Math.max(27,w.r*2.65))){ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');}ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;if(!PetriArt.draw(1,1,0,0,r*2.75)){ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}}ctx.restore()}for(const g of globs)drawGlob(g);
 if(scuttle){ctx.save();ctx.translate(scuttleX,scuttleY);ell(0,12,37,17,'#e9a3b9');ell(11,0,23,22,'#ffd2c2');ell(13,-7,17,17,'#ffe5ce');ell(-23,1,13,12,'#e590d4');ell(-27,-3,4,5,'#64365b');ell(-16,-3,4,5,'#64365b');ctx.strokeStyle='#a7659e';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-28,-9);ctx.lineTo(-32,-24);ctx.moveTo(-17,-9);ctx.lineTo(-12,-24);ctx.stroke();ctx.restore()}
 for(const guard of guardians)drawGuardian(guard);for(const e of enemies){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(Math.sin(e.phase)*.08);ctx.shadowColor='#a33e87';ctx.shadowBlur=14;
  if(e.kind==='boss'){
