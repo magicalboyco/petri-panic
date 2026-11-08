@@ -993,20 +993,9 @@ const MASTER_ROOM_PATHS=[
  'assets/environments/masters/biotech.svg',
  'assets/environments/masters/tomorrow.svg'
 ];
-/* New illustrated Room 01 is loaded before SVG era fallback.
-   Its art contains no duplicate dish, DNA counter or UI; all game mechanics remain live.
-   Place the exported WebP at the path below to enable it in the deployed build. */
-const ILLUSTRATED_ROOM_PATHS={
-  1:'assets/environments/rooms/rosewood-nursery.webp'
-};
-const ILLUSTRATED_ROOM_IMAGES={};
-Object.keys(ILLUSTRATED_ROOM_PATHS).forEach(key=>{
- const image=new Image(),record={image,ready:false,failed:false};
- ILLUSTRATED_ROOM_IMAGES[key]=record;
- image.onload=()=>{record.ready=image.naturalWidth>0;record.failed=!record.ready};
- image.onerror=()=>{record.failed=true};
- image.src=ILLUSTRATED_ROOM_PATHS[key];
-});
+/* One shared art master per five-experiment era.
+   Room identity stays coherent across levels; experiment number and gameplay
+   change independently. Deliberately do not load the old 300px prototype. */
 const MASTER_ROOM_IMAGES=MASTER_ROOM_PATHS.map(path=>{
  const record={image:new Image(),ready:false,failed:false};
  record.image.onload=()=>{record.ready=record.image.naturalWidth>0;record.failed=!record.ready};
@@ -1054,31 +1043,23 @@ function drawRoomVariation(){
  // Large, recognizable per-stage side props; never drawn over active Globs.
  drawRoomMotif(230,392,era,variant,p);drawRoomMotif(672,391,era,variant,p);
  // Room names appear on a consistent, readable placard outside the main dish.
- ctx.save();ctx.globalAlpha=.96;roomRect(22,567,266,33,'#fff9f6',12);
+ ctx.save();ctx.globalAlpha=.97;roomRect(22,567,266,33,'#fff9f6',12);
  ctx.font='900 11px Nunito,sans-serif';ctx.textAlign='center';ctx.fillStyle=p.ink;
  ctx.fillText(EXPERIMENT_ROOMS[level-1].toUpperCase(),155,589);
  ctx.restore()
 }
 function drawScenicRoom(){
- const level=environmentLevel();
- const illustrated=ILLUSTRATED_ROOM_IMAGES[level];
- if(illustrated&&illustrated.ready){
-   ctx.save();
-   // Pixel-art backgrounds retain crisp block edges when scaled to the game pad.
-   ctx.imageSmoothingEnabled=true;
-   ctx.imageSmoothingQuality='high';
-   ctx.drawImage(illustrated.image,0,0,W,H);
-   ctx.restore();
-   return;
- }
- const era=Math.min(4,Math.floor((level-1)/5));
+ const era=Math.min(4,Math.floor((environmentLevel()-1)/5));
  const master=MASTER_ROOM_IMAGES[era];
  if(master.ready){
+  ctx.save();
+  ctx.imageSmoothingEnabled=true;
+  ctx.imageSmoothingQuality='high';
   ctx.drawImage(master.image,0,0,W,H);
-  drawRoomVariation();
-  return
+  ctx.restore();
+ }else{
+  drawEraRoom();
  }
- drawEraRoom()
 }
 
 function drawBackground(){const p=environmentTheme();drawScenicRoom();ctx.save();dishPath();ctx.clip();let grad=ctx.createRadialGradient(450,310,50,450,310,520);grad.addColorStop(0,p.dish[0]);grad.addColorStop(.65,p.dish[1]);grad.addColorStop(1,p.dish[2]);// Keep Globs and collectibles readable; show only a soft hint of room scenery through the dish.
