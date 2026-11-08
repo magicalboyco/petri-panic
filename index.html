@@ -460,7 +460,7 @@ function storyRender(){
  $('storySkip').hidden=final;
  const pic=$('storyPicture');pic.classList.toggle('ending',final&&storyLine===event.lines.length-1);
  if(final&&storyLine===event.lines.length-1)pic.innerHTML='<div class="final-scene">🌹 🥂 🎶<strong>TRUNG ♥ SCOTT</strong><span>Toronto · CN Tower · Anniversary dinner</span><small>Illustration and original ukulele theme coming soon</small></div>';
- else pic.innerHTML='<img src="professor-trung.webp" alt="Professor Trung" onerror="this.style.display=\'none\';this.parentNode.querySelector(\'.story-fallback\').style.display=\'block\'"><span class="story-fallback" style="display:none">👨🏻‍🔬</span>';
+ else pic.innerHTML='<img src="professor-trung.svg" alt="Professor Trung" onerror="this.style.display=\'none\';this.parentNode.querySelector(\'.story-fallback\').style.display=\'block\'"><span class="story-fallback" style="display:none">👨🏻‍🔬</span>';
 }
 function storyAdvance(skip=false){
  if(!storyCurrent)return;
