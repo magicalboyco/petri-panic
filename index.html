@@ -1064,8 +1064,8 @@ function drawScenicRoom(){
  const illustrated=ILLUSTRATED_ROOM_IMAGES[level];
  if(illustrated&&illustrated.ready){
    ctx.save();
-   ctx.imageSmoothingEnabled=true;
-   ctx.imageSmoothingQuality='high';
+   // Pixel-art backgrounds retain crisp block edges when scaled to the game pad.
+   ctx.imageSmoothingEnabled=false;
    ctx.drawImage(illustrated.image,0,0,W,H);
    ctx.restore();
    return;
@@ -1080,7 +1080,8 @@ function drawScenicRoom(){
  drawEraRoom()
 }
 
-function drawBackground(){const p=environmentTheme();drawScenicRoom();ctx.save();dishPath();ctx.clip();let grad=ctx.createRadialGradient(450,310,50,450,310,520);grad.addColorStop(0,p.dish[0]);grad.addColorStop(.65,p.dish[1]);grad.addColorStop(1,p.dish[2]);ctx.globalAlpha=.93;ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;ctx.strokeStyle=p.line+'35';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();drawDishRim();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
+function drawBackground(){const p=environmentTheme();drawScenicRoom();ctx.save();dishPath();ctx.clip();let grad=ctx.createRadialGradient(450,310,50,450,310,520);grad.addColorStop(0,p.dish[0]);grad.addColorStop(.65,p.dish[1]);grad.addColorStop(1,p.dish[2]);// Keep Globs and collectibles readable; show only a soft hint of room scenery through the dish.
+ ctx.globalAlpha=(environmentLevel()===1&&ILLUSTRATED_ROOM_IMAGES[1].ready)? .86 : .93;ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;ctx.strokeStyle=p.line+'35';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();drawDishRim();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
 
 function drawGlob(g){
  const st=stage(g),r=radius(g),dry=g.hunger>30,injured=g.hurtTimer>0,sick=g.poison>0;
