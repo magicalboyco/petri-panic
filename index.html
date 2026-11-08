@@ -925,7 +925,7 @@ function ell(x,y,rx,ry,color){ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,
 /* The 21 Petri Panic environments: five readable pink-first art systems. */
 const ERA_ART=[{"era":"Victorian Origins","short":"THE ROSEWOOD LAB","bg":["#f4d5de","#e1b5c6","#bd8ea8"],"ink":"#7b5268","line":"#c995a7","accent":"#c5a06b","floor":"#e7c0d0","dish":["#fffafd","#fce9f2","#f3cbdc"]},{"era":"Atomic Age","short":"THE ATOMIC DREAMHOUSE","bg":["#f9d7d9","#e9adb9","#9bd9bd"],"ink":"#366c64","line":"#88b6a5","accent":"#e3b561","floor":"#aedcc9","dish":["#fffaf7","#fceae9","#f4cddd"]},{"era":"Space Age","short":"THE PINK TOMORROW","bg":["#f5eafa","#f2b1d3","#9bdedc"],"ink":"#9d3e81","line":"#d995c8","accent":"#55cbd8","floor":"#e3b7d9","dish":["#ffffff","#fff2fa","#f9cde7"]},{"era":"Biotech Renaissance","short":"THE LIVING LAB","bg":["#ffdfdf","#feb9b7","#9eb08b"],"ink":"#3c6654","line":"#9eb08b","accent":"#2e6a67","floor":"#b8c49b","dish":["#fffaf9","#f9e6e3","#e6efd8"]},{"era":"Tomorrow Lab","short":"THE IMPOSSIBLE LAB","bg":["#fbe7fa","#e6bbf6","#ff94d9"],"ink":"#69449c","line":"#bb82d6","accent":"#ef77c8","floor":"#d5b1f0","dish":["#fffdff","#fce7fb","#eed4ff"]}];
 const EXPERIMENT_ROOMS=["Rosewood Nursery","Botanical Study","Brass Workshop","Electrical Conservatory","Grand Observatory","Atomic Kitchen","Isotope Workshop","Tomorrow Showroom","The Pink Reactor","Grand Science Fair","Tomorrow Welcome Hall","Dream Lab","Sky Observatory","Atomic Glamour","Tomorrow Dome","Living Greenhouse","Botanical Laboratory","Bio-Garden","Living Ecosystem","Heart of the Garden","The Impossible Laboratory"];
-function environmentLevel(){return isDNAExperiment()?activeLevel:Math.min(21,Math.max(1,chosenLevel))}
+function environmentLevel(){return isDNAExperiment()&&['playing','paused','story','guardian-roster','inspect','help'].includes(state)?activeLevel:Math.min(21,Math.max(1,chosenLevel))}
 function environmentTheme(){return ERA_ART[Math.min(4,Math.floor((environmentLevel()-1)/5))]}
 function applyEnvironment(){const level=environmentLevel(),era=Math.min(4,Math.floor((level-1)/5)),p=ERA_ART[era];document.body.dataset.era=String(era);document.body.dataset.experiment=String(level);document.body.style.setProperty('--era-deep',p.ink);document.body.style.setProperty('--era-edge',p.line);document.body.style.setProperty('--era-highlight',p.accent);document.body.style.setProperty('--era-floor',p.floor);document.body.style.setProperty('--era-bg-start',p.bg[0]);document.body.style.setProperty('--era-bg-mid',p.bg[1]);document.body.style.setProperty('--era-bg-end',p.bg[2])}
 function roomLine(x1,y1,x2,y2,color,width=3){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
@@ -979,7 +979,7 @@ function drawEraRoom(){
   ctx.strokeStyle='#c479e4';ctx.lineWidth=7;ctx.beginPath();ctx.ellipse(450,145,110,85,-Math.PI/5,0,Math.PI*2);ctx.stroke();
  }
  // Room-specific signage: all 21 rooms have an individual identity.
- ctx.textAlign='center';ctx.font='900 14px Nunito, sans-serif';roomRect(270,568,360,32,'#fffafdeb',15);ctx.fillStyle=p.ink;ctx.fillText(EXPERIMENT_ROOMS[level-1].toUpperCase(),450,589);
+ ctx.textAlign='center';ctx.font='900 14px Nunito, sans-serif';roomRect(17,563,260,34,'#fffafdeb',12);ctx.fillStyle=p.ink;ctx.font='900 11px Nunito, sans-serif';ctx.fillText(EXPERIMENT_ROOMS[level-1].toUpperCase(),147,585);
  ctx.textAlign='left';ctx.restore();
 }
 
