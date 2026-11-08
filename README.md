@@ -2,13 +2,15 @@
 
 An original, candy-pink, single-file browser game about nurturing Globs, collecting BioBits, defending a living petri dish, and experimenting with unique Guardian companions.
 
-## Play the last published build
+## Play the current GitHub build
 
-**https://petri-panic-pink-lab-o02kge.v2.appdeploy.ai/**
+**[Play Petri Panic on GitHub Pages](https://magicalboyco.github.io/petri-panic/)**
 
-**IMPORTANT:** The GitHub `main` branch contains significant *staged / unpublished* updates beyond the currently hosted AppDeploy version. Do not describe the features below as live until the new deployment has been completed and confirmed ready.
+GitHub Pages now publishes the latest `main` branch through `.github/workflows/pages.yml`. The first publishing workflow completed successfully on November 8, 2026. GitHub Pages includes the recent Professor Trung video-call narrative beta, 21 environment variations, the free-DNA testing counter, and the preliminary Rosewood Nursery illustrated room.
 
-## Development branch: Alpha 12, awaiting AppDeploy publishing
+Previous AppDeploy build: https://petri-panic-pink-lab-o02kge.v2.appdeploy.ai/ — it is a separate, older version and **has not** been updated with this GitHub build. If the GitHub Pages URL does not open immediately, check the [Pages deployment workflow](https://github.com/magicalboyco/petri-panic/actions/workflows/pages.yml) and Settings → Pages.
+
+## Current GitHub Pages beta (continuing alpha development)
 
 - **Adaptive play layout:** Petri dish stays clear of UI buttons; separate Shop / Guardian / Inspect controls and responsive portrait, landscape, tablet and desktop layouts.
 - **Adventure progression:** 21 selectable experiments, locked until unlocked, with replayable earlier experiments and progression preserved after replays. The Next Experiment action displays its actual destination level number. The Adventure mode tile does not show a level number.
@@ -25,7 +27,7 @@ An original, candy-pink, single-file browser game about nurturing Globs, collect
 
 ## Current status
 
-The last published AppDeploy build is older than the GitHub source. AppDeploy rejected a new deployment after hitting its daily publishing-credit budget, so the extended features above **must still be deployed and verified on actual devices**. Staging a source commit does not publish the game.
+The AppDeploy build remains older. The current GitHub `main` source is now published by GitHub Pages (first deployment workflow succeeded on November 8, 2026), but **real device gameplay and rendering tests remain necessary**. The illustrated Rosewood Nursery asset is an initial low-resolution integration test, not final artwork.
 
 All staged gameplay changes have been checked for JavaScript syntax errors. A mocked DOM gameplay smoke test exercised all 24 Guardian loadouts, all 24 on-screen creature drawings, the four boss milestones (including DNA gates and victories), and autosave/resume. The latest gallery also renders 24 cards and correctly displays locked versus unlocked companions in the simulated interface. Those tests passed, but are **not a substitute for real browser playtests**.
 
@@ -41,8 +43,8 @@ All staged gameplay changes have been checked for JavaScript syntax errors. A mo
 
 The working game is `index.html`. It can run on any static website, using HTTPS for normal Safari and mobile testing.
 
-When AppDeploy publishing is available:
-1. Deploy the latest `main/index.html` source into the existing Petri Panic app, preserving the app ID.
+For GitHub Pages beta testing:
+1. Open https://magicalboyco.github.io/petri-panic/ and verify the latest `main` build. If AppDeploy publishing is later available, separately redeploy to that app.
 2. Confirm AppDeploy says **ready** with no frontend or network errors.
 3. Verify mobile portrait and landscape, iPad rotation, desktop, tap targets and modal scrolling.
 4. In Adventure, verify Guardian selection and locked slots, later unlocks, replaying earlier stages, and next-level labels.
