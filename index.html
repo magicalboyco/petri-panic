@@ -643,7 +643,7 @@ function musicReset(){
 function musicTick(){
  if(!audioOn||!audioContext||audioContext.state!=='running'){musicWasActive=false;musicNextTime=0;return}
  const ending=!!(storyCurrent&&storyCurrent.id==='victory');
- const running=state==='playing'||ending;
+ const running=state==='playing'||state==='story'||ending;
  if(!running){musicWasActive=false;return}
  const era=eraForMusic(),song=ERA_SONGS[era],stepTime=ending?.36:song.tempo/1000;
  if(musicEra!==era||musicEnding!==ending){
