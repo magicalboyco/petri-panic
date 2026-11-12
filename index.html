@@ -553,12 +553,14 @@ function sound(f=440){if(!audioOn||!audioInit())return;try{const osc=audioContex
 const PETRI_AUDIO_KEY='petri-panic-audio-v1';
 let audioSettings={music:.58,effects:.70};
 try{const savedAudio=JSON.parse(localStorage.getItem(PETRI_AUDIO_KEY));if(savedAudio){for(const k of ['music','effects'])if(Number.isFinite(savedAudio[k]))audioSettings[k]=clamp(savedAudio[k],0,1)}}catch(e){}
+// Eight-bar original melodies become four musically varied 32-step phrases,
+// avoiding the harsh 6–8 second repeat of the first audio beta.
 const ERA_SONGS=[
- {name:'The Curious Little Laboratory',tempo:235,leadWave:'sine',bassWave:'triangle',bellWave:'sine',lead:[76,79,81,79,76,74,72,null,76,79,83,81,79,76,74,null,74,76,79,76,72,74,76,null,79,81,83,79,76,74,72,null],chords:[[48,52,55],[53,57,60],[50,53,57],[55,59,62],[45,48,52],[53,57,60],[48,52,55],[55,59,62]],texture:'waltz'},
- {name:'Tomorrow Is Wonderful!',tempo:210,leadWave:'triangle',bassWave:'triangle',bellWave:'sine',lead:[76,79,81,84,83,81,79,null,76,79,83,86,84,81,79,null,77,81,84,81,79,77,76,null,79,81,84,86,83,81,79,null],chords:[[48,52,55],[55,59,62],[53,57,60],[50,53,57],[53,57,60],[57,60,64],[55,59,62],[48,52,55]],texture:'swing'},
- {name:'Pink Tomorrowland',tempo:175,leadWave:'square',bassWave:'sine',bellWave:'triangle',lead:[79,83,86,83,81,79,76,null,79,84,88,86,83,81,79,null,76,79,83,86,88,86,83,null,81,83,86,91,88,86,83,null],chords:[[48,52,55],[57,60,64],[53,57,60],[55,59,62],[48,52,55],[53,57,60],[55,59,62],[48,52,55]],texture:'orbit'},
- {name:'The Secret Garden of Science',tempo:265,leadWave:'sine',bassWave:'sine',bellWave:'triangle',lead:[72,76,79,null,77,76,74,null,72,74,76,79,76,null,72,null,69,72,76,79,81,79,76,null,74,76,79,76,72,null,72,null],chords:[[48,52,55],[45,48,52],[53,57,60],[50,53,57],[45,48,52],[53,57,60],[55,59,62],[48,52,55]],texture:'marimba'},
- {name:'Beyond the Petri Dish',tempo:180,leadWave:'triangle',bassWave:'sine',bellWave:'sine',lead:[76,79,84,88,86,84,83,79,81,84,88,91,88,86,84,null,79,83,86,91,93,91,88,86,84,88,91,96,93,91,88,null],chords:[[48,52,55],[53,57,60],[57,60,64],[55,59,62],[48,52,55],[53,57,60],[55,59,62],[48,52,55]],texture:'cosmic'}
+ {name:'The Curious Little Laboratory',tempo:315,patch:'musicbox',texture:'waltz',lead:[76,79,81,79,76,74,72,null,76,79,83,81,79,76,74,null,74,76,79,76,72,74,76,null,79,81,83,79,76,74,72,null],chords:[[48,52,55],[53,57,60],[50,53,57],[55,59,62],[45,48,52],[53,57,60],[48,52,55],[55,59,62]]},
+ {name:'Tomorrow Is Wonderful!',tempo:275,patch:'vibes',texture:'swing',lead:[76,79,81,84,83,81,79,null,76,79,83,86,84,81,79,null,77,81,84,81,79,77,76,null,79,81,84,86,83,81,79,null],chords:[[48,52,55],[55,59,62],[53,57,60],[50,53,57],[53,57,60],[57,60,64],[55,59,62],[48,52,55]]},
+ {name:'Pink Tomorrowland',tempo:295,patch:'retro',texture:'orbit',lead:[79,83,86,83,81,79,76,null,79,84,88,86,83,81,79,null,76,79,83,86,88,86,83,null,81,83,86,91,88,86,83,null],chords:[[48,52,55],[57,60,64],[53,57,60],[55,59,62],[48,52,55],[53,57,60],[55,59,62],[48,52,55]]},
+ {name:'The Secret Garden of Science',tempo:355,patch:'marimba',texture:'garden',lead:[72,76,79,null,77,76,74,null,72,74,76,79,76,null,72,null,69,72,76,79,81,79,76,null,74,76,79,76,72,null,72,null],chords:[[48,52,55],[45,48,52],[53,57,60],[50,53,57],[45,48,52],[53,57,60],[55,59,62],[48,52,55]]},
+ {name:'Beyond the Petri Dish',tempo:315,patch:'glass',texture:'cosmic',lead:[76,79,84,88,86,84,83,79,81,84,88,91,88,86,84,null,79,83,86,91,93,91,88,86,84,88,91,96,93,91,88,null],chords:[[48,52,55],[53,57,60],[57,60,64],[55,59,62],[48,52,55],[53,57,60],[55,59,62],[48,52,55]]}
 ];
 const ENDING_LEAD=[72,76,79,null,76,74,72,null,69,72,76,79,76,null,72,null,72,76,79,84,81,79,76,null,74,76,79,76,72,null,null,null];
 const ENDING_CHORDS=[[48,52,55],[53,57,60],[45,48,52],[55,59,62],[48,52,55],[53,57,60],[55,59,62],[48,52,55]];
@@ -592,18 +594,41 @@ function applyAudioSettings(){
  musicMaster.gain.setTargetAtTime(audioOn?audioSettings.music*.65:0,now,.08);
  soundMaster.gain.setTargetAtTime(audioOn?audioSettings.effects:0,now,.02);
 }
-function musicNote(midi,when,duration,volume,type='sine',channel='music'){
+// Warm, low-volume synthesized instruments rather than five nearly identical
+// sine/triangle beep tracks. Each note has a short click-free envelope.
+function musicNote(midi,when,duration,volume,patch='sine',channel='music'){
  if(midi==null||!audioOn||!audioContext)return;
- const osc=audioContext.createOscillator(),gain=audioContext.createGain();
- osc.type=type;
- osc.frequency.setValueAtTime(440*Math.pow(2,(midi-69)/12),when);
+ const options={
+  musicbox:{wave:'sine',attack:.007,release:.32,cutoff:4900,partial:.14},
+  vibes:{wave:'sine',attack:.016,release:.42,cutoff:4400,partial:.10},
+  retro:{wave:'triangle',attack:.025,release:.40,cutoff:1750,partial:0},
+  marimba:{wave:'sine',attack:.006,release:.28,cutoff:2500,partial:.08},
+  glass:{wave:'sine',attack:.035,release:.68,cutoff:4700,partial:.23},
+  ukulele:{wave:'triangle',attack:.008,release:.35,cutoff:2100,partial:.04},
+  pad:{wave:'sine',attack:.13,release:.83,cutoff:1900,partial:0},
+  bass:{wave:'sine',attack:.02,release:.47,cutoff:1300,partial:0}
+ };
+ const preset=options[patch]||{wave:patch,attack:.018,release:1,cutoff:7200,partial:0};
+ const hz=440*Math.pow(2,(midi-69)/12);
+ const release=Math.max(duration,preset.attack+.035)*preset.release;
+ const end=when+Math.max(.08,release);
+ const gain=audioContext.createGain(),filter=audioContext.createBiquadFilter();
+ filter.type='lowpass';filter.frequency.setValueAtTime(preset.cutoff,when);
  const peak=Math.max(.00011,volume);
  gain.gain.setValueAtTime(.0001,when);
- gain.gain.linearRampToValueAtTime(peak,when+Math.min(.018,duration*.25));
- gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
- osc.connect(gain);
- gain.connect(channel==='effects'?soundMaster:musicMaster);
- osc.start(when);osc.stop(when+duration+.025);
+ gain.gain.linearRampToValueAtTime(peak,when+preset.attack);
+ gain.gain.exponentialRampToValueAtTime(.0001,end);
+ filter.connect(gain);gain.connect(channel==='effects'?soundMaster:musicMaster);
+ function voice(hzScale,amplitude){
+  const osc=audioContext.createOscillator(),level=audioContext.createGain();
+  osc.type=preset.wave;
+  osc.frequency.setValueAtTime(hz*hzScale,when);
+  level.gain.value=amplitude;
+  osc.connect(level);level.connect(filter);
+  osc.start(when);osc.stop(end+.03);
+ }
+ voice(1,1);
+ if(preset.partial)voice(2,preset.partial);
 }
 function musicCue(name){
  if(!audioOn||!audioInit()||!audioContext||!soundMaster)return;
@@ -620,36 +645,46 @@ function musicTick(){
  const ending=!!(storyCurrent&&storyCurrent.id==='victory');
  const running=state==='playing'||ending;
  if(!running){musicWasActive=false;return}
- const era=eraForMusic(),song=ERA_SONGS[era],stepTime=ending?.23:song.tempo/1000;
- if(musicEra!==era||musicEnding!==ending){musicEra=era;musicEnding=ending;musicStep=0;musicNextTime=audioContext.currentTime+.045;if(!ending&&era>0)musicCue('era')}
+ const era=eraForMusic(),song=ERA_SONGS[era],stepTime=ending?.36:song.tempo/1000;
+ if(musicEra!==era||musicEnding!==ending){
+  musicEra=era;musicEnding=ending;musicStep=0;musicNextTime=audioContext.currentTime+.045;
+  if(!ending&&era>0)musicCue('era');
+ }
  if(!musicWasActive){musicNextTime=Math.max(musicNextTime,audioContext.currentTime+.035);musicWasActive=true}
- const duck=storyCurrent?.35:1;
  const boss=!ending&&!!activeBoss();
- if(musicMaster)musicMaster.gain.setTargetAtTime(audioSettings.music*.65*duck,audioContext.currentTime,.08);
- while(musicNextTime<audioContext.currentTime+.16){
-  const i=musicStep%32,bar=Math.floor(i/4),at=musicNextTime;
-  const lead=ending?ENDING_LEAD[i]:song.lead[i];
+ const duck=storyCurrent&&!ending?.22:1;
+ musicMaster.gain.setTargetAtTime(audioSettings.music*.55*duck,audioContext.currentTime,.18);
+ // Schedule a little ahead for stable timing on mobile Safari.
+ let scheduled=0;
+ while(musicNextTime<audioContext.currentTime+.17&&scheduled++<4){
+  const i=musicStep%32,phrase=Math.floor(musicStep/32)%4,bar=Math.floor(i/4),at=musicNextTime;
   const chord=ending?ENDING_CHORDS[bar]:song.chords[bar];
-  const leadWave=ending?'triangle':song.leadWave;
-  musicNote(lead,at,ending?.19:song.texture==='marimba'?.13:.17,
-   ending?.018:song.texture==='orbit'?.006:.014,leadWave);
-  if(i%4===0){
-   musicNote(chord[0]-12,at,ending?.33:.34,boss?.026:.018,ending?'triangle':song.bassWave);
-   musicNote(chord[1],at,ending?.18:.20,ending?.007:.009,'sine');
+  let lead=ending?ENDING_LEAD[i]:song.lead[i];
+  // Four related sections, with deliberate breaths rather than a constant melody.
+  if(!ending){
+   if(phrase===1&&i%8===6&&lead!==null)lead+=2;
+   if(phrase===2&&(i%8===3||i%8===7))lead=null;
+   if(phrase===3&&i%8>=4)lead=null;
+  }
+  const emphasis=(i%4===0),melodyLevel=ending?.012:boss?.009:.010;
+  musicNote(lead,at,ending?.39:song.texture==='garden'?.40:.31,melodyLevel,ending?'ukulele':song.patch);
+  if(emphasis){
+   musicNote(chord[0]-12,at,.68,ending?.009:.010,'bass');
+   // Soft sustained harmony at long intervals rather than pounding quarter-note chords.
+   musicNote(chord[1],at,1.13,ending?.005:.004,'pad');
   }
   if(ending){
-   if(i%4===2)musicNote(chord[2]+12,at,.15,.007,'triangle');
-  }else{
-   if(song.texture==='waltz'&&(i%4===1||i%4===3))musicNote(chord[2]+12,at,.10,.008,'sine');
-   if(song.texture==='swing'&&i%4===2)musicNote(chord[1]+12,at,.10,.009,'triangle');
-   if(song.texture==='orbit'&&i%2===1)musicNote(chord[bar%3]+12,at,.10,.006,'sine');
-   if(song.texture==='marimba'&&i%4===2)musicNote(chord[2]+12,at,.11,.011,'triangle');
-   if(song.texture==='cosmic'&&i%4===2)musicNote(chord[2]+12,at,.26,.008,'sine');
-   // Adaptive tension: light rhythmic pulses over the same melody, not a restart.
-   if(boss&&i%2===0)musicNote(i%4===0?36:43,at,.10,.018,'triangle');
+   if(i%8===3)musicNote(chord[2]+12,at,.26,.004,'ukulele');
+  }else if(phrase!==3){
+   if(song.texture==='waltz'&&i%4===2)musicNote(chord[2]+12,at,.19,.0032,'musicbox');
+   if(song.texture==='swing'&&i%8===3)musicNote(chord[2]+12,at+.055,.25,.004,'vibes');
+   if(song.texture==='orbit'&&i%8===3)musicNote(chord[2]+12,at,.34,.0029,'glass');
+   if(song.texture==='garden'&&i%8===4)musicNote(chord[2]+12,at,.38,.004,'marimba');
+   if(song.texture==='cosmic'&&i%8===4)musicNote(chord[2]+12,at,.75,.0038,'glass');
   }
-  musicStep++;
-  musicNextTime+=stepTime;
+  // Gentle tension only during boss encounters; no harsh percussive alarm.
+  if(boss&&i%8===0)musicNote(chord[0]-5,at,.50,.007,'bass');
+  musicStep++;musicNextTime+=stepTime;
  }
 }
 function startMusic(){
