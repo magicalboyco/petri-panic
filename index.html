@@ -583,14 +583,14 @@ function audioInit(){
 }
 function applyAudioSettings(){
  try{localStorage.setItem(PETRI_AUDIO_KEY,JSON.stringify(audioSettings))}catch(e){}
- if(!audioContext||!musicMaster)return;
- const now=audioContext.currentTime;
- musicMaster.gain.setTargetAtTime(audioOn?audioSettings.music*.65:0,now,.08);
- soundMaster.gain.setTargetAtTime(audioOn?audioSettings.effects:0,now,.02);
  $('musicVolume').value=Math.round(audioSettings.music*100);
  $('effectVolume').value=Math.round(audioSettings.effects*100);
  $('musicNumber').textContent=Math.round(audioSettings.music*100)+'%';
  $('effectNumber').textContent=Math.round(audioSettings.effects*100)+'%';
+ if(!audioContext||!musicMaster)return;
+ const now=audioContext.currentTime;
+ musicMaster.gain.setTargetAtTime(audioOn?audioSettings.music*.65:0,now,.08);
+ soundMaster.gain.setTargetAtTime(audioOn?audioSettings.effects:0,now,.02);
 }
 function musicNote(midi,when,duration,volume,type='sine',channel='music'){
  if(midi==null||!audioOn||!audioContext)return;
@@ -616,7 +616,7 @@ function musicReset(){
  musicStep=0;musicEra=-1;musicEnding=false;musicNextTime=0;musicWasActive=false;
 }
 function musicTick(){
- if(!audioOn||!audioContext||audioContext.state!=='running')return;
+ if(!audioOn||!audioContext||audioContext.state!=='running'){musicWasActive=false;musicNextTime=0;return}
  const ending=!!(storyCurrent&&storyCurrent.id==='victory');
  const running=state==='playing'||ending;
  if(!running){musicWasActive=false;return}
