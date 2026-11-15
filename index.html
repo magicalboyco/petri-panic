@@ -319,6 +319,14 @@ body.menu-open{overflow:hidden}
  .guardian-choice .guardian-face{flex-basis:36px;height:40px;min-width:36px;font-size:20px}.guardian-choice strong{font-size:11px}.guardian-choice small{font-size:9px}}
 @media(max-width:390px){#collectionContents{grid-template-columns:1fr}.guardian-options{grid-template-columns:1fr;max-height:190px}}
 @media(orientation:landscape) and (max-height:600px){.guardian-options{max-height:130px}#collectionContents{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Scuttle vector portrait arm rig: independent transforms, no sprite rotation. */
+.scuttle-vector{display:block;overflow:visible;max-width:100%;max-height:100%}
+.scuttle-vector .arm-left,.scuttle-vector .arm-right{transform-box:view-box}
+.scuttle-vector .arm-left{transform-origin:-18px 8px;animation:scuttle-wave-left 2.3s ease-in-out infinite}
+.scuttle-vector .arm-right{transform-origin:18px 8px;animation:scuttle-wave-right 2.7s ease-in-out infinite}
+@keyframes scuttle-wave-left{0%,100%{transform:rotate(5deg)}50%{transform:rotate(-15deg)}}
+@keyframes scuttle-wave-right{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(17deg)}}
+@media(prefers-reduced-motion:reduce){.scuttle-vector .scuttle-arm{animation:none!important}}
 /* Guardian picker touch-scroll fix */
 #guardianPicker{min-height:0;max-width:100%;}
 #guardianOptions,.guardian-options{display:grid;overflow-x:hidden;overflow-y:auto!important;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:thin;scrollbar-color:#c84a94 #fff1f8;max-height:clamp(180px,38dvh,390px);min-height:130px;padding:5px 7px 12px 3px;align-content:start;}
@@ -481,6 +489,7 @@ body[data-era] .region-name{color:var(--era-deep)}
  background:radial-gradient(circle at 35% 20%,#fff,#fff0f7)!important;
  clip-path:none!important;box-shadow:inset 0 1px 0 #fff,0 2px 0 #eed1e0
 }
+#guardianOptions .guardian-face .scuttle-vector{width:46px!important;height:46px!important;flex:none}
 #guardianOptions .guardian-face .keeper-pixel{
  box-sizing:border-box;display:block;width:46px!important;height:46px!important;
  min-width:0;max-width:46px;max-height:46px;margin:0;
@@ -513,6 +522,7 @@ body[data-era] .region-name{color:var(--era-deep)}
  font:800 11px/1.18 Nunito,sans-serif;min-width:0;
  overflow:hidden;overflow-wrap:anywhere
 }
+#guardianSlotDisplay .scuttle-vector{width:30px!important;height:30px!important;flex:none}
 #guardianSlotDisplay .keeper-pixel{width:30px!important;height:30px!important;margin:0!important;max-width:100%}
 #collectionContents .collection-item{
  box-sizing:border-box;display:grid;grid-template-columns:48px minmax(0,1fr);
@@ -522,11 +532,13 @@ body[data-era] .region-name{color:var(--era-deep)}
  box-sizing:border-box;width:48px;height:48px;min-width:48px;
  border-radius:15px!important;clip-path:none!important
 }
+#collectionContents .collection-face .scuttle-vector{width:40px!important;height:40px!important}
 #collectionContents .collection-face .keeper-pixel{
  width:40px!important;height:40px!important;max-width:40px;max-height:40px;filter:none
 }
 #collectionContents .collection-state{grid-column:2;justify-self:start;margin-top:2px}
 #storyKeepers .story-keeper{overflow:hidden;min-height:69px;gap:9px}
+#storyKeepers .story-keeper .scuttle-vector{width:46px!important;height:46px!important;flex:none}
 #storyKeepers .story-keeper .keeper-pixel{
  width:46px!important;height:46px!important;min-width:46px;max-height:46px;
  filter:none;margin:0;flex:none
@@ -546,6 +558,7 @@ body[data-era] .region-name{color:var(--era-deep)}
  #guardianOptions .guardian-choice .guardian-face:has(.keeper-pixel){
   width:56px;height:56px;max-width:56px;min-width:56px
  }
+ #guardianOptions .guardian-face .scuttle-vector{width:48px!important;height:48px!important}
  #guardianOptions .guardian-face .keeper-pixel{width:48px!important;height:48px!important;max-width:48px;max-height:48px}
  #guardianOptions .guardian-copy strong{font-size:14px}
  #guardianOptions .guardian-copy small{font-size:11px;line-height:1.3}
@@ -611,7 +624,138 @@ keeperAtlas.onload=()=>{
 };
 keeperAtlas.onerror=()=>{keeperAtlasReady=false};
 keeperAtlas.src=KEEPER_ATLAS_URL;
+
+// Scuttle beta: a resolution-independent Canvas 2D character rig.
+// The shell, stalks, body, and both arms are independently drawn vector parts.
+// Art units are local to the character; changes to scale don't affect gameplay.
+function drawScuttleVector(x,y,size=60,cheer=false,seed=0){
+ const t=elapsed*3.25+seed;
+ const bob=Math.sin(t)*1.3;
+ const wave=Math.sin(t*1.1);
+ const rightWave=cheer?-.95:-.12+wave*.15;
+ const leftWave=cheer?.68:.12-wave*.13;
+ const ink='#653d53',peach='#ffcfb8',peachLite='#ffe5cf',pink='#f8aeb4';
+ function shape(cx,cy,rx,ry,fill,stroke=ink,sw=3){
+  ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);
+  ctx.fillStyle=fill;ctx.fill();
+  if(stroke){ctx.lineWidth=sw;ctx.strokeStyle=stroke;ctx.stroke()}
+ }
+ function arm(side,angle){
+  // Shoulder stays attached while the arm rotates around its own pivot.
+  ctx.save();ctx.translate(side*18,8);ctx.rotate(side*angle);
+  shape(side*7,8,9,7.1,peach,ink,3);
+  shape(side*6.4,6.2,5.6,3.1,peachLite,null);
+  ctx.restore();
+ }
+ ctx.save();
+ ctx.translate(Math.round(x),Math.round(y+bob));
+ ctx.scale(size/104,size/104);
+ ctx.save();
+ ctx.fillStyle='rgba(134,75,117,.18)';
+ ctx.beginPath();ctx.ellipse(2,45,35,5.2,0,0,Math.PI*2);ctx.fill();
+ ctx.restore();
+ // Shell is a real vector spiral, sitting behind the character.
+ shape(26,8,26,27,'#9768bf',ink,3.5);
+ shape(26,5,23.7,24.5,'#c9a5ed','#986bbe',2.1);
+ shape(23,-1,16.5,17,'#e7d1fb',null);
+ ctx.strokeStyle='#8964b9';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=3.2;
+ ctx.beginPath();
+ for(let k=0;k<=68;k++){
+  const a=k/68*Math.PI*4.3,rad=1.1+k/68*16.2;
+  const sx=26+Math.cos(a)*rad,sy=6+Math.sin(a)*rad;
+  if(k===0)ctx.moveTo(sx,sy);else ctx.lineTo(sx,sy);
+ }ctx.stroke();
+ shape(17,-9,5.8,3.5,'rgba(255,255,255,.68)',null);
+ shape(30,-13,3.1,2.2,'rgba(255,255,255,.55)',null);
+ // Feet drawn first, so they read as attached to the body.
+ shape(-12,36,10.2,8,peach,ink,3);
+ shape(12,36,10.2,8,peach,ink,3);
+ // Two gently flexing antenna stalks.
+ for(const side of [-1,1]){
+  const tipX=side*(21+Math.sin(t*.74+side)*1.2);
+  ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(side*11,-29);ctx.quadraticCurveTo(side*16,-44,tipX,-49);
+  ctx.strokeStyle=ink;ctx.lineWidth=8;ctx.stroke();
+  ctx.strokeStyle=peach;ctx.lineWidth=4.5;ctx.stroke();
+ }
+ // Rounded soft body and belly; no harsh pixel scaling.
+ shape(0,17,22,25,peach,ink,3.5);
+ shape(0,22,14.5,17.8,'#fff2db',null);
+ // Arms are their own independently animated rig parts.
+ arm(-1,leftWave);arm(1,rightWave);
+ // Head on top keeps the shoulders looking natural.
+ shape(0,-13,28.5,25,peach,ink,3.4);
+ shape(-10.5,-27.5,11,4.2,'rgba(255,255,255,.28)',null);
+ // Antenna tips sit above the head, with little golden centres.
+ for(const side of [-1,1]){
+  const tipX=side*(21+Math.sin(t*.74+side)*1.2);
+  shape(tipX,-51,7.8,8.1,peachLite,ink,3);
+  shape(tipX-2,-53,2.6,2.3,'#fff5c9',null);
+ }
+ // Face and expressions, still front-facing during every action.
+ const blink=!cheer&&((elapsed+seed)%5.3>5.05);
+ if(blink){
+  ctx.strokeStyle=ink;ctx.lineWidth=3;ctx.lineCap='round';
+  for(const eye of [-10,10]){ctx.beginPath();ctx.moveTo(eye-3,-12);ctx.quadraticCurveTo(eye,-9,eye+3,-12);ctx.stroke()}
+ }else{
+  for(const eye of [-10,10]){
+   shape(eye,-13,3.2,4.8,'#352935',null);
+   shape(eye-1.2,-15,1.05,1.5,'white',null);
+  }
+ }
+ shape(-18.4,-4,6.4,4.4,'#f7a9aa',null);
+ shape(18.4,-4,6.4,4.4,'#f7a9aa',null);
+ ctx.lineCap='round';ctx.lineJoin='round';
+ ctx.strokeStyle=ink;ctx.lineWidth=2.8;ctx.beginPath();
+ if(cheer){
+  // Open mouth, separate from head geometry.
+  ctx.ellipse(0,-2,5.5,5.9,0,0,Math.PI*2);
+  ctx.fillStyle='#a94f73';ctx.fill();ctx.stroke();
+  shape(0,0,3.1,1.65,'#f9a2ac',null);
+ }else{
+  ctx.moveTo(-5,-2);ctx.quadraticCurveTo(0,4.2,5,-2);ctx.stroke();
+  ctx.beginPath();ctx.arc(0,-2.2,1.1,0,Math.PI*2);ctx.fillStyle=ink;ctx.fill();
+ }
+ if(cheer){
+  ctx.save();ctx.globalAlpha=.95;ctx.fillStyle='#ffdf84';
+  for(const p of [[-39,-30,3],[37,-30,4]]){
+   ctx.beginPath();ctx.moveTo(p[0],p[1]-p[2]*2);
+   ctx.lineTo(p[0]+p[2]*.75,p[1]);
+   ctx.lineTo(p[0],p[1]+p[2]*2);
+   ctx.lineTo(p[0]-p[2]*.75,p[1]);ctx.closePath();ctx.fill();
+  }ctx.restore();
+ }
+ ctx.restore();
+}
+// Matching scalable vector portrait for the existing picker and video-call UI.
+// SVG uses the same colour language and separately articulated arms.
+function scuttleVectorHTML(size=56){
+ return '<svg class="scuttle-vector" role="img" aria-label="Scuttle vector character" viewBox="-52 -58 104 112" width="'+size+'" height="'+size+'" xmlns="http://www.w3.org/2000/svg">'+
+ '<ellipse cx="1" cy="44" rx="34" ry="5" fill="#955575" opacity=".15"/>'+
+ '<ellipse cx="26" cy="7" rx="26" ry="27" fill="#9870be" stroke="#653d53" stroke-width="3.5"/>'+
+ '<ellipse cx="26" cy="5" rx="23" ry="24" fill="#cda9ee" stroke="#986bbe" stroke-width="2"/>'+
+ '<ellipse cx="22" cy="-3" rx="15" ry="16" fill="#e9d4fb"/>'+
+ '<path d="M29 6 C30 3 26 1 24 5 C22 10 32 13 35 5 C38 -4 24 -13 17 -4 C7 7 16 22 28 23 C44 23 48 2 36 -9" fill="none" stroke="#8b65b9" stroke-width="3.2" stroke-linecap="round"/>'+
+ '<ellipse cx="-12" cy="36" rx="10" ry="8" fill="#ffcfb8" stroke="#653d53" stroke-width="3"/>'+
+ '<ellipse cx="12" cy="36" rx="10" ry="8" fill="#ffcfb8" stroke="#653d53" stroke-width="3"/>'+
+ '<path d="M-11-30 Q-15-43 -21-51 M11-30 Q15-43 21-51" stroke="#653d53" stroke-width="8" fill="none" stroke-linecap="round"/>'+
+ '<path d="M-11-30 Q-15-43 -21-51 M11-30 Q15-43 21-51" stroke="#ffcfb8" stroke-width="4.5" fill="none" stroke-linecap="round"/>'+
+ '<ellipse cx="0" cy="17" rx="22" ry="25" fill="#ffcfb8" stroke="#653d53" stroke-width="3.5"/>'+
+ '<ellipse cx="0" cy="22" rx="14.5" ry="18" fill="#fff2db"/>'+
+ '<g class="scuttle-arm arm-left"><ellipse cx="-25" cy="16" rx="9" ry="7.1" fill="#ffcfb8" stroke="#653d53" stroke-width="3"/><ellipse cx="-25" cy="14.5" rx="5.4" ry="3.1" fill="#ffe5cf"/></g>'+
+ '<g class="scuttle-arm arm-right"><ellipse cx="25" cy="16" rx="9" ry="7.1" fill="#ffcfb8" stroke="#653d53" stroke-width="3"/><ellipse cx="25" cy="14.5" rx="5.4" ry="3.1" fill="#ffe5cf"/></g>'+
+ '<ellipse cx="0" cy="-13" rx="28.5" ry="25" fill="#ffcfb8" stroke="#653d53" stroke-width="3.4"/>'+
+ '<ellipse cx="-21" cy="-51" rx="7.8" ry="8.1" fill="#ffe5cf" stroke="#653d53" stroke-width="3"/>'+
+ '<ellipse cx="21" cy="-51" rx="7.8" ry="8.1" fill="#ffe5cf" stroke="#653d53" stroke-width="3"/>'+
+ '<ellipse cx="-10" cy="-13" rx="3.2" ry="4.8" fill="#352935"/><ellipse cx="10" cy="-13" rx="3.2" ry="4.8" fill="#352935"/>'+
+ '<ellipse cx="-11" cy="-15" rx="1" ry="1.3" fill="#fff"/><ellipse cx="9" cy="-15" rx="1" ry="1.3" fill="#fff"/>'+
+ '<ellipse cx="-18" cy="-4" rx="6.4" ry="4.4" fill="#f7a9aa"/><ellipse cx="18" cy="-4" rx="6.4" ry="4.4" fill="#f7a9aa"/>'+
+ '<path d="M-5 -2 Q0 5 5 -2" fill="none" stroke="#653d53" stroke-width="2.8" stroke-linecap="round"/>'+
+ '</svg>';
+}
+
 function keeperSpriteHTML(id,pose=0,size=56){
+ if(id==='scuttle')return scuttleVectorHTML(size);
  const row=KEEPER_SPRITES[id];
  if(row===undefined||!keeperAtlasReady)return '';
  const x=['0%','50%','100%'][Math.max(0,Math.min(2,pose))];
@@ -1617,6 +1761,10 @@ function guardianOutline(id,p){
  return profile;
 }
 function drawGuardian(guard){
+ if(guard.id==='scuttle'){
+  drawScuttleVector(guard.x,guard.y,62,guard.keeperFlash>0,guard.y*.024);
+  return;
+ }
  // All Keepers face the player, matching the Globs.
  if(KEEPER_SPRITES[guard.id]!==undefined){
   const bob=Math.sin(elapsed*3.1+guard.x*.018+guard.y*.011)*1.5;
@@ -1645,7 +1793,7 @@ function drawGuardian(guard){
  ctx.restore();
 }
 function draw(){drawBackground();scuttleCheerTime=Math.max(0,scuttleCheerTime-1/60);for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}ctx.restore()}for(const g of globs)drawGlob(g);
-if(scuttle&&!drawKeeperSprite('scuttle',scuttleX,scuttleY+Math.sin(elapsed*3.2)*1.5,55,keeperExpression('scuttle',scuttleCheerTime>0),false)){ctx.save();ctx.translate(scuttleX,scuttleY);ell(0,12,37,17,'#e9a3b9');ell(11,0,23,22,'#ffd2c2');ell(13,-7,17,17,'#ffe5ce');ell(-23,1,13,12,'#e590d4');ell(-27,-3,4,5,'#64365b');ell(-16,-3,4,5,'#64365b');ctx.strokeStyle='#a7659e';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-28,-9);ctx.lineTo(-32,-24);ctx.moveTo(-17,-9);ctx.lineTo(-12,-24);ctx.stroke();ctx.restore()}
+if(scuttle)drawScuttleVector(scuttleX,scuttleY,65,scuttleCheerTime>0);
 if(scuttle){scuttleDrawX=scuttleX;scuttleDrawY=scuttleY}for(const guard of guardians)drawGuardian(guard);for(const e of enemies){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(Math.sin(e.phase)*.08);ctx.shadowColor='#a33e87';ctx.shadowBlur=14;
  if(e.kind==='boss'){
   const phase2=e.hp<e.maxHp*.5,r=e.r;let mainColor=e.variant==='prism'?'#ba8fff':e.variant==='serpent'?'#a9d177':e.variant==='moth'?'#799bcf':'#fa8fbf';
