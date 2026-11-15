@@ -52,5 +52,30 @@ const server=createServer(async(req,res)=>{
    console.log('PASS: '+viewport.width+'x'+viewport.height+' menu, Keeper selection, level, tap, shop, collection, pause');
    await page.close();
   }
+ 
+  // Validate the actual shared six-creature art renderer at phone and desktop widths.
+  for(const viewport of [{width:390,height:844},{width:1280,height:800}]){
+   const page=await browser.newPage({viewport,reducedMotion:'reduce'});
+   const errors=[];
+   page.on('pageerror',e=>errors.push(e.message));
+   await page.goto('http://127.0.0.1:'+server.address().port+'/creature-review.html',{waitUntil:'load'});
+   await page.waitForTimeout(500);
+   assert.equal(await page.locator('.card').count(),6,'All six character cards must render');
+   assert(await page.evaluate(()=>!!window.PetriPanicCreatureArt?.preview),'Shared renderer is unavailable');
+   const hashes=await page.locator('canvas').evaluateAll(canvases=>canvases.map(c=>{
+    const data=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
+    let visible=0;for(let i=3;i<data.length;i+=4)if(data[i]>0)visible++;
+    return visible;
+   }));
+   assert(hashes.every(v=>v>500),'One or more creature drawings are blank: '+JSON.stringify(hashes));
+   await page.locator('[data-stage="ability"]').click();
+   assert.equal(await page.locator('[data-stage="ability"]').getAttribute('aria-pressed'),'true');
+   await page.locator('[data-stage="hurt"]').click();
+   await page.locator('#motion').click();
+   assert.equal(await page.locator('#motion').getAttribute('aria-pressed'),'true');
+   assert.equal(errors.length,0,'Creature gallery exceptions: '+errors.join(' | '));
+   console.log('PASS: '+viewport.width+'x'+viewport.height+' all six creature artworks, ability/hurt modes, pause motion');
+   await page.close();
+  }
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());
