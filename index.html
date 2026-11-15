@@ -1994,6 +1994,90 @@ function drawRoomVariation(){
  ctx.fillText(EXPERIMENT_ROOMS[level-1].toUpperCase(),155,589);
  ctx.restore()
 }
+
+// One Victorian architectural master, five understated experiment-specific props.
+// These sit mostly outside the central dish so the active Globs remain dominant.
+function drawVictorianExperimentDetails(){
+ const v=Math.max(0,Math.min(4,environmentLevel()-1));
+ const time=elapsed||0;
+ function rimRect(x,y,w,h,r,fill,edge='#ad7996',sw=2){
+  ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();
+  ctx.lineWidth=sw;ctx.strokeStyle=edge;ctx.stroke();
+ }
+ function oval(x,y,rx,ry,fill,edge='',sw=1.8){
+  ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill();
+  if(edge){ctx.lineWidth=sw;ctx.strokeStyle=edge;ctx.stroke()}
+ }
+ function stroke(points,color='#b18a9e',sw=2){
+  ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+  ctx.lineWidth=sw;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=color;ctx.stroke();
+ }
+ function rose(x,y,scale=1){
+  ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
+  for(let i=0;i<5;i++){const a=i*Math.PI*2/5;oval(Math.cos(a)*6,Math.sin(a)*6,6,5,'#edb3cb','#b67d9f',1.3)}
+  oval(0,0,4,4,'#f6e4a1');ctx.restore();
+ }
+ function littlePlant(x,y){
+  stroke([[x,y+26],[x,y-7]],'#749b80',3);
+  for(const side of [-1,1])oval(x+side*10,y+2,11,5,'#a9c7a3','#789a85',1.4);
+  oval(x+5,y-13,7,12,'#bad8ad','#789a85',1.4);
+  rimRect(x-16,y+18,32,23,6,'#d69fba');
+  rose(x,y-25,.75);
+ }
+ function clock(x,y){
+  oval(x,y,28,30,'#e7c8d6','#a57b96',3.5);oval(x,y,22,23,'#fff5e6','#d6b686',2.2);
+  for(let k=0;k<8;k++){
+   const a=k*Math.PI/4;
+   oval(x+Math.sin(a)*17,y-Math.cos(a)*17,1.7,1.7,'#bc9572');
+  }
+  stroke([[x,y],[x+11,y-8]],'#ae8f79',3);
+  stroke([[x,y],[x,y-13]],'#ae8f79',2.2);
+  oval(x,y,3,3,'#bf8b9f');
+ }
+ ctx.save();
+ // The little props never overlap game text or the outer HUD.
+ ctx.globalAlpha=.89;
+ const k=Math.sin(time*1.1)*.8;
+ if(v===0){
+  // Rosewood Nursery: warm terrariums with a budding pink culture.
+  rimRect(104,520,65,54,14,'#f7dbe8');
+  rimRect(113,527,48,36,10,'#fff2f8');
+  oval(137,545,12,12,'#f6bbd4','#c68ead',2);
+  oval(133,542,2.1,2.5,'#75516d');oval(142,542,2.1,2.5,'#75516d');
+  rose(761,537+k,.78);littlePlant(778,541);
+ }else if(v===1){
+  // Botanical Study: living seedlings and a charming preserved flower.
+  littlePlant(132,538);
+  littlePlant(767,540);
+  rose(789,510,.65);
+ }else if(v===2){
+  // Brass Workshop: oversized child-friendly measuring dials.
+  clock(134,545);clock(769,545);
+  rimRect(120,579,32,9,4,'#b98ea4');
+  rimRect(756,579,32,9,4,'#b98ea4');
+ }else if(v===3){
+  // Electrical Conservatory: mint-and-gold electrodes, no harsh lightning.
+  for(const x of [125,773]){
+   rimRect(x-24,533,48,43,10,'#e6c5d5');
+   rimRect(x-14,542,28,24,6,'#fff0f6');
+   oval(x,552,7,7,'#f5d88b','#be9d79',2);
+   stroke([[x-19,541],[x-10,527],[x+3,537],[x+13,520]],'#a7b7a3',2.3);
+   roomStar(x+13,520,5+Math.sin(time*2.1)*1.1,'#f8e7ae',6);
+  }
+ }else{
+  // Grand Observatory: small brass telescopes and a few overhead stars.
+  for(const x of [127,766]){
+   stroke([[x,571],[x+7,548],[x+16,570]],'#b79a80',3);
+   ctx.save();ctx.translate(x+4,540);ctx.rotate(-.28);
+   rimRect(-19,-9,39,18,8,'#dcc498','#b3947a',2.4);
+   oval(20,0,6,10,'#fff0d0','#ab8b75',2);
+   ctx.restore();
+  }
+  roomStar(344,46,6,'#e4c387',8);roomStar(562,57,7,'#e4c387',8);
+ }
+ ctx.restore();
+}
+
 function drawScenicRoom(){
  const era=Math.min(4,Math.floor((environmentLevel()-1)/5));
  const master=MASTER_ROOM_IMAGES[era];
@@ -2003,6 +2087,7 @@ function drawScenicRoom(){
   ctx.imageSmoothingQuality='high';
   ctx.drawImage(master.image,0,0,W,H);
   ctx.restore();
+  if(era===0)drawVictorianExperimentDetails();
  }else{
   drawEraRoom();
  }
