@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Petri Panic · Creature Art Studio</title>
+<style>
+:root{color-scheme:light;--ink:#604661;--berry:#ae477e;--rose:#ffc5dc;--line:#edc9db;--card:#fffcfe}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 12% 1%,#fff 0,#fff1f7 37%,transparent 66%),linear-gradient(150deg,#ffeff5,#f1ecff);color:var(--ink);font:16px/1.5 ui-rounded,"Trebuchet MS",system-ui,sans-serif}
+a{color:#9a386e}a:focus-visible,button:focus-visible{outline:3px solid #734fac;outline-offset:3px}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto}
+header{padding:30px 0 20px}
+nav{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center;gap:12px}
+nav a{text-decoration:none;font-weight:800;border:1px solid var(--line);padding:9px 13px;border-radius:12px;background:#fff9fc}
+h1{font-size:clamp(2.1rem,6vw,4.5rem);line-height:1.06;letter-spacing:-.045em;margin:40px 0 12px}
+h1 em{font-style:normal;color:#b34d88}
+.lead{font-size:clamp(1rem,2vw,1.2rem);max-width:750px;line-height:1.55;color:#75536c}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:15px;margin:30px 0 20px;padding:15px;border:1px solid var(--line);border-radius:18px;background:#fffaffd9}
+.controls{display:flex;flex-wrap:wrap;gap:7px}
+button{cursor:pointer;border:2px solid #e9c7db;color:var(--ink);font:800 .9rem/1.1 inherit;border-radius:100px;background:white;padding:11px 15px;min-height:44px}
+button[aria-pressed="true"]{background:#a9548d;color:white;border-color:#a9548d}
+#motion{background:#f4f0fb}
+.tag{font-weight:900;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#a65d8d}
+h2{font-size:1.5rem;letter-spacing:-.025em;margin:35px 0 15px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{border:2px solid var(--line);border-radius:26px;background:var(--card);overflow:hidden;box-shadow:0 14px 24px #8e54801c}
+.scene{background:radial-gradient(circle at 50% 45%,#fffefb 0 25%,#fff0f8 59%,#e8e7fa 100%);position:relative;display:grid;place-items:center;min-height:235px;overflow:hidden}
+.scene:before{content:'';position:absolute;width:66%;height:66%;border:3px solid #f0c2da99;border-radius:50%;box-shadow:0 0 0 12px #ffffff4f,inset 0 0 24px #fff;opacity:.7}
+.scene:after{content:'✦';position:absolute;right:10%;top:9%;color:#dfafd1;font-size:30px}
+.scene canvas{width:min(100%,320px);height:auto;position:relative;z-index:1;display:block}
+.info{padding:19px 21px 23px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.info strong{font-size:21px;letter-spacing:-.02em}.info p{margin:4px 0 0;color:#896b82;font-size:14px}
+.info .id{font-size:11px;font-weight:900;letter-spacing:.06em;color:#ab6b91;text-transform:uppercase}
+footer{padding:35px 0 70px;color:#86697f;font-size:14px}
+.note{background:#fff9fc;border-left:5px solid #ba73a1;border-radius:12px;padding:14px 18px;margin-top:20px}
+@media(max-width:660px){.grid{grid-template-columns:1fr;gap:14px}.scene{min-height:250px}.toolbar{align-items:start}.info{padding:15px 18px}h1{margin-top:25px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body><div class="wrap">
+<header><nav><strong>🧫 PETRI PANIC <span style="font-weight:500">/ Creature Studio</span></strong><div><a href="./">Play game</a> <a href="keeper-review.html">24 Keepers</a> <a href="art-review.html">Era artwork</a></div></nav>
+<h1>Meet the <em>invaders.</em></h1>
+<p class="lead">Four original boss character designs and two laboratory pests, rendered from the exact live gameplay vector models. Compare their facial expressions, weakened states, and motion at real phone widths.</p>
+</header>
+<main>
+<div class="toolbar"><div class="controls" role="group" aria-label="Artwork pose">
+<button type="button" data-stage="idle" aria-pressed="true">Idle</button>
+<button type="button" data-stage="ability" aria-pressed="false">Weak spot</button>
+<button type="button" data-stage="hurt" aria-pressed="false">Damaged</button></div>
+<button type="button" id="motion" aria-pressed="false">Pause motion</button></div>
+<h2>Boss milestones</h2><section class="grid" id="bosses" aria-label="Boss artwork"></section>
+<h2>Petri-dish pests</h2><section class="grid" id="pests" aria-label="Enemy artwork"></section>
+<p class="note"><strong>Review scope:</strong> These are actual character drawing functions, not simulated screenshots or static concept art. The preview supplies mock health and weakness states; it does not alter the game's save or unlocks. Enemy movement, attack timings, and gameplay balance remain unchanged.</p>
+</main>
+<footer>Hand-authored Canvas 2D vector artwork for Petri Panic. Motion follows your operating system's reduced-motion preference, and the Pause motion control freezes the previews.</footer>
+</div>
+<script src="assets/js/creature-art.js"></script>
+<script>
+(function(){
+'use strict';
+const art=window.PetriPanicCreatureArt;
+const entries=[
+ {id:'prism',name:'Prism Queen',level:'Experiment 4',description:'Crystal crown · royal sceptre · sharp jewel silhouette',target:'bosses'},
+ {id:'serpent',name:'Spore Serpent',level:'Experiment 9',description:'Coiled leaf body · mushroom crest · spores',target:'bosses'},
+ {id:'moth',name:'Abyss Moth',level:'Experiment 15',description:'Lunar feelers · velvet wings · oscillating flight',target:'bosses'},
+ {id:'omega',name:'Omega Bloom',level:'Experiment 21',description:'Layered petals · radiant seedling · final-form bloom',target:'bosses'},
+ {id:'virus',name:'Purple Virus',level:'Regular invader',description:'Spiky silhouette · mischievous frown · health color',target:'pests'},
+ {id:'mold',name:'Green Mold',level:'Spreading organism',description:'Soft spore edges · unfurling seedling · sleepy smile',target:'pests'}
+];
+const contexts=[];
+entries.forEach(e=>{
+ const article=document.createElement('article');article.className='card';
+ const scene=document.createElement('div');scene.className='scene';
+ const canvas=document.createElement('canvas');canvas.width=300;canvas.height=300;canvas.setAttribute('role','img');canvas.setAttribute('aria-label',e.name+' original animated character drawing');
+ scene.appendChild(canvas);
+ const info=document.createElement('div');info.className='info';
+ const text=document.createElement('div');text.innerHTML='<strong></strong><p></p><span class="id"></span>';
+ text.querySelector('strong').textContent=e.name;text.querySelector('p').textContent=e.description;text.querySelector('.id').textContent=e.level;
+ info.appendChild(text);article.append(scene,info);document.getElementById(e.target).appendChild(article);
+ contexts.push({c:canvas.getContext('2d'),type:e.id});});
+let stage='idle',paused=false,elapsed=0,last=0;
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+function render(ts){
+ const delta=last?Math.min(.05,(ts-last)/1000):0;last=ts;
+ if(!paused&&!reduce.matches)elapsed+=delta;
+ for(const {c,type} of contexts){
+  c.clearRect(0,0,300,300);
+  if(!art||!art.preview){c.fillText('Artwork unavailable',55,150);continue;}
+  art.preview(c,type,elapsed,paused||reduce.matches,stage);
+ }
+ requestAnimationFrame(render);
+}
+document.querySelectorAll('[data-stage]').forEach(button=>button.addEventListener('click',()=>{
+ stage=button.dataset.stage;
+ document.querySelectorAll('[data-stage]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+}));
+document.getElementById('motion').addEventListener('click',event=>{
+ paused=!paused;event.currentTarget.setAttribute('aria-pressed',String(paused));event.currentTarget.textContent=paused?'Resume motion':'Pause motion';
+});
+requestAnimationFrame(render);
+})();
+</script></body></html>

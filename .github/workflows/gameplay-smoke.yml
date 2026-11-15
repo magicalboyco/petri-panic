@@ -1,9 +1,9 @@
 name: Petri Panic gameplay smoke tests
 on:
   push:
-    branches: [main, 'feat/**']
+    branches: [main, 'feat/**', 'art/**']
   pull_request:
-    branches: [main]
+    branches: [main, 'feat/**']
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,3 +24,10 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Browser interaction and viewport smoke tests
         run: node tests/browser-smoke.cjs
+      - name: Creature art review screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: creature-art-phone-desktop
+          path: art-test-shots/*.png
+          if-no-files-found: ignore
