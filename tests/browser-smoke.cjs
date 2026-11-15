@@ -41,7 +41,8 @@ const server=createServer(async(req,res)=>{
    await page.locator('#game').click({position:{x:170,y:160},force:true});
    await page.locator('#shopToggle').click();
    assert(await page.locator('#supplyPanel').evaluate(el=>el.classList.contains('shopping')),'Shop did not open');
-   await page.locator('#shopClose').click();
+   if(await page.locator('#shopClose').isVisible()) await page.locator('#shopClose').click();
+   else await page.locator('#shopClose').evaluate(el=>el.click()); // Desktop renders the Shop beside the dish; its close control is mobile-only.
    await page.locator('#guardianToggle').click();
    assert(await page.locator('#guardianCollection').isVisible(),'Guardian collection did not open');
    await page.locator('#closeCollection').click();
