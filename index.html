@@ -833,8 +833,120 @@ const KEEPER_VECTOR_TONES={
  mimic:['#f1e4fd','#b9a0dc','#fff6ff','#b18bd4']
 };
 const keeperPortraitCache={};
+
+// Lookout's individually mastered bear + glasses rig.
+// Named poses are extensible: add a state to LOOKOUT_POSES and trigger it via
+// getLookoutPose(), without adding atlas columns or changing draw loops.
+const LOOKOUT_POSES={
+ idle:{mouth:'smile',eyes:'open',arms:0,hop:0},
+ blink:{mouth:'smile',eyes:'closed',arms:0,hop:0},
+ wink:{mouth:'grin',eyes:'wink',arms:.10,hop:.6},
+ cheer:{mouth:'open',eyes:'open',arms:.82,hop:3.2},
+ alert:{mouth:'o',eyes:'wide',arms:.38,hop:1.5}
+};
+function getLookoutPose(g,portrait=false){
+ if(portrait)return 'idle';
+ if(g.keeperFlash>0)return 'cheer';
+ if(enemies.some(e=>!e.dead&&Math.hypot(e.x-g.x,e.y-g.y)<145))return 'alert';
+ const seed=(elapsed+1.21)%5.4;
+ if(seed>5.14&&seed<5.37)return 'blink';
+ if(seed>3.17&&seed<3.49)return 'wink';
+ return 'idle';
+}
+function drawLookoutVector(g,c=ctx,size=70,portrait=false){
+ const stateName=getLookoutPose(g,portrait);
+ const pose=LOOKOUT_POSES[stateName]||LOOKOUT_POSES.idle;
+ const t=portrait?0:elapsed;
+ const moving=portrait?0:Math.min(1,Math.max(0,g.motionSpeed||0));
+ const step=portrait?0:(g.motionStep||0);
+ const sway=Math.sin(t*2.2+1.8);
+ const bob=portrait?0:Math.sin(t*3.0)*.8+Math.max(0,Math.sin(step))*moving*2.3+pose.hop*Math.abs(Math.sin(t*11.8));
+ const lean=portrait?0:sway*.023+(g.motionGaze||0)*.03;
+ const ink='#593a5a',skin='#e0d2fa',soft='#f2e8ff',purple='#a589cd',shine='#ffffff',blush='#f3a5bf';
+ function oval(x,y,rx,ry,fill,edge='',width=2.8){
+  c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fillStyle=fill;c.fill();
+  if(edge){c.lineWidth=width;c.strokeStyle=edge;c.stroke()}
+ }
+ function curve(d,fill,edge=ink,width=3){
+  c.beginPath();d(c);if(fill){c.fillStyle=fill;c.fill()}
+  if(edge){c.lineWidth=width;c.lineJoin='round';c.lineCap='round';c.strokeStyle=edge;c.stroke()}
+ }
+ function arm(side){
+  c.save();c.translate(side*21,13);
+  const angle=side*(pose.arms*.85+.055*Math.sin(t*3.1+side*1.6));
+  c.rotate(angle);
+  oval(side*7,6,10,9,skin,ink,3.5);
+  oval(side*6.4,3.1,5.3,3,soft,'',0);
+  c.restore();
+ }
+ c.save();
+ c.translate(Math.round(g.x),Math.round(g.y-bob));
+ // 118-unit working canvas makes glasses/eyes legible when rendered small.
+ c.scale(size/118,size/118);
+ if(!portrait){
+  oval(0,52+bob,30,4.7,'rgba(136,81,133,.16)');
+  // faint soft edge-light to match neighboring Globs
+  c.save();c.globalAlpha=.20;oval(0,0,47,46,'#d6b6ed');c.restore();
+ }
+ c.rotate(lean);
+ const squash=portrait?0:.023*Math.sin(t*2.8)+moving*.035*Math.cos(step*2);
+ c.scale(1+squash,1-squash);
+ // Round feet and belly, drawn at the back of the head.
+ oval(-13,43+Math.max(0,Math.sin(step))*moving*1.7,12,8,skin,ink,3);
+ oval(13,43+Math.max(0,-Math.sin(step))*moving*1.7,12,8,skin,ink,3);
+ oval(0,21,28,29,skin,ink,4);
+ oval(0,23,19.5,24,shine,'',0);
+ // Bear's ear silhouette: unmistakable at tiny game sizes.
+ oval(-29,-31,15.2,17.5,skin,ink,4.4);
+ oval(29,-31,15.2,17.5,skin,ink,4.4);
+ oval(-29,-31,9.5,11.5,'#b69bd8','',0);
+ oval(29,-31,9.5,11.5,'#b69bd8','',0);
+ arm(-1);arm(1);
+ // Head uses a restrained lavender-to-white gradient.
+ const face=c.createLinearGradient(0,-46,0,22);
+ face.addColorStop(0,'#e7d8fa');face.addColorStop(.4,'#f4eaff');face.addColorStop(.68,'#fffaff');face.addColorStop(1,'#fffafc');
+ oval(0,-17,37.5,36,face,ink,4.1);
+ oval(-12.5,-42,11,4,'rgba(255,255,255,.78)','',0);
+ oval(-21,-9,8,5,blush,'',0);oval(21,-9,8,5,blush,'',0);
+ // Chunky circular glasses (not tiny intersecting scribbles).
+ const goggles=[-16,16];
+ for(const eyeX of goggles){
+  oval(eyeX,-18,17,18,'rgba(255,255,255,.67)',purple,5.1);
+  if(pose.eyes==='closed'||(pose.eyes==='wink'&&eyeX===16)){
+   curve(p=>{p.moveTo(eyeX-6,-17);p.quadraticCurveTo(eyeX,-12,eyeX+6,-17)},null,ink,3.4);
+  }else{
+   oval(eyeX+(g.motionGaze||0)*.6,-18,pose.eyes==='wide'?6.1:5.4,pose.eyes==='wide'?8.8:7.6,'#47354e','',0);
+   oval(eyeX-1.7,-21,2.1,2.7,'#ffffff','',0);
+  }
+ }
+ // Bridge and temples are distinct strokes.
+ curve(p=>{p.moveTo(-.5,-18);p.quadraticCurveTo(0,-22,.5,-18)},null,purple,5);
+ curve(p=>{p.moveTo(-33,-17);p.lineTo(-38,-17)},null,purple,5);
+ curve(p=>{p.moveTo(33,-17);p.lineTo(38,-17)},null,purple,5);
+ // Mouth fits under the glasses and stays centred across expressions.
+ if(pose.mouth==='open'){
+  oval(0,1,6.5,7.5,'#8b426d',ink,2.7);
+  oval(0,4.9,4,2.2,'#f8a7b9','',0);
+ }else if(pose.mouth==='o'){
+  oval(0,1,4.4,6,'#8b426d',ink,2.1);
+ }else if(pose.mouth==='grin'){
+  curve(p=>{p.moveTo(-6,-1);p.quadraticCurveTo(0,10,6,-1)},null,ink,3.4);
+ }else{
+  curve(p=>{p.moveTo(-4.5,-1);p.quadraticCurveTo(0,6,4.5,-1)},null,ink,3.1);
+ }
+ if(stateName==='cheer'){
+  c.save();c.globalAlpha=.93;
+  for(const sign of [-1,1]){
+   c.fillStyle='#ffe5a1';
+   c.beginPath();c.moveTo(sign*48,-16);c.lineTo(sign*55,-13);c.lineTo(sign*47,-9);c.closePath();c.fill();
+  }c.restore();
+ }
+ c.restore();return true;
+}
+
 function drawKeeperVector(g,c=ctx,size=64,portrait=false){
  const id=g.id;if(!VECTORIZED_KEEPERS.has(id))return false;
+ if(id==='forecast')return drawLookoutVector(g,c,size,portrait);
  const [skin,shade,hi,accent]=KEEPER_VECTOR_TONES[id];
  const idx=Array.from(VECTORIZED_KEEPERS).indexOf(id);
  const time=portrait?0:elapsed,seed=idx*.73;
