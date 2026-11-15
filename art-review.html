@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Petri Panic · Art Review Gallery</title>
+<meta name="description" content="Preview the five era artwork masters from Professor Trung's Petri Panic. These are art-review backgrounds, not final gameplay screenshots."/>
+<style>
+:root{color-scheme:light;--ink:#55354e;--muted:#825f7b;--rose:#cb5d98;--bg:#fff6fb;--line:#eac4da}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;background:radial-gradient(circle at top left,#fff 0,#ffe8f3 55%,#f5e7fc 100%);min-height:100vh}
+header,main,footer{max-width:1180px;margin:auto;padding-left:clamp(16px,4vw,50px);padding-right:clamp(16px,4vw,50px)}
+header{padding-top:clamp(28px,5vw,58px);padding-bottom:24px}
+.nav{display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:800}
+.nav a{color:#8f4272;text-decoration:none;padding:10px 14px;border:2px solid #e7bfdb;border-radius:999px;background:#fffafd}
+.nav a:focus-visible,button:focus-visible{outline:4px solid #a993e2;outline-offset:3px}
+h1{font-size:clamp(36px,6vw,64px);line-height:1.04;letter-spacing:-2px;margin:36px 0 16px}
+.tag{color:#a94e83;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.lead{font-size:clamp(15px,2vw,19px);line-height:1.65;max-width:780px;color:#71546d}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.stat{background:#fff9fd;border:2px solid #f1d6e8;border-radius:18px;padding:12px 19px;min-width:128px}
+.stat strong{font-size:24px;color:#a74780;display:block}.stat small{color:#76546e;font-weight:700}
+.note{font-size:14px;color:#71536c;line-height:1.5;padding:14px 18px;background:#fff9f9;border-left:4px solid #ca79a2;border-radius:12px;margin:10px 0 32px}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;padding-bottom:40px}
+.era{border:2px solid #e9c6d9;border-radius:24px;overflow:hidden;background:#fffbfe;box-shadow:0 12px 38px rgba(128,65,105,.075)}
+.art{display:block;width:100%;position:relative;padding:0;cursor:zoom-in;border:0;background:var(--accent);aspect-ratio:900/620;overflow:hidden}
+.art img{display:block;width:100%;height:100%;object-fit:cover}
+.art:hover img{transform:scale(1.025)}.art img{transition:transform .25s ease}
+.inspect{position:absolute;right:12px;bottom:12px;background:#fffdfaeb;padding:8px 12px;border-radius:100px;color:#723e67;font-weight:900;font-size:12px}
+.info{padding:20px 22px 24px}
+.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#976b87;font-weight:900;font-size:11px;letter-spacing:1px}
+.state{font-weight:700;background:#f9e6ee;border-radius:999px;padding:3px 9px;letter-spacing:0}
+h2{font-size:clamp(22px,2.8vw,29px);margin:12px 0 2px;letter-spacing:-.6px}
+.info p{margin:5px 0;color:#79586e;line-height:1.4}.info p.sub{color:#a35285;font-weight:800}
+.era:last-child{grid-column:1/-1;max-width:630px;justify-self:center;width:100%}
+dialog{border:2px solid #eec4de;border-radius:22px;box-shadow:0 25px 100px #5f3b6377;max-width:min(96vw,1150px);width:1150px;padding:0;overflow:hidden;background:#fff8fe;color:var(--ink)}
+dialog::backdrop{background:#281b3480;backdrop-filter:blur(5px)}
+.dialog-top{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;font-weight:900;gap:12px}
+.dialog-top button{cursor:pointer;border:2px solid #dfb9d2;border-radius:100px;padding:7px 11px;background:#fff;font-size:18px;color:#783e69}
+dialog img{display:block;width:100%;height:auto;max-height:79vh;object-fit:contain}
+footer{padding-top:15px;padding-bottom:32px;color:#855f79;font-size:13px}
+@media(max-width:720px){.gallery{grid-template-columns:1fr;gap:18px}.era:last-child{grid-column:auto}.nav{align-items:flex-start}.nav a{font-size:12px}.info{padding:15px 17px 20px}}
+@media(prefers-reduced-motion:reduce){.art img{transition:none}}
+</style></head>
+<body>
+<header>
+ <div class="nav"><strong>🧫 Professor Trung's PETRI PANIC</strong><a href="./">← Back to game</a></div>
+ <h1>Science Across <span style="color:#c9659c">Time.</span></h1>
+ <p class="tag">Environment art direction · Review gallery</p>
+ <p class="lead">Five laboratory eras. Twenty-one experiments. One very pink, very peculiar world. Explore the current full-resolution environment masters before their final visual sign-off.</p>
+ <div class="stats"><div class="stat"><strong>5</strong><small>Laboratory eras</small></div><div class="stat"><strong>21</strong><small>Experiments</small></div><div class="stat"><strong>SVG</strong><small>Scalable artwork</small></div></div>
+</header>
+<main>
+ <p class="note"><strong>Artwork review, not finished screenshots.</strong> These illustrations are the background masters actually loaded by the game. The animated experiment-specific props, Petri dish, HUD and Globs are layered on top in gameplay. The artwork remains open for refinement.</p>
+ <div class="gallery"><article class="era" style="--accent:#b7849d">
+ <button class="art" type="button" data-art="victorian" data-label="Victorian Origins" aria-label="View Victorian Origins artwork at full size">
+  <img src="assets/environments/masters/victorian.svg" alt="Victorian Origins full-size illustration" loading="lazy"/>
+  <span class="inspect">View full artwork ↗</span>
+ </button>
+ <div class="info">
+  <div class="meta"><span>EXPERIMENTS 01–05</span><span class="state">Second art pass</span></div>
+  <h2>Victorian Origins</h2><p class="sub">The Rosewood Lab</p><p>Steam, glass & discovery</p>
+ </div>
+</article>
+<article class="era" style="--accent:#80b9aa">
+ <button class="art" type="button" data-art="atomic" data-label="Atomic Age" aria-label="View Atomic Age artwork at full size">
+  <img src="assets/environments/masters/atomic.svg" alt="Atomic Age full-size illustration" loading="lazy"/>
+  <span class="inspect">View full artwork ↗</span>
+ </button>
+ <div class="info">
+  <div class="meta"><span>EXPERIMENTS 06–10</span><span class="state">Second art pass</span></div>
+  <h2>Atomic Age</h2><p class="sub">The Atomic Dreamhouse</p><p>Mint-and-pink science fair</p>
+ </div>
+</article>
+<article class="era" style="--accent:#b895d8">
+ <button class="art" type="button" data-art="space" data-label="Space Age" aria-label="View Space Age artwork at full size">
+  <img src="assets/environments/masters/space.svg" alt="Space Age full-size illustration" loading="lazy"/>
+  <span class="inspect">View full artwork ↗</span>
+ </button>
+ <div class="info">
+  <div class="meta"><span>EXPERIMENTS 11–15</span><span class="state">New art master</span></div>
+  <h2>Space Age</h2><p class="sub">The Pink Tomorrow</p><p>1960s retro-future</p>
+ </div>
+</article>
+<article class="era" style="--accent:#739e83">
+ <button class="art" type="button" data-art="biotech" data-label="Biotech Renaissance" aria-label="View Biotech Renaissance artwork at full size">
+  <img src="assets/environments/masters/biotech.svg" alt="Biotech Renaissance full-size illustration" loading="lazy"/>
+  <span class="inspect">View full artwork ↗</span>
+ </button>
+ <div class="info">
+  <div class="meta"><span>EXPERIMENTS 16–20</span><span class="state">New art master</span></div>
+  <h2>Biotech Renaissance</h2><p class="sub">The Living Laboratory</p><p>Botanical biotech</p>
+ </div>
+</article>
+<article class="era" style="--accent:#ba91d9">
+ <button class="art" type="button" data-art="tomorrow" data-label="Tomorrow Lab" aria-label="View Tomorrow Lab artwork at full size">
+  <img src="assets/environments/masters/tomorrow.svg" alt="Tomorrow Lab full-size illustration" loading="lazy"/>
+  <span class="inspect">View full artwork ↗</span>
+ </button>
+ <div class="info">
+  <div class="meta"><span>EXPERIMENTS 21</span><span class="state">New art master</span></div>
+  <h2>Tomorrow Lab</h2><p class="sub">The Reality-Bending Finale</p><p>Holographic impossible science</p>
+ </div>
+</article></div>
+</main>
+<footer>Petri Panic — art-review page. All images link to files in this GitHub Pages build. No gameplay progress or saved data is changed by this gallery.</footer>
+<dialog id="full" aria-label="Full-size environment artwork"><div class="dialog-top"><span id="fullName">Environment</span><button id="close" type="button" aria-label="Close art preview">✕</button></div><img id="fullImage" alt=""/></dialog>
+<script>
+const dialog=document.getElementById('full'),full=document.getElementById('fullImage');
+document.querySelectorAll('[data-art]').forEach(button=>{
+ button.addEventListener('click',()=>{
+  document.getElementById('fullName').textContent=button.dataset.label;
+  full.src='assets/environments/masters/'+button.dataset.art+'.svg';
+  full.alt=button.dataset.label+' environment master enlarged';
+  if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');
+ });
+});
+document.getElementById('close').addEventListener('click',()=>dialog.close?dialog.close():dialog.removeAttribute('open'));
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+</script></body></html>
