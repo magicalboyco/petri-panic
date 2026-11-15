@@ -53,6 +53,31 @@ const server=createServer(async(req,res)=>{
    await page.close();
   }
  
+  // Shared Keeper vector art and phone-size signature samples.
+  for(const viewport of [{width:390,height:844},{width:1280,height:800}]){
+   const page=await browser.newPage({viewport,reducedMotion:'reduce'});
+   const errors=[];
+   page.on('pageerror',e=>errors.push(e.message));
+   await page.goto('http://127.0.0.1:'+server.address().port+'/keeper-review.html',{waitUntil:'load'});
+   await page.waitForFunction(()=>document.querySelector('#count')?.textContent?.includes('24 of 24'),{timeout:20000});
+   assert.equal(await page.locator('.card').count(),24,'Missing Keeper character cards');
+   assert.equal(await page.locator('.gameplay-size').count(),24,'Missing phone-size samples');
+   assert(await page.locator('.gameplay-size canvas').count()>=23,'Playable small-scale Keeper canvases missing');
+   const alpha=await page.locator('.gameplay-size canvas').evaluateAll(canvases=>canvases.map(c=>{
+     const d=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
+     let count=0;for(let i=3;i<d.length;i+=4)if(d[i]>0)count++;
+     return count;
+   }));
+   assert(alpha.every(count=>count>4000),'Some small-sized Keeper renders are blank');
+   await page.locator('#action').click();
+   assert.equal(await page.locator('#action').getAttribute('aria-pressed'),'true');
+   await page.locator('#motion').click();
+   assert.equal(await page.locator('#motion').getAttribute('aria-pressed'),'true');
+   await page.screenshot({path:path.join(root,'art-test-shots','keepers-'+viewport.width+'.png'),fullPage:true});
+   assert.equal(errors.length,0,'Keeper gallery browser error: '+errors.join(' | '));
+   console.log('PASS: '+viewport.width+'x'+viewport.height+' 24 Keeper gallery cards, phone-scale art, ability reaction and motion toggle');
+   await page.close();
+  }
   // Validate the actual shared six-creature art renderer at phone and desktop widths.
   for(const viewport of [{width:390,height:844},{width:1280,height:800}]){
    const page=await browser.newPage({viewport,reducedMotion:'reduce'});
