@@ -73,6 +73,8 @@ const server=createServer(async(req,res)=>{
    await page.locator('[data-stage="hurt"]').click();
    await page.locator('#motion').click();
    assert.equal(await page.locator('#motion').getAttribute('aria-pressed'),'true');
+   await fs.mkdir(path.join(root,'art-test-shots'),{recursive:true});
+   await page.screenshot({path:path.join(root,'art-test-shots','creatures-'+viewport.width+'.png'),fullPage:true});
    assert.equal(errors.length,0,'Creature gallery exceptions: '+errors.join(' | '));
    console.log('PASS: '+viewport.width+'x'+viewport.height+' all six creature artworks, ability/hurt modes, pause motion');
    await page.close();
