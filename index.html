@@ -3322,5 +3322,12 @@ $('runCheck').style.display='none';
 window.addEventListener('error',function(event){try{$('runCheck').style.display='block';$('runCheck').textContent='Game error: '+(event.message||'unknown issue')+'. Try opening the hosted HTTPS URL in Safari.';}catch(e){}});
 // Avoid false pauses when iOS Safari briefly loses focus during touch interactions.
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing'){saveCheckpoint();pause()}if(!document.hidden&&audioOn&&audioContext?.state!=='running')audioStatus('🎵 Tap Test sound to resume audio')});
-chosenLevel=clamp(save.level||1,1,21);$('musicVolume').value=Math.round(audioSettings.music*100);$('effectVolume').value=Math.round(audioSettings.effects*100);$('musicNumber').textContent=Math.round(audioSettings.music*100)+'%';$('effectNumber').textContent=Math.round(audioSettings.effects*100)+'%';updateUI();showMenu('menu');requestAnimationFrame(frame);
+chosenLevel=clamp(save.level||1,1,21);$('musicVolume').value=Math.round(audioSettings.music*100);$('effectVolume').value=Math.round(audioSettings.effects*100);$('musicNumber').textContent=Math.round(audioSettings.music*100)+'%';$('effectNumber').textContent=Math.round(audioSettings.effects*100)+'%';// Deliberately public, read-only drawing bridge for the Keeper art gallery.
+// The actual game state and saving controls remain private inside this IIFE.
+window.PetriPanicArtPreview=Object.freeze({
+ drawKeeperVector:(keeper,canvasContext,size,portrait)=>drawKeeperVector(keeper,canvasContext,size,portrait),
+ scuttleVectorHTML:(size)=>scuttleVectorHTML(size),
+ roster:()=>guardianCatalog.map(g=>({id:g.id,name:g.name,level:g.level}))
+});
+updateUI();showMenu('menu');requestAnimationFrame(frame);
 })();</script></body></html>
