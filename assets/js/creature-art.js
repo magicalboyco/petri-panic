@@ -242,11 +242,14 @@ function draw(c,e,elapsed=0,bossWeakTime=0,reduce=false){
  c.restore();return true;
 }
 // Safe art preview: same renderer, fake enemies, no change to actual game state.
-function preview(c,type,elapsed=0,reduce=false){
+function preview(c,type,elapsed=0,reduce=false,stage='idle'){
  const boss=['prism','serpent','moth','omega'].includes(type);
  const e={kind:boss?'boss':type,variant:boss?type:null,x:150,y:150,
-  r:boss?65:21,maxHp:20,hp:20,phase:elapsed,dead:false};
- return draw(c,e,elapsed,boss?1:0,reduce);
+  r:boss?65:21,maxHp:20,hp:stage==='hurt'?6:20,phase:elapsed,dead:false};
+ if(!boss){c.save();c.translate(150,150);c.scale(2.2,2.2);c.translate(-150,-150);}
+ const result=draw(c,e,elapsed,boss&&stage==='ability'?1:0,reduce);
+ if(!boss)c.restore();
+ return result;
 }
 window.PetriPanicCreatureArt=Object.freeze({draw,preview,version:'2026.11'});
 })();
