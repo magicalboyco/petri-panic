@@ -21,6 +21,14 @@ assert(html.includes('drawKeeperAbilityFeedback(guard)'), 'Keeper effects must b
 assert(html.includes('prefers-reduced-motion: reduce'), 'Respect reduced-motion preference');
 assert(html.includes('saveCheckpoint()'), 'Autosave checkpoint required');
 assert(html.includes('defeatBoss('), 'Boss completion required');
+const keeperFx=fs.readFileSync(path.join(root,'assets/js/keeper-signature-fx.js'),'utf8');
+new vm.Script(keeperFx,{filename:'assets/js/keeper-signature-fx.js'});
+assert(html.includes('<script src="assets/js/keeper-signature-fx.js"></script>'),'Keeper accents must load in gameplay');
+assert(html.includes('signature?.after(ctx,guard,elapsed,reduced)'),'Keeper reaction accents must render in the dish');
+const keeperReview=fs.readFileSync(path.join(root,'keeper-review.html'),'utf8');
+assert(keeperReview.includes('drawKeeperSignature'),'Keeper review must use the shared gameplay art');
+assert(keeperReview.includes('gameplay-size'),'Keeper review must show phone-size examples');
+
 const creatureSource=fs.readFileSync(path.join(root,'assets/js/creature-art.js'),'utf8');
 new vm.Script(creatureSource,{filename:'assets/js/creature-art.js'});
 assert(html.includes('<script src="assets/js/creature-art.js"></script>'),'Live creature artwork loader missing');
