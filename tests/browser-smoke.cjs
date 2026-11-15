@@ -39,8 +39,32 @@ const server=createServer(async(req,res)=>{
    await page.waitForTimeout(250);
    assert(await page.locator('#overlay').isHidden(),'Experiment did not start');
    await page.locator('#game').click({position:{x:170,y:160},force:true});
+
+   // Confirm that the *live* game has the new watercolor feedback runtime, not a separate mockup.
+   const feedback=await page.evaluate(()=>{
+    const fx=window.PetriPanicJuice;
+    if(!fx)return null;
+    fx.water(390,280);fx.feed(310,290);fx.collect(475,310,true);fx.grow(550,350);
+    const c=document.getElementById('game').getContext('2d');
+    fx.draw(c);
+    const data=c.getImageData(0,0,900,620).data;
+    let pixels=0;for(let i=3;i<data.length;i+=4)if(data[i]>0)pixels++;
+    return {functions:['draw','drawWater','drawBioBit','ambient','changeEra','underGlob','overGlob'].every(x=>typeof fx[x]==='function'),pixels};
+   });
+   assert(feedback?.functions,'Live dish/Glob effects must be available');
+   assert(feedback.pixels>100000,'Game canvas is unexpectedly blank');
+   await fs.mkdir(path.join(root,'art-test-shots'),{recursive:true});
+   if(viewport.width!==844)await page.screenshot({path:path.join(root,'art-test-shots','gameplay-'+viewport.width+'.png'),fullPage:true});
    await page.locator('#shopToggle').click();
    assert(await page.locator('#supplyPanel').evaluate(el=>el.classList.contains('shopping')),'Shop did not open');
+   assert(await page.locator('#supplyPanel .buy').count()>=8,'Polished shop items missing');
+   const shopColors=await page.locator('#supplyPanel .buy').first().evaluate(el=>({
+    radius:getComputedStyle(el).borderRadius,
+    background:getComputedStyle(el).backgroundImage
+   }));
+   assert(shopColors.radius!=='0px' && shopColors.background.includes('gradient'),'Shop must have rounded, illustrated supply cards');
+   if(viewport.width!==844)await page.screenshot({path:path.join(root,'art-test-shots','shop-'+viewport.width+'.png'),fullPage:true});
+
    if(await page.locator('#shopClose').isVisible()) await page.locator('#shopClose').click();
    else await page.locator('#shopClose').evaluate(el=>el.click()); // Desktop renders the Shop beside the dish; its close control is mobile-only.
    await page.locator('#guardianToggle').click();

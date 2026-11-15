@@ -20,6 +20,17 @@ assert.equal((html.match(/\{id:'(?:scuttle|bouncer|nurse|feeder|spark|nursery|co
 assert(html.includes('drawKeeperAbilityFeedback(guard)'), 'Keeper effects must be connected to gameplay');
 assert(html.includes('prefers-reduced-motion: reduce'), 'Respect reduced-motion preference');
 assert(html.includes('saveCheckpoint()'), 'Autosave checkpoint required');
+const juiceSource=fs.readFileSync(path.join(root,'assets/js/petri-juice.js'),'utf8');
+new vm.Script(juiceSource,{filename:'assets/js/petri-juice.js'});
+assert(html.includes('<script src="assets/js/petri-juice.js"></script>'),'Live dish polish module missing');
+assert(html.includes('window.PetriPanicJuice?.feed(g.x,g.y)'),'Feeding response must be tied to a real Glob reaching water');
+assert(html.includes('window.PetriPanicJuice?.collect(b.x,b.y'),'BioBit collection must trigger the visual reward');
+assert(html.includes('window.PetriPanicJuice?.grow(g.x,g.y)'),'Glob growth must animate');
+assert(html.includes('window.PetriPanicJuice?.drawWater(ctx,w,elapsed)'),'Water illustration must be used in live gameplay');
+assert(html.includes('window.PetriPanicJuice?.drawBioBit(ctx,b,elapsed)'),'BioBit illustration must be used in live gameplay');
+assert(html.includes('window.PetriPanicJuice?.ambient(ctx,era,elapsed)'),'Era-specific dish ambience missing');
+assert(html.includes('shelf-purchase'),'Supply shelf tactile purchase animation missing');
+
 assert(html.includes('defeatBoss('), 'Boss completion required');
 const keeperFx=fs.readFileSync(path.join(root,'assets/js/keeper-signature-fx.js'),'utf8');
 new vm.Script(keeperFx,{filename:'assets/js/keeper-signature-fx.js'});
