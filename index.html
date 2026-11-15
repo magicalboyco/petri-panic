@@ -872,11 +872,11 @@ function drawLookoutVector(g,c=ctx,size=70,portrait=false){
   if(edge){c.lineWidth=width;c.lineJoin='round';c.lineCap='round';c.strokeStyle=edge;c.stroke()}
  }
  function arm(side){
-  c.save();c.translate(side*21,13);
+  c.save();c.translate(side*28,14);
   const angle=side*(pose.arms*.85+.055*Math.sin(t*3.1+side*1.6));
   c.rotate(angle);
-  oval(side*7,6,10,9,skin,ink,3.5);
-  oval(side*6.4,3.1,5.3,3,soft,'',0);
+  oval(side*8,6,11.4,10.2,skin,ink,3.5);
+  oval(side*7.4,3.1,5.3,3,soft,'',0);
   c.restore();
  }
  c.save();
@@ -897,10 +897,10 @@ function drawLookoutVector(g,c=ctx,size=70,portrait=false){
  oval(0,21,28,29,skin,ink,4);
  oval(0,23,19.5,24,shine,'',0);
  // Bear's ear silhouette: unmistakable at tiny game sizes.
- oval(-29,-31,15.2,17.5,skin,ink,4.4);
- oval(29,-31,15.2,17.5,skin,ink,4.4);
- oval(-29,-31,9.5,11.5,'#b69bd8','',0);
- oval(29,-31,9.5,11.5,'#b69bd8','',0);
+ oval(-31,-48,15.2,17.2,skin,ink,4.4);
+ oval(31,-48,15.2,17.2,skin,ink,4.4);
+ oval(-31,-48,9.5,11.2,'#b69bd8','',0);
+ oval(31,-48,9.5,11.2,'#b69bd8','',0);
  arm(-1);arm(1);
  // Head uses a restrained lavender-to-white gradient.
  const face=c.createLinearGradient(0,-46,0,22);
@@ -1147,9 +1147,155 @@ function drawFeaturedKeeper(g,c=ctx,size=69,portrait=false){
  c.restore();return true;
 }
 
+
+// Second-wave vector remaster: Mochi Mop, Orbit and Sprout.
+// Purpose-built readable silhouettes, distinct props and independently
+// animated leaves, antennae, mop fringe and paws. Uses the same renderer in
+// the petri dish and all menu/video-call portraits.
+const SECOND_WAVE_KEEPERS=new Set(['moldguard','magnet','growth']);
+function drawSecondWaveKeeper(g,c=ctx,size=69,portrait=false){
+ const id=g.id;if(!SECOND_WAVE_KEEPERS.has(id))return false;
+ const t=portrait?0:elapsed,seed={moldguard:.35,magnet:1.75,growth:3.1}[id];
+ const speed=portrait?0:Math.max(0,Math.min(1,g.motionSpeed||0));
+ const step=portrait?0:(g.motionStep||0),walk=Math.sin(step);
+ const pulse=Math.sin(t*2.8+seed),active=!portrait&&(g.keeperFlash||0)>0;
+ const blink=!portrait&&!active&&((t+seed)%4.85>4.65);
+ const alarm=!portrait&&!active&&(id==='moldguard')&&enemies.some(e=>!e.dead&&Math.hypot(e.x-g.x,e.y-g.y)<105);
+ const lift=portrait?0:Math.max(0,walk)*speed*2.1+(active?Math.abs(Math.sin(t*11.3))*3.1:0);
+ const tilt=portrait?0:(g.motionGaze||0)*.03+pulse*.017;
+ const ink='#594254',cheek='#f7b2bf';
+ const pal={
+  moldguard:{skin:'#f0e7ff',rim:'#c7b3eb',light:'#fffafe',accent:'#9f8ad1'},
+  magnet:{skin:'#ede4ff',rim:'#b6a1ed',light:'#fffaff',accent:'#9479c8'},
+  growth:{skin:'#e1f6d9',rim:'#b0dcac',light:'#fffef1',accent:'#7aaa83'}
+ }[id];
+ function ell(x,y,rx,ry,fill,edge='',sw=2.7,rot=0){
+  c.beginPath();c.ellipse(x,y,rx,ry,rot,0,Math.PI*2);
+  c.fillStyle=fill;c.fill();if(edge){c.strokeStyle=edge;c.lineWidth=sw;c.stroke()}
+ }
+ function line(points,color=ink,sw=2.8){
+  c.beginPath();points.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));
+  c.lineJoin='round';c.lineCap='round';c.strokeStyle=color;c.lineWidth=sw;c.stroke();
+ }
+ function shape(draw,fill,edge=ink,sw=2.6){
+  c.beginPath();draw(c);c.fillStyle=fill;c.fill();
+  if(edge){c.strokeStyle=edge;c.lineWidth=sw;c.lineJoin='round';c.lineCap='round';c.stroke()}
+ }
+ function leaf(x,y,rotate,fill){
+  c.save();c.translate(x,y);c.rotate(rotate);
+  ell(0,0,10,18,fill,'#699e77',2);
+  line([[0,13],[0,-11]],'#7ca989',1.5);c.restore();
+ }
+ function star(x,y,r,color){
+  shape(q=>{for(let i=0;i<8;i++){
+   const a=Math.PI*i/4-Math.PI/2,rr=i%2?r*.38:r;
+   i?q.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr):q.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);
+  }q.closePath()},color,'#bd9a8e',1);
+ }
+ function arm(side){
+  c.save();c.translate(side*20,8);
+  const angle=side*(active?.68:(.055+pulse*.14+walk*speed*.12));
+  c.rotate(angle);ell(side*8,8,10,8,pal.skin,ink,3);
+  ell(side*7,5,5,3,pal.light);
+  c.restore();
+ }
+ c.save();c.translate(Math.round(g.x),Math.round(g.y-lift));
+ c.scale(size/108,size/108);
+ if(!portrait){
+  ell(0,45+lift,27,4.4,'rgba(140,78,122,.15)');
+  c.save();c.globalAlpha=.13;ell(0,-2,42,45,pal.rim);c.restore();
+ }
+ c.rotate(tilt);
+ const squash=portrait?0:.016*pulse+.042*speed*Math.cos(step*2);
+ c.scale(1+squash,1-squash);
+ // Back ornaments establish identity before the common chibi anatomy.
+ if(id==='moldguard'){
+  // Rounded microfiber fringe and a small swinging cleaning tail.
+  for(let k=0;k<5;k++){
+   ell(-25+k*12,21+Math.sin(t*3+k)*1.7,12.2,22.3,k%2?'#e8d8f7':'#d2bfef',ink,1.9);
+  }
+  c.save();c.translate(29,20);c.rotate(.15+pulse*.15);
+  ell(7,-2,12,16,'#e3d4f8',ink,2.3);
+  ell(9,-7,5,7,pal.light);c.restore();
+ }else if(id==='magnet'){
+  // A gold-lilac magnetic orbit, deliberately behind the face and body.
+  c.save();c.rotate(.18+Math.sin(t*1.15)*.10);
+  c.beginPath();c.ellipse(0,2,37,19,.25,0,Math.PI*2);
+  c.strokeStyle='#d5b0e9';c.lineWidth=7;c.stroke();
+  c.strokeStyle='#f8dfa5';c.lineWidth=2.1;c.stroke();c.restore();
+  star(32,-13,5.1,'#fff0a1');star(-32,14,4.2,'#fff0a1');
+ }else if(id==='growth'){
+  // Tiny bushy leaf-tail and triangular kitty ears.
+  c.save();c.translate(26,16);c.rotate(-.4+pulse*.11);
+  leaf(9,-10,.8,'#9fcba5');leaf(7,5,1.3,'#c1e0ae');c.restore();
+  for(const side of [-1,1]){
+   shape(q=>{q.moveTo(side*12,-28);q.lineTo(side*32,-51);
+    q.lineTo(side*35,-18);q.closePath()},pal.skin,ink,2.8);
+   shape(q=>{q.moveTo(side*18,-29);q.lineTo(side*30,-42);
+    q.lineTo(side*30,-24);q.closePath()},'#bfd9dc','',0);
+  }
+ }
+ ell(-11,34+Math.max(0,walk)*speed*1.6,9.8,7.5,pal.skin,ink,2.6);
+ ell(11,34+Math.max(0,-walk)*speed*1.6,9.8,7.5,pal.skin,ink,2.6);
+ ell(0,16,22,23.5,pal.skin,ink,3);
+ ell(0,21,15,17,pal.light);
+ arm(-1);arm(1);
+ // Per-character face silhouette.
+ if(id==='moldguard'){
+  for(let k=0;k<5;k++)ell(-20+k*10,-28+Math.cos(t*2.1+k)*.8,11,10,
+   k%2?'#e4d8f8':'#d4c2ee',ink,1.6);
+ }
+ const skinGrad=c.createLinearGradient(-14,-36,12,10);
+ skinGrad.addColorStop(0,pal.light);skinGrad.addColorStop(.37,pal.skin);skinGrad.addColorStop(1,pal.skin);
+ ell(0,-15,id==='growth'?27:29,id==='growth'?23:25,skinGrad,ink,3.2);
+ ell(-10,-29,11,3.2,'rgba(255,255,255,.6)');
+ if(id==='growth'){
+  // Head sprout bends as a single mini-rig with two individually swaying leaves.
+  c.save();c.translate(0,-39);c.rotate(pulse*.065);
+  line([[0,0],[0,-14]],'#699e77',3.3);
+  leaf(-10,-16,-.63,'#a5d49c');
+  leaf(10,-17,.63,'#b8dca6');
+  c.restore();
+ }else if(id==='moldguard'){
+  // Clear mint-cleaner forehead insignia; not tiny goggles.
+  ell(0,-34,8.5,7,'#f0e8ff',ink,1.5);
+  star(0,-35,5,'#a6e6cd');
+ }else if(id==='magnet'){
+  for(const side of [-1,1]){
+   line([[side*11,-34],[side*14,-46]],pal.accent,4);
+   ell(side*15,-48+Math.sin(t*2.5+side)*1.5,5.5,6.1,'#f7e1ab',ink,1.9);
+  }
+  // Magnet badge is high contrast and clear at gameplay size.
+  c.beginPath();c.arc(0,24,8.4,.10,Math.PI-.10);
+  c.strokeStyle='#9b79cd';c.lineWidth=4.2;c.stroke();
+  ell(-8,24,3,3,'#f5b3c9');ell(8,24,3,3,'#a5ddeb');
+ }
+ for(const side of [-1,1]){
+  if(blink||(active&&id==='growth')){
+   shape(q=>{q.moveTo(side*10-4,-14);q.quadraticCurveTo(side*10,-10,side*10+4,-14)},null);
+   line([[side*10-4,-14],[side*10,-11],[side*10+4,-14]],ink,2.6);
+  }else{
+   ell(side*10+(g.motionGaze||0)*.7,-14,3.1,4.3,'#383042');
+   ell(side*10-1,-16,1,1.45,'#fff');
+  }
+ }
+ ell(-19,-5,5.7,3.9,cheek);ell(19,-5,5.7,3.9,cheek);
+ if(active||alarm){
+  ell(0,-2,4.3,5,alarm?'#9a6e80':'#af6687',ink,1.75);
+  if(active)ell(0,.7,2.4,1.4,'#ffb7c8');
+ }else{
+  line([[-4,-2],[-1,1],[1,1],[4,-2]],ink,2.6);
+ }
+ if(active&&!portrait){
+  star(-37,-26,4.3,'#ffe9a6');star(38,-22,4.3,'#ffe9a6');
+ }
+ c.restore();return true;
+}
+
 function drawKeeperVector(g,c=ctx,size=64,portrait=false){
  const id=g.id;if(!VECTORIZED_KEEPERS.has(id))return false;
  if(FEATURED_KEEPER_IDS.has(id))return drawFeaturedKeeper(g,c,size,portrait);
+ if(SECOND_WAVE_KEEPERS.has(id))return drawSecondWaveKeeper(g,c,size,portrait);
  if(id==='forecast')return drawLookoutVector(g,c,size,portrait);
  const [skin,shade,hi,accent]=KEEPER_VECTOR_TONES[id];
  const idx=Array.from(VECTORIZED_KEEPERS).indexOf(id);
