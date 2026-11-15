@@ -11,7 +11,7 @@ nav a{padding:10px 14px;border-radius:30px;background:#fffcfe;border:2px solid v
 .sub{font-size:clamp(16px,2vw,20px);color:#7e5974;max-width:770px;line-height:1.55}
 .note{background:#fffafd;border-left:4px solid #be6b99;padding:14px 18px;border-radius:12px;line-height:1.55;margin:0 0 22px}
 .controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
-.tabs{display:flex;gap:8px}.tabs button{font-size:15px;cursor:pointer;font-weight:800;border:2px solid var(--border);border-radius:100px;padding:12px 17px;background:#fff}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}.tabs button{font-size:15px;cursor:pointer;font-weight:800;border:2px solid var(--border);border-radius:100px;padding:12px 17px;background:#fff}
 .tabs button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
 #count{font-size:13px;color:#946e88;font-weight:800}
 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
@@ -19,6 +19,11 @@ nav a{padding:10px 14px;border-radius:30px;background:#fffcfe;border:2px solid v
 .face{display:grid;place-items:center;width:100%;aspect-ratio:1;background:radial-gradient(circle at 50% 43%,#fff 0,#ffeef8 57%,#f4e8fc 100%);border-radius:16px;max-width:230px}
 .face canvas{width:100%;height:100%;display:block}
 .face img{max-width:88%;max-height:88%;object-fit:contain}
+.gameplay-size{display:flex;gap:8px;align-items:center;justify-content:center;border:1px solid #ecd0e3;background:linear-gradient(145deg,#fffafa,#f6ecfa);border-radius:12px;width:100%;padding:6px;min-height:79px}
+.gameplay-size canvas{display:block;width:90px;height:61px}
+.gameplay-size .mini-scuttle{width:40px;height:40px;display:grid;place-items:center}
+.gameplay-size .mini-scuttle svg{width:40px;height:40px}
+.gameplay-size label{font-size:10px;line-height:1.35;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#946788;text-align:left}
 .card strong{font-size:19px;margin-top:1px}.card small{font-size:12px;color:#936b88;letter-spacing:.6px;font-weight:800;text-transform:uppercase}
 footer{font-size:13px;color:#8e6585;line-height:1.6;padding-bottom:40px}
 #runner{position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;border:0;opacity:0;pointer-events:none}
@@ -33,7 +38,7 @@ footer{font-size:13px;color:#8e6585;line-height:1.6;padding-bottom:40px}
 </header>
 <main>
 <div class="note"><b>Artwork review, not final approval.</b> These drawings are generated live from the game's character renderers, not a recycled image atlas. The action preview is an illustrative pose, not a test of each Keeper's unlocked gameplay abilities.</div>
-<div class="controls"><div class="tabs" aria-label="Keeper expression"><button type="button" id="idle" aria-pressed="true">♡ Idle pose</button><button type="button" id="action" aria-pressed="false">✨ Ability reaction</button></div><span id="count" role="status">Loading all 24 Keeper drawings…</span></div>
+<div class="controls"><div class="tabs" aria-label="Keeper expression"><button type="button" id="idle" aria-pressed="true">♡ Idle pose</button><button type="button" id="action" aria-pressed="false">✨ Ability reaction</button><button type="button" id="motion" aria-pressed="false">Pause movement</button></div><span id="count" role="status">Loading all 24 Keeper drawings…</span></div>
 <div id="cards" class="cards"></div>
 </main>
 <footer>Artwork rendered using the public game's live vector functions in an isolated same-origin frame. This page does not equip a Keeper, modify your save data, or change experiment progress.</footer>
@@ -41,16 +46,21 @@ footer{font-size:13px;color:#8e6585;line-height:1.6;padding-bottom:40px}
 <script>
 const keepers=[["scuttle","Scuttle","🐌","Collector"],["bouncer","Bouncer","🛡️","Defender"],["comfort","Poppy","🌼","Comfort"],["beacon","Moonbeam","🌙","Distraction"],["nurse","Mallow","💕","Healer"],["moldguard","Mochi Mop","🧹","Cleaner"],["forecast","Lookout","👓","Warning"],["feeder","Dewdrop","💧","Water"],["magnet","Orbit","🪄","Collector"],["growth","Sprout","🌱","Growth"],["spark","Glimmer","✨","BioBits"],["purify","Fern","🍀","Purifier"],["ray","Zappy","⚡","Combat"],["float","Floatie","🎈","Preservation"],["nursery","Lovie","💗","Nursery"],["ward","Nimbus","☁️","Defense"],["nectar","Taffy","🍬","Production"],["shield","Marshmallow","🛡️","Defense"],["twirl","Whirly","🌀","Speed"],["cookie","Patch","🩹","Rescue"],["savings","Pearly","🦪","Savings"],["breeze","Breeze","🍃","Water"],["wish","Wishie","🌟","Power-up"],["mimic","Mimsy","🦎","Mimic"]];
 const gallery=document.getElementById('cards'),runner=document.getElementById('runner'),count=document.getElementById('count');
-let frame=null,action=false;
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+let frame=null,action=false,paused=false,lastDraw=0;
 for(const [id,name,emoji,type] of keepers){
  const card=document.createElement('article');card.className='card';card.dataset.id=id;
  const holder=document.createElement('div');holder.className='face';
  if(id==='scuttle'){holder.textContent=emoji}else{
   const cv=document.createElement('canvas');cv.width=220;cv.height=220;cv.setAttribute('role','img');cv.setAttribute('aria-label',name+' '+type+' character');holder.appendChild(cv);
  }
+ const sample=document.createElement('div');sample.className='gameplay-size';
+ const small=document.createElement('canvas');small.width=200;small.height=136;small.setAttribute('role','img');small.setAttribute('aria-label',name+' at approximate in-game phone scale');
+ sample.appendChild(small);
+ const label=document.createElement('label');label.textContent='Phone-size\npreview';sample.appendChild(label);
  const title=document.createElement('strong');title.textContent=name;
  const sub=document.createElement('small');sub.textContent=type;
- card.append(holder,title,sub);gallery.append(card);
+ card.append(holder,sample,title,sub);gallery.append(card);
 }
 function renderAll(){
  const bridge=frame?.PetriPanicArtPreview;
@@ -77,11 +87,51 @@ function renderAll(){
  }
  count.textContent=ok+' of '+keepers.length+' character drawings available';
 }
-runner.addEventListener('load',()=>{frame=runner.contentWindow;renderAll()});
+function renderPhoneSamples(time){
+ const bridge=frame?.PetriPanicArtPreview;
+ if(!bridge?.drawKeeperSignature)return;
+ for(const card of gallery.children){
+  const id=card.dataset.id;
+  const cv=card.querySelector('.gameplay-size canvas');
+  if(!cv)continue;
+  const c=cv.getContext('2d');c.clearRect(0,0,200,136);
+  c.fillStyle='#fff5fb';c.fillRect(0,0,200,136);
+  c.fillStyle='#e7d6e8';c.beginPath();c.ellipse(100,68,85,58,0,0,Math.PI*2);c.fill();
+  c.fillStyle='#fff9fc';c.beginPath();c.ellipse(100,66,81,54,0,0,Math.PI*2);c.fill();
+  const t=(paused||reduce.matches)?0:time/1000;
+  const g={id,x:100,y:68,size:69,keeperFlash:action?.6:0,
+   motionSpeed:paused||reduce.matches?0:.55,motionStep:t*4,
+   motionGaze:paused||reduce.matches?0:Math.sin(t*1.5)};
+  if(id==='scuttle'){
+   try{
+    const svg=bridge.scuttleVectorHTML(44);
+    if(!card.dataset.scuttleSmall){
+     const mini=document.createElement('div');mini.className='mini-scuttle';mini.innerHTML=svg;
+     cv.replaceWith(mini);card.dataset.scuttleSmall='true';
+    }
+   }catch(e){}
+   continue;
+  }
+  bridge.drawKeeperSignature(c,g,t,paused||reduce.matches);
+ }
+}
+function animate(ts){
+ if(frame&&(!paused&&!reduce.matches)){
+  if(ts-lastDraw>95){renderPhoneSamples(ts);lastDraw=ts;}
+ }else if(frame&&ts-lastDraw>450){renderPhoneSamples(0);lastDraw=ts;}
+ requestAnimationFrame(animate);
+}
+runner.addEventListener('load',()=>{frame=runner.contentWindow;renderAll();renderPhoneSamples(0)});
+requestAnimationFrame(animate);
+document.getElementById('motion').addEventListener('click',()=>{
+ paused=!paused;document.getElementById('motion').setAttribute('aria-pressed',String(paused));
+ document.getElementById('motion').textContent=paused?'Resume movement':'Pause movement';
+ renderPhoneSamples(0);
+});
 for(const [button,on] of [['idle',false],['action',true]]){
  document.getElementById(button).addEventListener('click',()=>{
   action=on;document.getElementById('idle').setAttribute('aria-pressed',String(!on));
-  document.getElementById('action').setAttribute('aria-pressed',String(on));renderAll();
+  document.getElementById('action').setAttribute('aria-pressed',String(on));renderAll();renderPhoneSamples(0);
  })
 }
 </script></body></html>
