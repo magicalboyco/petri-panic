@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Petri Panic · Keeper Art Review</title>
+<style>
+:root{--ink:#62415c;--accent:#c65d9a;--border:#e9c6dc}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(137deg,#fff8fc,#ffe8f4 65%,#f5edff);color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}
+main,header,footer{max-width:1180px;margin:auto;padding:24px clamp(16px,4vw,48px)}
+header{padding-top:50px}header h1{font-size:clamp(36px,6vw,62px);margin:25px 0 12px;line-height:1.07;letter-spacing:-1.5px}
+a{color:#a4477c}nav{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+nav a{padding:10px 14px;border-radius:30px;background:#fffcfe;border:2px solid var(--border);font-weight:800;text-decoration:none}
+.sub{font-size:clamp(16px,2vw,20px);color:#7e5974;max-width:770px;line-height:1.55}
+.note{background:#fffafd;border-left:4px solid #be6b99;padding:14px 18px;border-radius:12px;line-height:1.55;margin:0 0 22px}
+.controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.tabs{display:flex;gap:8px}.tabs button{font-size:15px;cursor:pointer;font-weight:800;border:2px solid var(--border);border-radius:100px;padding:12px 17px;background:#fff}
+.tabs button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+#count{font-size:13px;color:#946e88;font-weight:800}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 10px 21px;text-align:center;background:#fffafe;border:2px solid var(--border);border-radius:22px;box-shadow:0 9px 24px #8f54821a;overflow:hidden}
+.face{display:grid;place-items:center;width:100%;aspect-ratio:1;background:radial-gradient(circle at 50% 43%,#fff 0,#ffeef8 57%,#f4e8fc 100%);border-radius:16px;max-width:230px}
+.face canvas{width:100%;height:100%;display:block}
+.face img{max-width:88%;max-height:88%;object-fit:contain}
+.card strong{font-size:19px;margin-top:1px}.card small{font-size:12px;color:#936b88;letter-spacing:.6px;font-weight:800;text-transform:uppercase}
+footer{font-size:13px;color:#8e6585;line-height:1.6;padding-bottom:40px}
+#runner{position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;border:0;opacity:0;pointer-events:none}
+@media(max-width:890px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:580px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:9px 6px 14px}.card strong{font-size:16px}.card small{font-size:10px}header{padding-top:25px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+<header><nav><strong>🧫 Professor Trung's PETRI PANIC</strong><div><a href="./">← Play game</a> <a href="art-review.html">Era artwork</a></div></nav>
+<h1>Meet the <span style="color:#bf62a0">Keepers.</span></h1>
+<p class="sub">All 24 Guardian companions, drawn using the exact same vector functions as the playable game. Preview their everyday faces and ability reactions without unlocking later experiments.</p>
+</header>
+<main>
+<div class="note"><b>Artwork review, not final approval.</b> These drawings are generated live from the game's character renderers, not a recycled image atlas. The action preview is an illustrative pose, not a test of each Keeper's unlocked gameplay abilities.</div>
+<div class="controls"><div class="tabs" aria-label="Keeper expression"><button type="button" id="idle" aria-pressed="true">♡ Idle pose</button><button type="button" id="action" aria-pressed="false">✨ Ability reaction</button></div><span id="count" role="status">Loading all 24 Keeper drawings…</span></div>
+<div id="cards" class="cards"></div>
+</main>
+<footer>Artwork rendered using the public game's live vector functions in an isolated same-origin frame. This page does not equip a Keeper, modify your save data, or change experiment progress.</footer>
+<iframe id="runner" src="./" title="Petri Panic art rendering runtime" loading="eager" tabindex="-1" aria-hidden="true"></iframe>
+<script>
+const keepers=[["scuttle","Scuttle","🐌","Collector"],["bouncer","Bouncer","🛡️","Defender"],["comfort","Poppy","🌼","Comfort"],["beacon","Moonbeam","🌙","Distraction"],["nurse","Mallow","💕","Healer"],["moldguard","Mochi Mop","🧹","Cleaner"],["forecast","Lookout","👓","Warning"],["feeder","Dewdrop","💧","Water"],["magnet","Orbit","🪄","Collector"],["growth","Sprout","🌱","Growth"],["spark","Glimmer","✨","BioBits"],["purify","Fern","🍀","Purifier"],["ray","Zappy","⚡","Combat"],["float","Floatie","🎈","Preservation"],["nursery","Lovie","💗","Nursery"],["ward","Nimbus","☁️","Defense"],["nectar","Taffy","🍬","Production"],["shield","Marshmallow","🛡️","Defense"],["twirl","Whirly","🌀","Speed"],["cookie","Patch","🩹","Rescue"],["savings","Pearly","🦪","Savings"],["breeze","Breeze","🍃","Water"],["wish","Wishie","🌟","Power-up"],["mimic","Mimsy","🦎","Mimic"]];
+const gallery=document.getElementById('cards'),runner=document.getElementById('runner'),count=document.getElementById('count');
+let frame=null,action=false;
+for(const [id,name,emoji,type] of keepers){
+ const card=document.createElement('article');card.className='card';card.dataset.id=id;
+ const holder=document.createElement('div');holder.className='face';
+ if(id==='scuttle'){holder.textContent=emoji}else{
+  const cv=document.createElement('canvas');cv.width=220;cv.height=220;cv.setAttribute('role','img');cv.setAttribute('aria-label',name+' '+type+' character');holder.appendChild(cv);
+ }
+ const title=document.createElement('strong');title.textContent=name;
+ const sub=document.createElement('small');sub.textContent=type;
+ card.append(holder,title,sub);gallery.append(card);
+}
+function renderAll(){
+ if(!frame||typeof frame.drawKeeperVector!=='function'){count.textContent='Game drawing runtime unavailable';return}
+ let ok=0;
+ for(const card of gallery.children){
+  const id=card.dataset.id,canvas=card.querySelector('canvas');
+  if(!canvas){
+   try{
+    const html=frame.scuttleVectorHTML(160);
+    if(html){card.querySelector('.face').innerHTML=html;ok++}
+   }catch(e){}
+   continue;
+  }
+  const c=canvas.getContext('2d');c.clearRect(0,0,220,220);
+  try{
+   // Gameplay render mode engages ability reaction; fixed position/zero pace.
+   frame.drawKeeperVector({id,x:110,y:116,keeperFlash:action?2:0,motionSpeed:0,motionStep:0,motionGaze:0},c,152,false);
+   ok++;
+  }catch(err){
+   const error=document.createElement('div');error.textContent='Art unavailable';error.style.color='#9e4d76';card.querySelector('.face').append(error);
+   console.error(id+' art rendering failed',err);
+  }
+ }
+ count.textContent=ok+' of '+keepers.length+' character drawings available';
+}
+runner.addEventListener('load',()=>{frame=runner.contentWindow;renderAll()});
+for(const [button,on] of [['idle',false],['action',true]]){
+ document.getElementById(button).addEventListener('click',()=>{
+  action=on;document.getElementById('idle').setAttribute('aria-pressed',String(!on));
+  document.getElementById('action').setAttribute('aria-pressed',String(on));renderAll();
+ })
+}
+</script></body></html>
