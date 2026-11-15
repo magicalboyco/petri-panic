@@ -1277,10 +1277,203 @@ function drawSecondWaveKeeper(g,c=ctx,size=69,portrait=false){
  c.restore();return true;
 }
 
+
+// Third-wave art masters: Glimmer, Lovie, Fern, Nimbus, and Zappy.
+// Distinctive front-facing silhouettes, articulated appendages, and facial
+// states; the same drawing path serves gameplay and high-resolution portraits.
+const THIRD_WAVE_KEEPERS=new Set(['spark','nursery','purify','ward','ray']);
+function drawThirdWaveKeeper(g,c=ctx,size=69,portrait=false){
+ const id=g.id;if(!THIRD_WAVE_KEEPERS.has(id))return false;
+ const config={
+  spark:{body:'#fff1bc',shade:'#f5cb69',light:'#fffcf0',trim:'#d7a453',seed:0},
+  nursery:{body:'#ffe7f2',shade:'#f4a6cc',light:'#fffafc',trim:'#c49edc',seed:1.2},
+  purify:{body:'#e9f6e2',shade:'#a1d6ac',light:'#fffef1',trim:'#71af8f',seed:2.3},
+  ward:{body:'#eef8ff',shade:'#b2d6ef',light:'#ffffff',trim:'#8eafe0',seed:3.5},
+  ray:{body:'#fff2ce',shade:'#f2ca72',light:'#fffdf4',trim:'#dc9e48',seed:4.3}
+ }[id];
+ const time=portrait?0:elapsed,seed=config.seed;
+ const pace=portrait?0:Math.min(1,Math.max(0,g.motionSpeed||0));
+ const step=portrait?0:(g.motionStep||0);
+ const breathe=Math.sin(time*2.75+seed),stride=Math.sin(step);
+ const active=!portrait&&(g.keeperFlash||0)>0;
+ const danger=!portrait&&!active&&(id==='ward'||id==='ray')&&
+  enemies.some(e=>!e.dead&&Math.hypot(e.x-g.x,e.y-g.y)<110);
+ const blink=!portrait&&!active&&((time+seed)%5.1>4.92);
+ const pose=active?'cheer':danger?'alert':blink?'blink':'idle';
+ const hop=portrait?0:Math.max(0,stride)*pace*2.2+
+  (active?Math.abs(Math.sin(time*11.7))*2.7:0);
+ const ink='#5c465a',cheeks='#f3a9c4';
+ function oval(x,y,rx,ry,fill,edge='',sw=2.7,turn=0){
+  c.beginPath();c.ellipse(x,y,rx,ry,turn,0,Math.PI*2);
+  c.fillStyle=fill;c.fill();if(edge){c.strokeStyle=edge;c.lineWidth=sw;c.stroke()}
+ }
+ function stroke(pts,color=ink,width=2.8){
+  c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));
+  c.strokeStyle=color;c.lineWidth=width;c.lineCap='round';c.lineJoin='round';c.stroke()
+ }
+ function path(draw,fill,edge=ink,sw=2.7){
+  c.beginPath();draw(c);
+  if(fill){c.fillStyle=fill;c.fill()}
+  if(edge){c.strokeStyle=edge;c.lineWidth=sw;c.lineJoin='round';c.lineCap='round';c.stroke()}
+ }
+ function star(x,y,r,fill,n=5){
+  path(q=>{for(let k=0;k<n*2;k++){
+   const a=k*Math.PI/n-Math.PI/2,rr=k%2?r*.46:r;
+   k?q.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr):q.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);
+  }q.closePath()},fill,ink,1.7)
+ }
+ function heart(x,y,k,fill){
+  c.save();c.translate(x,y);c.scale(k,k);
+  path(q=>{q.moveTo(0,13);q.bezierCurveTo(-24,-2,-15,-14,0,-7);
+   q.bezierCurveTo(15,-14,24,-2,0,13);q.closePath()},fill,ink,2.2);
+  c.restore();
+ }
+ function leaf(x,y,rot,scale=1,fill=config.shade){
+  c.save();c.translate(x,y);c.rotate(rot);c.scale(scale,scale);
+  path(q=>{q.moveTo(0,15);q.bezierCurveTo(-16,4,-15,-15,0,-28);
+   q.bezierCurveTo(15,-15,16,4,0,15);q.closePath()},fill,'#6a9f82',2.2);
+  stroke([[0,11],[0,-23]],'#6fa58b',1.5);
+  c.restore();
+ }
+ function paw(side){
+  c.save();c.translate(side*20,12);
+  c.rotate(side*(active?.77:.045+breathe*.11+stride*pace*.13));
+  oval(side*8,8,10.2,8.6,config.body,ink,3.1);
+  oval(side*6,6,5.1,3.2,config.light);
+  c.restore();
+ }
+ function eyes(y=-16){
+  for(const side of [-1,1]){
+   const x=side*10;
+   if(pose==='blink'||(active&&id==='nursery')){
+    path(q=>{q.moveTo(x-4.5,y);q.quadraticCurveTo(x,y+4,x+4.5,y)},null,ink,2.9);
+   }else{
+    oval(x+(g.motionGaze||0)*.7,y,3.1,danger?5.1:4.1,'#3e3445');
+    oval(x-1.1+(g.motionGaze||0)*.7,y-1.3,1.2,1.5,'#fff');
+   }
+  }
+  oval(-19,y+9,5.3,3.5,cheeks);oval(19,y+9,5.3,3.5,cheeks);
+  if(active||danger){
+   oval(0,y+11,4.6,5.6,'#9f597d',ink,1.7);
+   if(active)oval(0,y+13.8,2.6,1.4,'#ffaec5');
+  }else{
+   path(q=>{q.moveTo(-4.6,y+10);q.quadraticCurveTo(0,y+17,4.6,y+10)},null,ink,2.5)
+  }
+ }
+ c.save();c.translate(Math.round(g.x),Math.round(g.y-hop));
+ c.scale(size/108,size/108);
+ if(!portrait){
+  oval(0,47+hop,27.5,4.4,'rgba(118,72,119,.15)');
+  c.save();c.globalAlpha=.12;oval(0,-3,44,45,config.shade);c.restore();
+ }
+ c.rotate(portrait?0:(g.motionGaze||0)*.032+breathe*.019);
+ const squish=portrait?0:.013*breathe+pace*.036*Math.cos(step*2);
+ c.scale(1+squish,1-squish);
+ // Signature rear silhouette elements are oversized enough to read at 59px.
+ if(id==='spark'){
+  for(let k=0;k<8;k++){
+   const a=k*Math.PI/4-Math.PI/2;
+   const rad=38+(!portrait?Math.sin(time*2.1+seed+k)*.8:0);
+   path(q=>{q.moveTo(Math.cos(a-.20)*22,Math.sin(a-.20)*22-12);
+    q.lineTo(Math.cos(a)*rad,Math.sin(a)*rad-12);
+    q.lineTo(Math.cos(a+.20)*22,Math.sin(a+.20)*22-12);
+    q.closePath()},k%2?'#f7d68b':'#ffe8a4',ink,2.3);
+  }
+ }else if(id==='nursery'){
+  for(const side of [-1,1]){
+   c.save();c.translate(side*19,-5);
+   c.rotate(side*(.10+breathe*.10+(active?-.20:0)));
+   path(q=>{q.moveTo(0,-15);q.bezierCurveTo(side*23,-47,side*44,-20,side*28,-1);
+    q.bezierCurveTo(side*50,20,side*26,36,0,17);q.closePath()},
+    '#d7c1f2','#987dbb',3);
+   path(q=>{q.moveTo(side*4,-13);q.quadraticCurveTo(side*29,-32,side*30,-10);
+    q.lineTo(side*10,5);q.closePath()},'#f6d7f0','',0);
+   heart(side*20,14,.6,'#f6b1cc');
+   c.restore();
+  }
+ }else if(id==='purify'){
+  for(const side of [-1,1]){
+   // Fern-frond silhouette replaces the former generic leaf hat.
+   c.save();c.translate(side*18,2);c.rotate(side*(.10+breathe*.08));
+   leaf(side*12,9,side*.44,.92,'#abd9ad');
+   leaf(side*20,-14,side*.78,.54,'#8abf9d');
+   c.restore();
+  }
+ }else if(id==='ward'){
+  // Round cloud puffs, not indistinct rabbit ears.
+  for(const p of [[-30,-9,16,19],[30,-9,16,19],[-22,-30,17,18],[22,-30,17,18],[0,-38,18,17]]){
+   oval(p[0],p[1],p[2],p[3],'#c9e6f5',ink,2.9);
+  }
+ }else if(id==='ray'){
+  for(const side of [-1,1]){
+   // Fox-like bolt ears plus a matching tail on the right.
+   path(q=>{q.moveTo(side*12,-29);q.lineTo(side*21,-57);
+    q.lineTo(side*28,-39);q.lineTo(side*37,-45);
+    q.lineTo(side*33,-20);q.closePath()},'#f7d88c',ink,3);
+  }
+  path(q=>{q.moveTo(20,23);q.lineTo(40,7);q.lineTo(35,27);
+   q.lineTo(48,23);q.lineTo(26,46);q.closePath()},'#f5cf74',ink,2.7);
+ }
+ // Soft plush feet and rounded body.
+ oval(-11,36+Math.max(0,stride)*pace*1.6,10,8,config.body,ink,2.8);
+ oval(11,36+Math.max(0,-stride)*pace*1.6,10,8,config.body,ink,2.8);
+ oval(0,18,24,25,config.body,ink,3.2);
+ oval(0,24,17,17,config.light);
+ if(id==='nursery'){heart(0,23,1.13,'#f5a6c7')}
+ if(id==='purify'){
+  oval(0,25,14,13,'#d1eecd');
+  leaf(-5,27,-.6,.40,'#a4d3a6');leaf(6,28,.65,.40,'#a4d3a6');
+ }
+ if(id==='ray'){
+  path(q=>{q.moveTo(2,12);q.lineTo(-7,29);q.lineTo(2,29);q.lineTo(-3,40);
+   q.lineTo(15,21);q.lineTo(5,22);q.closePath()},'#f9c75f','#af7e53',1.9);
+ }
+ if(id==='ward'){
+  oval(0,24,13,10,'#cae7fc');
+  path(q=>{q.moveTo(-9,29);q.quadraticCurveTo(0,36,9,29)},null,'#8eafe0',2);
+ }
+ paw(-1);paw(1);
+ // Character-specific forehead and head shape, never obscuring the eyes.
+ const face=c.createLinearGradient(0,-38,0,9);
+ face.addColorStop(0,config.light);face.addColorStop(.60,config.body);face.addColorStop(1,config.body);
+ oval(0,-16,id==='ward'?29:27,id==='ward'?23:25,face,ink,3.3);
+ oval(-10,-31,11,3.8,'rgba(255,255,255,.7)');
+ if(id==='spark'){
+  star(0,-40,11,'#fff7c1');
+  oval(0,-40,4,4,'#f4c46f');
+ }else if(id==='nursery'){
+  for(const side of [-1,1]){
+   stroke([[side*12,-34],[side*20,-45]],'#ba8cbb',3.5);
+   heart(side*23,-47,.58,'#ffb0ce');
+  }
+ }else if(id==='purify'){
+  c.save();c.translate(0,-37);c.rotate(breathe*.055);
+  stroke([[0,1],[0,-12]],'#72aa84',3);
+  leaf(-10,-18,-.64,.66,'#b9e0ac');
+  leaf(10,-18,.64,.66,'#9ccc9b');
+  c.restore();
+  star(23,9,4.5,'#e6f8cb');
+ }else if(id==='ward'){
+  // Blue cloud droplet crest.
+  oval(0,-38,7,8,'#a1d5f1',ink,2);
+  oval(-2,-40,2,3,'#fff');
+ }else if(id==='ray'){
+  star(0,-37,7.3,'#ffef9d');
+ }
+ eyes(-16);
+ if(active&&!portrait){
+  const tone=id==='ray'?'#ffdc74':id==='purify'?'#dbefb2':id==='nursery'?'#ffc1dc':'#fff5af';
+  star(-41,-20,6,tone);star(42,-24,5,tone);
+  if(id==='ray')stroke([[27,-34],[34,-44],[32,-30],[43,-35]],'#f1c168',3);
+ }
+ c.restore();return true;
+}
+
 function drawKeeperVector(g,c=ctx,size=64,portrait=false){
  const id=g.id;if(!VECTORIZED_KEEPERS.has(id))return false;
  if(FEATURED_KEEPER_IDS.has(id))return drawFeaturedKeeper(g,c,size,portrait);
  if(SECOND_WAVE_KEEPERS.has(id))return drawSecondWaveKeeper(g,c,size,portrait);
+ if(THIRD_WAVE_KEEPERS.has(id))return drawThirdWaveKeeper(g,c,size,portrait);
  if(id==='forecast')return drawLookoutVector(g,c,size,portrait);
  const [skin,shade,hi,accent]=KEEPER_VECTOR_TONES[id];
  const idx=Array.from(VECTORIZED_KEEPERS).indexOf(id);
