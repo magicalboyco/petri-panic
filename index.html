@@ -3349,7 +3349,7 @@ function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,y
 for(const g of globs)drawGlob(g);
 if(scuttle){
  const keeperSignature=window.PetriPanicKeeperSignature;
- const scuttlePreview={id:'scuttle',x:scuttleX,y:scuttleY,keeperFlash:scuttleCheerTime};
+ const scuttlePreview={x:scuttleX,y:scuttleY,id:'scuttle',keeperFlash:scuttleCheerTime};
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  keeperSignature?.before(ctx,scuttlePreview,elapsed,reduced);
  drawScuttleVector(scuttleX,scuttleY,69,scuttleCheerTime>0);
