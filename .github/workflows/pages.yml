@@ -31,6 +31,10 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+      # GitHub's artifact index can lag behind a successful upload.
+      # A short settling period avoids "no artifact found" race failures.
+      - name: Let the Pages artifact become discoverable
+        run: sleep 15
       - name: Publish the game
         id: deployment
         uses: actions/deploy-pages@v4
