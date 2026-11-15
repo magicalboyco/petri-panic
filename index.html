@@ -613,7 +613,7 @@ function startStory(){
 const KEEPER_SPRITES={scuttle:0,bouncer:1,nurse:2,comfort:3,beacon:4,feeder:5,growth:6,nursery:7};
 const KEEPER_ATLAS_URL='assets/keepers/keepers-front3.png?v=20261115';
 const keeperAtlas=new Image();
-let keeperAtlasReady=false,scuttleDrawX=null,scuttleDrawY=null,scuttleCheerTime=0;
+let keeperAtlasReady=false,scuttleDrawX=null,scuttleDrawY=null,scuttleCheerTime=0,scuttleStep=0,scuttleSpeed=0,scuttleGaze=0,scuttleTrail=[],scuttleTrailTimer=0;
 keeperAtlas.onload=()=>{
  keeperAtlasReady=keeperAtlas.naturalWidth>0;
  if(keeperAtlasReady){
@@ -628,33 +628,52 @@ keeperAtlas.src=KEEPER_ATLAS_URL;
 // Scuttle beta: a resolution-independent Canvas 2D character rig.
 // The shell, stalks, body, and both arms are independently drawn vector parts.
 // Art units are local to the character; changes to scale don't affect gameplay.
-function drawScuttleVector(x,y,size=60,cheer=false,seed=0){
- const t=elapsed*3.25+seed;
- const bob=Math.sin(t)*1.3;
- const wave=Math.sin(t*1.1);
- const rightWave=cheer?-.95:-.12+wave*.15;
- const leftWave=cheer?.68:.12-wave*.13;
- const ink='#653d53',peach='#ffcfb8',peachLite='#ffe5cf',pink='#f8aeb4';
+function drawScuttleVector(x,y,size=65,cheer=false,seed=0){
+ // Art-directed Scuttle 2.0: animated parts instead of replacement sprite frames.
+ // All motions remain forward-facing, soft and non-intrusive like the Globs.
+ const step=scuttleStep+seed*.07, pace=Math.min(1,Math.max(0,scuttleSpeed));
+ const t=elapsed, breathe=Math.sin(t*2.55+seed)*.017;
+ const stride=Math.sin(step), squash=pace*.052*Math.cos(step*2.0);
+ const hop=Math.max(0,stride)*pace*2.6+(cheer?Math.abs(Math.sin(t*13))*3.5:0);
+ const blink=!cheer&&((t+seed)%4.85>4.66);
+ const threatened=!cheer&&enemies.some(e=>!e.dead&&Math.hypot(e.x-x,e.y-y)<100);
+ const gaze=scuttleGaze, shySway=Math.sin(t*2.0+seed)*.022;
+ const bodyLean=shySway+gaze*.040+(cheer?Math.sin(t*15)*.035:0);
+ const shellLag=-gaze*1.8-Math.sin(step*.8)*pace*.7;
+ const antennaBounce=Math.sin(step-0.7)*pace*2.2;
+ const ink='#653d53',peach='#ffcfb8',peachLite='#ffe5cf';
+ const headPaint=ctx.createRadialGradient(-8,-29,1,2,-8,46);
+ headPaint.addColorStop(0,'#fff0dd');headPaint.addColorStop(.48,'#ffcfb8');headPaint.addColorStop(1,'#f2adac');
+ const bodyPaint=ctx.createLinearGradient(0,-9,8,40);
+ bodyPaint.addColorStop(0,'#ffe3c9');bodyPaint.addColorStop(.72,'#ffcfb8');bodyPaint.addColorStop(1,'#edb0b1');
  function shape(cx,cy,rx,ry,fill,stroke=ink,sw=3){
   ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);
   ctx.fillStyle=fill;ctx.fill();
   if(stroke){ctx.lineWidth=sw;ctx.strokeStyle=stroke;ctx.stroke()}
  }
- function arm(side,angle){
-  // Shoulder stays attached while the arm rotates around its own pivot.
-  ctx.save();ctx.translate(side*18,8);ctx.rotate(side*angle);
-  shape(side*7,8,9,7.1,peach,ink,3);
-  shape(side*6.4,6.2,5.6,3.1,peachLite,null);
+ function arm(side,angle,reach=false){
+  // Each arm swings on its own shoulder pivot; reach is on BioBit pickup.
+  ctx.save();ctx.translate(side*18,8);
+  ctx.rotate(side*angle);
+  shape(side*(reach?8.5:7),reach?6.5:8,9,7.1,peach,ink,3);
+  shape(side*7,reach?5:6.2,5.4,3.1,peachLite,null);
   ctx.restore();
  }
  ctx.save();
- ctx.translate(Math.round(x),Math.round(y+bob));
+ ctx.translate(Math.round(x),Math.round(y+Math.sin(t*2.8+seed)*.8-hop));
  ctx.scale(size/104,size/104);
- ctx.save();
- ctx.fillStyle='rgba(134,75,117,.18)';
- ctx.beginPath();ctx.ellipse(2,45,35,5.2,0,0,Math.PI*2);ctx.fill();
+ // Shadow remains anchored while the body squashes and rebounds.
+ ctx.save();ctx.translate(0,hop);
+ shape(1,44,32+pace*2,4.5,'rgba(126,73,123,.15)',null);
  ctx.restore();
- // Shell is a real vector spiral, sitting behind the character.
+ // A faint rose-coloured glow gives a similar finish to the existing Globs.
+ ctx.save();ctx.globalAlpha=.18;
+ shape(2,0,41,43,'#f5c8e7',null);ctx.restore();
+ ctx.rotate(bodyLean);
+ ctx.scale(1+squash+breathe,1-squash-breathe*.6);
+ // Separate shell animation: it settles a beat after the body.
+ ctx.save();ctx.translate(shellLag,antennaBounce*.18);
+ ctx.rotate(-bodyLean*.4-Math.sin(step*.85)*pace*.022);
  shape(26,8,26,27,'#9768bf',ink,3.5);
  shape(26,5,23.7,24.5,'#c9a5ed','#986bbe',2.1);
  shape(23,-1,16.5,17,'#e7d1fb',null);
@@ -667,57 +686,71 @@ function drawScuttleVector(x,y,size=60,cheer=false,seed=0){
  }ctx.stroke();
  shape(17,-9,5.8,3.5,'rgba(255,255,255,.68)',null);
  shape(30,-13,3.1,2.2,'rgba(255,255,255,.55)',null);
- // Feet drawn first, so they read as attached to the body.
- shape(-12,36,10.2,8,peach,ink,3);
- shape(12,36,10.2,8,peach,ink,3);
- // Two gently flexing antenna stalks.
+ ctx.restore();
+ // Alternating little footfalls: the feet visibly shuffle when collecting.
+ shape(-12,36+Math.max(0,stride)*pace*2.3,10.2,8,peach,ink,3);
+ shape(12,36+Math.max(0,-stride)*pace*2.3,10.2,8,peach,ink,3);
+ // Each antenna has delayed secondary motion.
  for(const side of [-1,1]){
-  const tipX=side*(21+Math.sin(t*.74+side)*1.2);
+  const tipX=side*(21+Math.sin(t*2.6+side*1.1)*2.5+gaze*side*.7);
+  const tipY=-51+Math.sin(t*3.35+side*.95)*1.2+antennaBounce*.55;
   ctx.lineCap='round';
-  ctx.beginPath();ctx.moveTo(side*11,-29);ctx.quadraticCurveTo(side*16,-44,tipX,-49);
+  ctx.beginPath();ctx.moveTo(side*11,-29);
+  ctx.quadraticCurveTo(side*(17+gaze),-44,tipX,tipY+2);
   ctx.strokeStyle=ink;ctx.lineWidth=8;ctx.stroke();
   ctx.strokeStyle=peach;ctx.lineWidth=4.5;ctx.stroke();
  }
- // Rounded soft body and belly; no harsh pixel scaling.
- shape(0,17,22,25,peach,ink,3.5);
+ shape(0,17,22,25,bodyPaint,ink,3.5);
  shape(0,22,14.5,17.8,'#fff2db',null);
- // Arms are their own independently animated rig parts.
- arm(-1,leftWave);arm(1,rightWave);
- // Head on top keeps the shoulders looking natural.
- shape(0,-13,28.5,25,peach,ink,3.4);
+ const leftWave=cheer?.77:.10+Math.sin(t*3.4+step*.3)*.13-pace*stride*.24;
+ const rightWave=cheer?-.80:-.11+Math.sin(t*3.4+.9+step*.3)*.14+pace*stride*.24;
+ arm(-1,leftWave,cheer);arm(1,rightWave,cheer);
+ // Head has a small independent follow-through, including a sideways glance.
+ ctx.save();
+ ctx.translate(gaze*.65,-Math.abs(stride)*pace*.9);
+ ctx.rotate(-bodyLean*.17+Math.sin(t*1.75)*.008);
+ shape(0,-13,28.5,25,headPaint,ink,3.4);
  shape(-10.5,-27.5,11,4.2,'rgba(255,255,255,.28)',null);
- // Antenna tips sit above the head, with little golden centres.
  for(const side of [-1,1]){
-  const tipX=side*(21+Math.sin(t*.74+side)*1.2);
-  shape(tipX,-51,7.8,8.1,peachLite,ink,3);
-  shape(tipX-2,-53,2.6,2.3,'#fff5c9',null);
+  const tipX=side*(21+Math.sin(t*2.6+side*1.1)*2.5+gaze*side*.7);
+  const tipY=-51+Math.sin(t*3.35+side*.95)*1.2+antennaBounce*.55;
+  shape(tipX,tipY,7.8,8.1,peachLite,ink,3);
+  shape(tipX-2,tipY-2,2.6,2.3,'#fff5c9',null);
  }
- // Face and expressions, still front-facing during every action.
- const blink=!cheer&&((elapsed+seed)%5.3>5.05);
- if(blink){
-  ctx.strokeStyle=ink;ctx.lineWidth=3;ctx.lineCap='round';
-  for(const eye of [-10,10]){ctx.beginPath();ctx.moveTo(eye-3,-12);ctx.quadraticCurveTo(eye,-9,eye+3,-12);ctx.stroke()}
+ // The eyes react to movement and nearby enemies without ever turning away.
+ ctx.strokeStyle=ink;ctx.lineWidth=3;ctx.lineCap='round';
+ if(cheer){
+  for(const eye of [-10,10]){
+   ctx.beginPath();ctx.arc(eye,-11,4.3,Math.PI*1.05,Math.PI*1.95);ctx.stroke();
+  }
+ }else if(blink){
+  for(const eye of [-10,10]){
+   ctx.beginPath();ctx.moveTo(eye-3,-12);ctx.quadraticCurveTo(eye,-9,eye+3,-12);ctx.stroke();
+  }
  }else{
   for(const eye of [-10,10]){
-   shape(eye,-13,3.2,4.8,'#352935',null);
-   shape(eye-1.2,-15,1.05,1.5,'white',null);
+   shape(eye+gaze*.75,-13,threatened?3.65:3.2,threatened?5.2:4.8,'#352935',null);
+   shape(eye-1+gaze*.75,-15,1.2,1.5,'#ffffff',null);
   }
  }
  shape(-18.4,-4,6.4,4.4,'#f7a9aa',null);
  shape(18.4,-4,6.4,4.4,'#f7a9aa',null);
- ctx.lineCap='round';ctx.lineJoin='round';
- ctx.strokeStyle=ink;ctx.lineWidth=2.8;ctx.beginPath();
+ ctx.strokeStyle=ink;ctx.lineWidth=2.8;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
  if(cheer){
-  // Open mouth, separate from head geometry.
-  ctx.ellipse(0,-2,5.5,5.9,0,0,Math.PI*2);
-  ctx.fillStyle='#a94f73';ctx.fill();ctx.stroke();
-  shape(0,0,3.1,1.65,'#f9a2ac',null);
+  shape(0,-2,5.8,6.0,'#a94f73',ink,2.5);
+  shape(0,.6,3.1,1.65,'#f9a2ac',null);
+ }else if(threatened){
+  shape(0,-1,3.4,4.9,'#a94f73',ink,2.2);
+  for(const eye of [-10,10]){
+   ctx.beginPath();ctx.moveTo(eye-3,-22);ctx.lineTo(eye+3,-22);ctx.stroke();
+  }
  }else{
   ctx.moveTo(-5,-2);ctx.quadraticCurveTo(0,4.2,5,-2);ctx.stroke();
-  ctx.beginPath();ctx.arc(0,-2.2,1.1,0,Math.PI*2);ctx.fillStyle=ink;ctx.fill();
+  shape(0,-2.2,1.1,1.1,ink,null);
  }
+ ctx.restore();
  if(cheer){
-  ctx.save();ctx.globalAlpha=.95;ctx.fillStyle='#ffdf84';
+  ctx.save();ctx.globalAlpha=.92;ctx.fillStyle='#ffdf84';
   for(const p of [[-39,-30,3],[37,-30,4]]){
    ctx.beginPath();ctx.moveTo(p[0],p[1]-p[2]*2);
    ctx.lineTo(p[0]+p[2]*.75,p[1]);
@@ -1426,7 +1459,7 @@ switch(k){case'glob':globs.push(glob());message('A baby Glob joined your dish! �
 if(k!=='dna')sound(880);updateUI();if(mode==='adventure'&&['nutrition','regen','zap','star','mitosis','revive','antidote'].includes(k))queueStory(k)}
 function updateUI(){applyEnvironment();if($('cultureMood')){let dry=globs.filter(g=>g.hunger>=24).length,hurt=globs.filter(g=>g.hp<maxhp(g)||g.poison>0).length;$('cultureMood').textContent=hurt?'💗 '+hurt+' Glob'+(hurt===1?' needs':'s need')+' healing':dry?'💧 '+dry+' Glob'+(dry===1?' is':'s are')+' thirsty':'💗 Your Globs are happy';$('cultureWater').textContent='💧 '+water.length+' / 10 droplets';$('cultureThreat').textContent=enemies.length?'🦠 '+enemies.length+' invader'+(enemies.length===1?'':'s')+'!':'✨ Peaceful for now';}const currentLevel=clamp(state==='playing'||state==='paused'||state==='guardian-roster'||state==='story'?activeLevel:chosenLevel,1,21);const regions=['Victorian Origins','Atomic Age','Space Age','Biotech Renaissance','Tomorrow Lab'];const regionIndex=Math.min(4,Math.floor((currentLevel-1)/5));$('levelNum').innerHTML=String(currentLevel).padStart(2,'0')+' <span class="level-of">/ 21</span>';$('adventureLevel').textContent='Collect 3 DNA pieces';$('regionName').textContent=(mode==='hard'?'🔥 HARD · ':'')+regions[regionIndex];$('levelFill').style.width=Math.max(5,Math.round(currentLevel/21*100))+'%';$('levelChip').setAttribute('aria-label','Experiment '+currentLevel+' of 21: '+regions[regionIndex]); $('money').textContent=Math.floor(coins);$('dna').textContent=isDNAExperiment()?`${dna}/3`:'—';$('count').textContent=globs.length;for(let k of Object.keys(cost)){let b=document.querySelector(`[data-buy="${k}"]`);if(!b)continue;let owned=(k==='scuttle'&&save.scuttleUnlocked)||(k==='revive'&&rescue);let max=(['nutrition','regen','zap'].includes(k)&&save[k]>=3);let unavailable=(k==='dna'&&(!isDNAExperiment()||dna===2&&hasBossLevel()&&!bossDefeated))||(k==='antidote'&&!globs.some(g=>g.poison>0));b.disabled=state!=='playing'||coins<getCost(k)||owned||max||unavailable;$('cost-'+k).textContent=owned?'OWNED':max?'MAX':unavailable?'—':getCost(k)}$('notes').innerHTML=`💧 Tap to feed Globs and heal them.<br>💕 Baby → Grown → Expert → babies!<br>✨ Collect floating BioBits bubbles.<br>🦠 Tap purple viruses and green mold directly until they disappear.<br>🌟 Star: ${Math.ceil(starTime)}s · 🧬 Maxing: ${Math.ceil(mitosisTime)}s · 🩹 Rescue: ${rescue?'Ready':'None'}${mode==='trial'?`<br>⏱️ Time left: ${Math.max(0,Math.ceil(180-elapsed))}s`:''}${mode==='challenge'?`<br>💧 Drops remaining: ${challengeDrops} · ${Math.max(0,Math.ceil(120-elapsed))}s`:''}${mode==='lab'?`<br>🎀 DNA experiments completed: ${save.lab||0}`:''}`}
 function spawnWave(){wave++;attackType=(wave>3&&Math.random()<(mode==='hard'?.7:.45))?'mixed':Math.random()<.5?'virus':'mold';let kinds=attackType==='mixed'?['virus','mold']:Array.from({length:attackType==='virus'?Math.min(4,wave+1):1},()=>attackType);if(mode==='hard'&&wave>1)kinds.push(wave%3?'virus':'mold');for(let kind of kinds){enemies.push({kind,x:rnd(80,820),y:kind==='virus'?-35:rnd(110,490),r:kind==='virus'?20:28,hp:Math.floor(rnd(mode==='hard'?7:5,mode==='hard'?13:11)),maxHp:mode==='hard'?12:10,speed:(kind==='virus'?34+wave*6:8+wave*2)*(mode==='hard'?1.14:1),phase:rnd(0,6),cool:0,spread:12,dead:false})}message(attackType==='virus'?'🦠 VIRUS ATTACK! Tap to zap!':attackType==='mold'?'🍄 CREEPING MOLD! Clear it fast!':'⚠️ DOUBLE CONTAMINATION! Both enemy types!',5);flash=.5;sound(210)}
-let lastShape='oval';function update(dt){elapsed+=dt;if(isDNAExperiment()&&activeLevel===21){const seconds=elapsed%23;const shape=dishShape();if(seconds<dt+0.05&&shape!==lastShape){lastShape=shape;globs.forEach(g=>keepInDish(g,radius(g)+12));guardians.forEach(g=>keepGuardianInDish(g));water.forEach(w=>keepInDish(w,20));bubbles.forEach(b=>keepInDish(b,23));message('🌌 REALITY SHIFT! The chamber is now '+shape.toUpperCase()+'!',4);sparkleBurst(450,310,33,'blue')}else if(seconds>19&&seconds<19+dt+.04){message('⚠️ TIME WARP! The chamber changes shape in 4 seconds!',4)}}for(const p of sparkles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=12*dt;p.vx*=Math.exp(-1.5*dt);p.life-=dt}sparkles=sparkles.filter(p=>p.life>0);flash=Math.max(0,flash-dt);starTime=Math.max(0,starTime-dt);mitosisTime=Math.max(0,mitosisTime-dt);noticeTime-=dt;if(noticeTime<=0){$('ribbon').textContent=mode==='lab'?'🎀 Peaceful Living Lab — grow and decorate with more Globs':starTime>0?'🌟 STAR CELL ACTIVE!':`💧 Water • ✨ Collect • 💗 Protect • ${isDNAExperiment()?'🧬 Complete DNA':'🌸 Keep growing'}`;noticeTime=0}
+let lastShape='oval';function update(dt){elapsed+=dt;scuttleCheerTime=Math.max(0,scuttleCheerTime-dt);for(const p of scuttleTrail)p.life-=dt;scuttleTrail=scuttleTrail.filter(p=>p.life>0);if(isDNAExperiment()&&activeLevel===21){const seconds=elapsed%23;const shape=dishShape();if(seconds<dt+0.05&&shape!==lastShape){lastShape=shape;globs.forEach(g=>keepInDish(g,radius(g)+12));guardians.forEach(g=>keepGuardianInDish(g));water.forEach(w=>keepInDish(w,20));bubbles.forEach(b=>keepInDish(b,23));message('🌌 REALITY SHIFT! The chamber is now '+shape.toUpperCase()+'!',4);sparkleBurst(450,310,33,'blue')}else if(seconds>19&&seconds<19+dt+.04){message('⚠️ TIME WARP! The chamber changes shape in 4 seconds!',4)}}for(const p of sparkles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=12*dt;p.vx*=Math.exp(-1.5*dt);p.life-=dt}sparkles=sparkles.filter(p=>p.life>0);flash=Math.max(0,flash-dt);starTime=Math.max(0,starTime-dt);mitosisTime=Math.max(0,mitosisTime-dt);noticeTime-=dt;if(noticeTime<=0){$('ribbon').textContent=mode==='lab'?'🎀 Peaceful Living Lab — grow and decorate with more Globs':starTime>0?'🌟 STAR CELL ACTIVE!':`💧 Water • ✨ Collect • 💗 Protect • ${isDNAExperiment()?'🧬 Complete DNA':'🌸 Keep growing'}`;noticeTime=0}
 if(mode==='trial'&&elapsed>=180){showMenu('timeup');return}if(mode==='challenge'&&elapsed>=120){showMenu('challengewin');return}
 bossWeakTime=Math.max(0,bossWeakTime-dt);if(mode!=='lab'&&!activeBoss()){attackTimer-=dt;if(attackTimer<0&&warning===0&&enemies.length===0){warning=guardians.some(g=>g.id==='forecast')?7:mode==='hard'?2:3;message('⚠️ Contamination approaching!',3)}if(warning>0){warning-=dt;if(warning<=0){warning=0;spawnWave();attackTimer=mode==='hard'?Math.max(14,32-wave*1.2):wave>3?45:53}}}
 starDropTimer-=dt;if(starDropTimer<0&&mode!=='lab'){starDropTimer=rnd(75,120);if(Math.random()<.48){const star={x:rnd(65,835),y:rnd(70,550),vx:0,vy:-5,value:0,star:true,life:10,phase:0,r:20};keepInDish(star,30);bubbles.push(star);message('A rare Star Cell appeared! Tap it! 🌟',3)}}
@@ -1450,7 +1483,20 @@ if(g.eaten>=2&&g.produce<=0&&g.hunger<25&&bubbles.filter(b=>!b.star).length<16){
 if(stage(g)===2&&g.hunger<10&&g.birth<=0&&globs.length<30){g.birth=rnd(16,25);if(Math.random()<.72){const count=mitosisTime>0?Math.min(2,30-globs.length):1;for(let n=0;n<count;n++){const baby=glob(g.x+rnd(-37,37),g.y+rnd(-37,37));keepInDish(baby,30);globs.push(baby)}g.heartTimer=2.6;sparkleBurst(g.x,g.y,count===2?50:27,'pink');emit(g.x,g.y,'#ff8bbc',19);message(count===2?'🧬 MITOSIS MAXING! Twin baby Globs! 👶👶':'An Expert Glob had a baby! 👶💕',2.8);score+=100*count}}}
 globs=globs.filter(g=>!g.dead);
 for(const b of bubbles){b.phase+=dt*5;const ddx=b.x-450,ddy=b.y-310,dist=Math.max(1,Math.hypot(ddx,ddy));const swirl=b.star?0:24*(b.orbit||1);b.x+=b.vx*dt-ddy/dist*swirl*dt;b.y+=b.vy*dt+ddx/dist*swirl*dt;const bx=b.x,by=b.y;keepInDish(b,(b.r||15)+9);if(bx!==b.x)b.vx*=-.4;if(by!==b.y)b.vy*=-.4;b.vx*=Math.exp(-2.2*dt);b.vy*=Math.exp(-2.2*dt);b.life-=dt;if(scuttle&&!b.star&&distance(b,{x:scuttleX,y:scuttleY})<35){collect(b);scuttleCheerTime=.6}if(b.star&&b.clicked){b.gone=true;starTime=15;message('Rare STAR CELL! Sparkle mode! 🌟',3)}if(mode==='hard'&&!b.star)b.life-=dt*.3;if(b.life<=0)b.gone=true}bubbles=bubbles.filter(b=>!b.gone);
-if(scuttle){let nearest=null,best=Infinity;for(const b of bubbles){if(b.star||b.gone)continue;const d=distance(b,{x:scuttleX,y:scuttleY});if(d<best){best=d;nearest=b}}const goal=nearest||{x:450+210*Math.sin(elapsed*.31),y:310+160*Math.sin(elapsed*.47+.8)};const navGoal=dishWaypoint({x:scuttleX,y:scuttleY},goal);const dx=navGoal.x-scuttleX,dy=navGoal.y-scuttleY,dist=Math.hypot(dx,dy);if(dist>3){const step=Math.min(dist,130*dt);scuttleX+=dx/dist*step;scuttleY+=dy/dist*step;const pos={x:scuttleX,y:scuttleY};keepInDish(pos,48);scuttleX=pos.x;scuttleY=pos.y}}
+if(scuttle){const oldScuttleX=scuttleX,oldScuttleY=scuttleY;let nearest=null,best=Infinity;for(const b of bubbles){if(b.star||b.gone)continue;const d=distance(b,{x:scuttleX,y:scuttleY});if(d<best){best=d;nearest=b}}const goal=nearest||{x:450+210*Math.sin(elapsed*.31),y:310+160*Math.sin(elapsed*.47+.8)};const navGoal=dishWaypoint({x:scuttleX,y:scuttleY},goal);const dx=navGoal.x-scuttleX,dy=navGoal.y-scuttleY,dist=Math.hypot(dx,dy);if(dist>3){const step=Math.min(dist,130*dt);scuttleX+=dx/dist*step;scuttleY+=dy/dist*step;const pos={x:scuttleX,y:scuttleY};keepInDish(pos,48);scuttleX=pos.x;scuttleY=pos.y}
+ const mx=scuttleX-oldScuttleX,my=scuttleY-oldScuttleY,moved=Math.hypot(mx,my);
+ const nextPace=Math.min(1,moved/Math.max(dt*.001+130*dt,0.001));
+ scuttleSpeed+=(nextPace-scuttleSpeed)*Math.min(1,dt*7);
+ const targetGaze=moved>0.05?Math.max(-1,Math.min(1,mx/Math.max(moved,1))):0;
+ scuttleGaze+=(targetGaze-scuttleGaze)*Math.min(1,dt*4);
+ scuttleStep+=moved*.084;
+ scuttleTrailTimer-=dt;
+ if(moved>.6&&scuttleTrailTimer<=0){
+  scuttleTrail.push({x:scuttleX-mx*1.2,y:scuttleY+17,life:.70});
+  if(scuttleTrail.length>9)scuttleTrail.shift();
+  scuttleTrailTimer=.12;
+ }
+}
 for(const e of enemies){e.phase+=dt*3;e.cool-=dt;const beacon=guardians.find(g=>g.id==='beacon'&&g.lureTime>0);if(e.kind==='virus'&&beacon&&distance(e,beacon)<215){const d=distance(e,beacon)||1;e.x+=(beacon.x-e.x)/d*e.speed*dt;e.y+=(beacon.y-e.y)/d*e.speed*dt;continue}if(e.kind==='boss'){e.x=450+195*Math.sin(elapsed*(e.hp<e.maxHp*.5?.95:.53));e.y=265+112*Math.cos(elapsed*(e.hp<e.maxHp*.5?.79:.45));const victim=globs.slice().sort((a,b)=>distance(e,a)-distance(e,b))[0];if(victim&&e.cool<=0){if(victim.shieldTime>0){victim.shieldTime=0;sparkleBurst(victim.x,victim.y,13,'blue')}else{victim.hp-=.7;victim.hunger+=6;victim.hurtTimer=1;flash=.25;emit(victim.x,victim.y,'#c78cdf',12)}e.cool=e.hp<e.maxHp*.5?2.9:4.5;message('⚠️ Boss attack! Keep feeding your Globs!',2)}continue}let target=null,min=Infinity;for(const g of globs){let d=distance(e,g);if(activeLevel>7&&g.eaten>=4)d-=(activeLevel>=15?160:55);if(d<min){min=d;target=g}}if(target){if(e.kind==='virus'){const wardSlow=guardians.some(g=>g.id==='ward'&&distance(g,e)<160)?.52:1;e.x+=(target.x-e.x)/Math.max(min,1)*e.speed*wardSlow*(.85+.15*Math.max(0,e.hp)/(e.maxHp||10))*dt;e.y+=(target.y-e.y)/Math.max(min,1)*e.speed*wardSlow*dt}else{e.x+=(target.x-e.x)/Math.max(min,1)*e.speed*(.85+.15*Math.max(0,e.hp)/(e.maxHp||10))*.18*dt;e.y+=(target.y-e.y)/Math.max(min,1)*e.speed*.18*dt;e.spread-=dt;if(e.spread<0&&enemies.filter(z=>z.kind==='mold').length<4){e.spread=14;{const mold={kind:'mold',x:clamp(e.x+rnd(-55,55),45,W-45),y:clamp(e.y+rnd(-55,55),55,H-55),r:21,hp:Math.floor(rnd(5,11)),maxHp:10,speed:8,phase:0,cool:1,spread:22};keepInDish(mold,28);enemies.push(mold)}}}if(min<radius(target)+e.r-6&&e.cool<=0){if(starTime<=0){if(target.shieldTime>0){target.shieldTime=0;sparkleBurst(target.x,target.y,13,'blue');message('🛡️ Marshmallow blocked an attack!',2)}else{target.hp-=1;target.hunger+=8;target.hurtTimer=1.25;if(e.kind==='mold'){target.poison=1;target.poisonFeed=0;message('Glob poisoned! Feed or buy Antidote! 💚',3)}emit(target.x,target.y,'#fb8aab',8);if(target.hp<=0){target.dead=true;message('A Glob was lost! Feed and protect the others!',3)}}}e.cool=e.kind==='virus'?3:4.5;flash=.2}}else{e.y+=dt*20}if(e.y>0&&e.kind!=='boss')keepInDish(e,e.r+7);if(e.y>H+70)e.dead=true}
 for(const guard of guardians){
   guard.cool-=dt;guard.abilityCool-=dt;guard.keeperFlash=Math.max(0,(guard.keeperFlash||0)-dt);guard.lureTime=Math.max(0,(guard.lureTime||0)-dt);
@@ -1762,7 +1808,7 @@ function guardianOutline(id,p){
 }
 function drawGuardian(guard){
  if(guard.id==='scuttle'){
-  drawScuttleVector(guard.x,guard.y,62,guard.keeperFlash>0,guard.y*.024);
+  drawScuttleVector(guard.x,guard.y,66,guard.keeperFlash>0,guard.y*.024);
   return;
  }
  // All Keepers face the player, matching the Globs.
@@ -1792,8 +1838,9 @@ function drawGuardian(guard){
  if(guard.id==='beacon'&&guard.lureTime>0){ctx.strokeStyle='#D1A9F0A0';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,37,0,Math.PI*2);ctx.stroke()}
  ctx.restore();
 }
-function draw(){drawBackground();scuttleCheerTime=Math.max(0,scuttleCheerTime-1/60);for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}ctx.restore()}for(const g of globs)drawGlob(g);
-if(scuttle)drawScuttleVector(scuttleX,scuttleY,65,scuttleCheerTime>0);
+function draw(){drawBackground();for(let i=0;i<13;i++){const xx=55+(i*211)%790,yy=70+(i*149)%470;starShape(xx,yy,3+(i%3),i%2?'#FFFFFF':'#EFB6D4',.22+.15*Math.sin(elapsed*1.6+i))}for(const w of water){ctx.save();ctx.globalAlpha=clamp(w.life/7,0,.78);ctx.shadowBlur=14;ctx.shadowColor='#8bd4fc';ell(w.x,w.y,w.r,w.r*.83,'#9bdffe');ell(w.x-w.r*.27,w.y-w.r*.25,w.r*.22,w.r*.20,'#fff');ctx.restore()}for(const b of bubbles){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.star?'#ffc641':'#ffd174';if(b.life<1.25&&Math.sin(elapsed*24)<0){ctx.restore();continue}if(b.star){ctx.fillStyle='#f9d04f';ctx.font='bold 38px system-ui';ctx.textAlign='center';ctx.fillText('★',0,13)}else{const r=b.r+Math.sin(b.phase)*1.2;ell(0,0,r,r,'#ffd56d');ell(-r*.2,-r*.26,r*.3,r*.25,'#fff7cb');ctx.fillStyle='#976a42';ctx.font=`bold ${r*.85}px Trebuchet MS`;ctx.textAlign='center';ctx.fillText('✦',0,r*.31)}ctx.restore()}for(const p of scuttleTrail){ctx.save();ctx.globalAlpha=.15*Math.min(1,p.life/.7);ell(p.x,p.y,5.1,2.6,'#e9b2dc');ctx.restore()}
+for(const g of globs)drawGlob(g);
+if(scuttle)drawScuttleVector(scuttleX,scuttleY,69,scuttleCheerTime>0);
 if(scuttle){scuttleDrawX=scuttleX;scuttleDrawY=scuttleY}for(const guard of guardians)drawGuardian(guard);for(const e of enemies){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(Math.sin(e.phase)*.08);ctx.shadowColor='#a33e87';ctx.shadowBlur=14;
  if(e.kind==='boss'){
   const phase2=e.hp<e.maxHp*.5,r=e.r;let mainColor=e.variant==='prism'?'#ba8fff':e.variant==='serpent'?'#a9d177':e.variant==='moth'?'#799bcf':'#fa8fbf';
