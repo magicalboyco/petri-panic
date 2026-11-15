@@ -1469,11 +1469,234 @@ function drawThirdWaveKeeper(g,c=ctx,size=69,portrait=false){
  c.restore();return true;
 }
 
+
+// Fourth-wave Keeper art: the remaining nine companions have characteristic
+// silhouettes, accessories, animation timing and readable expressions.
+const FOURTH_WAVE_KEEPERS=new Set(['float','nectar','shield','twirl','cookie','savings','breeze','wish','mimic']);
+function drawFourthWaveKeeper(g,c=ctx,size=69,portrait=false){
+ const id=g.id;if(!FOURTH_WAVE_KEEPERS.has(id))return false;
+ const themes={
+  float:['#fff1f8','#f6bad6','#fffafa','#ca82b5'],
+  nectar:['#ffebd5','#eab68b','#fff9ed','#d891a9'],
+  shield:['#f9eafa','#cdb5dd','#fffaff','#929acc'],
+  twirl:['#f3edff','#bea6f1','#fffaff','#a496d5'],
+  cookie:['#ffefe3','#ddbaa4','#fff9f1','#cf9cbd'],
+  savings:['#fff7e8','#e5c8b6','#fffdfa','#c99dae'],
+  breeze:['#e7fbf4','#a9d9c5','#fffefe','#78b7a7'],
+  wish:['#fff5d2','#f4cde9','#fffbf4','#d5a0ce'],
+  mimic:['#e7f6ec','#b9d1b2','#fff9ec','#a6b6cc']
+ };
+ const [skin,shade,bright,accent]=themes[id];
+ const seed=Array.from(FOURTH_WAVE_KEEPERS).indexOf(id)*.73;
+ const t=portrait?0:elapsed,active=!portrait&&g.keeperFlash>0;
+ const moving=portrait?0:Math.min(1,Math.max(0,g.motionSpeed||0));
+ const step=portrait?0:(g.motionStep||0);
+ const bob=portrait?0:Math.max(0,Math.sin(step))*moving*2.2+
+  (active?Math.abs(Math.sin(t*12))*3:Math.sin(t*2.7+seed)*.8);
+ const sway=Math.sin(t*2.1+seed),lean=portrait?0:sway*.017+(g.motionGaze||0)*.025;
+ const alert=!portrait&&!active&&(id==='shield'||id==='cookie')&&
+  enemies.some(e=>!e.dead&&Math.hypot(e.x-g.x,e.y-g.y)<110);
+ const blink=!portrait&&!active&&(t+seed)%5.4>5.18;
+ const ink='#594558';
+ function oval(x,y,rx,ry,fill,stroke='',w=2.7,angle=0){
+  c.beginPath();c.ellipse(x,y,rx,ry,angle,0,Math.PI*2);
+  c.fillStyle=fill;c.fill();
+  if(stroke){c.strokeStyle=stroke;c.lineWidth=w;c.stroke()}
+ }
+ function line(points,color=ink,w=2.7){
+  c.beginPath();points.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));
+  c.strokeStyle=color;c.lineWidth=w;c.lineCap='round';c.lineJoin='round';c.stroke();
+ }
+ function shape(cb,fill,edge=ink,w=2.6){
+  c.beginPath();cb(c);if(fill){c.fillStyle=fill;c.fill()}
+  if(edge){c.lineJoin='round';c.lineCap='round';c.lineWidth=w;c.strokeStyle=edge;c.stroke()}
+ }
+ function star(x,y,r,color,n=5){
+  shape(q=>{for(let k=0;k<n*2;k++){
+   const a=k*Math.PI/n-Math.PI/2,rad=k%2?r*.43:r;
+   k?q.lineTo(x+Math.cos(a)*rad,y+Math.sin(a)*rad):q.moveTo(x+Math.cos(a)*rad,y+Math.sin(a)*rad)
+  }q.closePath()},color,ink,1.4);
+ }
+ function heart(x,y,z,color){
+  c.save();c.translate(x,y);c.scale(z,z);
+  shape(q=>{q.moveTo(0,11);q.bezierCurveTo(-22,-2,-14,-14,0,-6);
+   q.bezierCurveTo(14,-14,22,-2,0,11);q.closePath()},color,ink,2);
+  c.restore();
+ }
+ function leaf(x,y,rot,scale,fill='#a1caa3'){
+  c.save();c.translate(x,y);c.rotate(rot);c.scale(scale,scale);
+  oval(0,-10,9,17,fill,'#6e9f88',2);
+  line([[0,4],[0,-22]],'#80ac91',1.5);c.restore();
+ }
+ function arm(side){
+  c.save();c.translate(side*21,11);
+  const angle=side*(active?.70:sway*.13+Math.sin(step)*moving*.13);
+  c.rotate(angle);oval(side*8,7,10.3,8.9,skin,ink,2.9);
+  oval(side*6.3,5,5.2,3,bright);
+  c.restore();
+ }
+ c.save();c.translate(Math.round(g.x),Math.round(g.y-bob));
+ c.scale(size/108,size/108);
+ if(!portrait){
+  oval(0,47+bob,28,4.1,'rgba(132,82,124,.16)');
+  c.save();c.globalAlpha=.14;oval(0,-3,43,45,shade);c.restore();
+ }
+ c.rotate(lean);
+ const squash=portrait?0:sway*.013+moving*.035*Math.cos(step*2);
+ c.scale(1+squash,1-squash);
+ if(id==='float'){
+  // A balloon jelly with bobbing inflated side fins and a heart top knot.
+  for(const side of [-1,1]){
+   oval(side*28,5,13.5,23,shade,ink,3,side*(.22+sway*.06));
+   oval(side*30,-3,5,11,'rgba(255,255,255,.65)');
+  }
+  line([[0,-30],[0,-44]],accent,3.2);heart(0,-50,.6,'#ffb1cf');
+ }else if(id==='nectar'){
+  // Nine confectionary petals: an unmistakable caramel candy silhouette.
+  for(let i=0;i<9;i++){
+   const a=i*Math.PI*2/9+sway*.018;
+   oval(Math.cos(a)*27,Math.sin(a)*27-14,10,14,
+    i%2?'#f4bdd2':'#f8d0b4',ink,2.1,a+Math.PI/2);
+  }
+ }else if(id==='shield'){
+  // Shield wings and a crown of protective rounded facets.
+  for(const side of [-1,1]){
+   shape(q=>{q.moveTo(side*17,-16);q.lineTo(side*41,-28);
+    q.lineTo(side*36,20);q.lineTo(side*18,34);q.closePath()},
+    '#b9c8ed','#8a8bbd',3);
+  }
+ }else if(id==='twirl'){
+  // Four propeller tufts animate as one rotating hairstyle.
+  c.save();c.translate(0,-32);c.rotate(portrait?0:t*.7);
+  for(let i=0;i<4;i++){
+   c.save();c.rotate(i*Math.PI/2);
+   oval(0,-17,8,20,'#d9c4fb',ink,2.3,.3);
+   c.restore();
+  }
+  oval(0,0,8,8,'#fff9ff',ink,2);
+  c.restore();
+ }else if(id==='cookie'){
+  // Four big plush patch tabs signal first aid.
+  for(const side of [-1,1]){
+   oval(side*25,-30,12.5,14.2,shade,ink,3.2);
+   oval(side*25,-30,5,6,bright);
+  }
+ }else if(id==='savings'){
+  // A pearl clam shell rim, unmistakable scalloped top and side hinge.
+  for(let i=0;i<6;i++){
+   const a=Math.PI+(i+.5)*Math.PI/6;
+   oval(Math.cos(a)*25,Math.sin(a)*19-13,15,16,
+    '#e7cabf',ink,2.4,a);
+  }
+  oval(-28,3,11,15,shade,ink,2.6);
+  oval(28,3,11,15,shade,ink,2.6);
+ }else if(id==='breeze'){
+  // An airborne mint leaf creature with broad leaf-wings.
+  for(const side of [-1,1]){
+   c.save();c.translate(side*23,6);c.rotate(side*(.10+sway*.12));
+   leaf(side*13,-7,side*.83,1.15,'#a7d7bc');
+   leaf(side*26,9,side*1.12,.65,'#c3e6cb');
+   c.restore();
+  }
+ }else if(id==='wish'){
+  // Star-shaped creature: nine soft points, not a tiny forehead star.
+  for(let i=0;i<9;i++){
+   const a=i*2*Math.PI/9-Math.PI/2;
+   shape(q=>{q.moveTo(Math.cos(a-.22)*23,Math.sin(a-.22)*23-12);
+    q.lineTo(Math.cos(a)*40,Math.sin(a)*40-12);
+    q.lineTo(Math.cos(a+.22)*23,Math.sin(a+.22)*23-12);q.closePath()},
+    i%2?'#f8e7b7':'#f1c8e8',ink,2.3);
+  }
+ }else if(id==='mimic'){
+  // Curled chameleon tail and raised eye bumps; future poses can shift hue.
+  shape(q=>{q.moveTo(18,22);q.bezierCurveTo(48,12,46,48,27,45);
+   q.bezierCurveTo(13,44,20,29,30,33);q.bezierCurveTo(37,38,36,29,29,26);
+   q.closePath()},'#a5d0b0','#789d8e',3);
+  oval(-19,-33,11,12,shade,ink,3);
+  oval(19,-33,11,12,shade,ink,3);
+ }
+ // Feet and plush pear/belly silhouette are slightly different per creature.
+ oval(-11,35+Math.max(0,Math.sin(step))*moving,10,8,skin,ink,2.8);
+ oval(11,35+Math.max(0,-Math.sin(step))*moving,10,8,skin,ink,2.8);
+ oval(0,17,id==='savings'?28:23,23.5,skin,ink,3.1);
+ oval(0,23,17.5,15,bright);
+ if(id==='shield'){
+  shape(q=>{q.moveTo(0,10);q.lineTo(18,16);q.lineTo(15,29);
+   q.lineTo(0,40);q.lineTo(-15,29);q.lineTo(-18,16);q.closePath()},
+   '#9aa9d8','#7e81b0',3);
+  heart(0,24,.65,'#fff3b9');
+ }
+ if(id==='cookie'){
+  oval(0,23,11.4,10.4,'#fffbf6','#cfa8b3',2);
+  line([[-7,24],[7,24]],'#e396b4',3);
+  line([[0,17],[0,31]],'#e396b4',3);
+ }
+ if(id==='savings')oval(0,24,13,12,'#fffdf5','#d8bdc5',2);
+ if(id==='nectar')star(0,25,9,'#ffecb0');
+ if(id==='float')heart(0,25,.78,'#f9bcd9');
+ if(id==='mimic'){
+  oval(0,25,16,13,'#d9eccf');
+  star(0,24,5,'#f8d8b7');
+ }
+ arm(-1);arm(1);
+ // Top of the head; most ornaments remain behind the face for clarity.
+ const face=c.createLinearGradient(-12,-38,12,7);
+ face.addColorStop(0,bright);face.addColorStop(.47,skin);face.addColorStop(1,skin);
+ oval(0,-15,id==='savings'?29:27,25,face,ink,3.3);
+ oval(-10,-29,11,3.2,'rgba(255,255,255,.72)');
+ if(id==='float'){oval(0,-39,7,7,'#fff5fa',ink,1.5)}
+ if(id==='nectar'){
+  oval(0,-36,10,7,'#fff4c8',ink,2);
+  oval(0,-36,5,3,'#f0b6c6');
+ }
+ if(id==='shield'){
+  oval(0,-36,12,7,'#e1d5ff',ink,2);
+  star(0,-38,6,'#fff0bb');
+ }
+ if(id==='cookie'){
+  shape(q=>{q.moveTo(-13,-34);q.lineTo(13,-34);q.lineTo(15,-27);q.lineTo(-15,-27);q.closePath()},
+   '#fff9f5',ink,2.2);
+  line([[-5,-31],[5,-31]],'#e99fbd',2.6);
+  line([[0,-35],[0,-27]],'#e99fbd',2.6);
+ }
+ if(id==='savings'){
+  oval(0,-37,11,9,'#fff0df',ink,2.1);
+  oval(-4,-40,3.1,3.1,'#fff');
+ }
+ if(id==='breeze'){
+  leaf(0,-44,0,.65,'#a3d4b4');
+  line([[0,-36],[0,-43]],'#76ae9c',2.5);
+ }
+ if(id==='wish'){star(0,-39,9,'#fff7c5')}
+ if(id==='mimic'){oval(-19,-33,4.4,4.4,'#fff8f9');oval(19,-33,4.4,4.4,'#fff8f9')}
+ for(const side of [-1,1]){
+  const ex=side*10+(g.motionGaze||0)*.7;
+  if(blink||(active&&id==='wish')){
+   shape(q=>{q.moveTo(ex-4,-16);q.quadraticCurveTo(ex,-12,ex+4,-16)},null,ink,2.7);
+  }else{
+   oval(ex,-16,3.1,4.2,'#3e3446');
+   oval(ex-1.1,-17.4,1.1,1.4,'#fff');
+  }
+ }
+ oval(-19,-7,5.2,3.5,'#f1aebf');oval(19,-7,5.2,3.5,'#f1aebf');
+ if(active||alert){
+  oval(0,-3,4.4,5.4,'#ae6684',ink,1.7);
+  if(active)oval(0,-.4,2.5,1.2,'#ffb6c9');
+ }else{
+  shape(q=>{q.moveTo(-4,-3);q.quadraticCurveTo(0,3.2,4,-3)},null,ink,2.6);
+ }
+ if(active&&!portrait){
+  star(-41,-22,5,'#fff1ad');star(40,-25,5,'#fff1ad');
+ }
+ c.restore();return true;
+}
+
 function drawKeeperVector(g,c=ctx,size=64,portrait=false){
  const id=g.id;if(!VECTORIZED_KEEPERS.has(id))return false;
  if(FEATURED_KEEPER_IDS.has(id))return drawFeaturedKeeper(g,c,size,portrait);
  if(SECOND_WAVE_KEEPERS.has(id))return drawSecondWaveKeeper(g,c,size,portrait);
  if(THIRD_WAVE_KEEPERS.has(id))return drawThirdWaveKeeper(g,c,size,portrait);
+ if(FOURTH_WAVE_KEEPERS.has(id))return drawFourthWaveKeeper(g,c,size,portrait);
  if(id==='forecast')return drawLookoutVector(g,c,size,portrait);
  const [skin,shade,hi,accent]=KEEPER_VECTOR_TONES[id];
  const idx=Array.from(VECTORIZED_KEEPERS).indexOf(id);
