@@ -6,7 +6,9 @@ An original, candy-pink, single-file browser game about nurturing Globs, collect
 
 **[Play Petri Panic on GitHub Pages](https://magicalboyco.github.io/petri-panic/)**
 
-GitHub Pages now publishes the latest `main` branch through `.github/workflows/pages.yml`. The first publishing workflow completed successfully on November 8, 2026. GitHub Pages includes the recent Professor Trung video-call narrative beta, 21 environment variations, the free-DNA testing counter, and the preliminary Rosewood Nursery illustrated room.
+GitHub Pages publishes the latest `main` branch through `.github/workflows/pages.yml`. The first workflow completed on November 8, 2026. The live build includes Professor Trung's video-call story beta, 21 experiments, 24 code-drawn Keeper companions, five scalable era environment masters, 21 per-experiment room detail sets, and the free-DNA testing counter.
+
+**[Review all five environment art masters](https://magicalboyco.github.io/petri-panic/art-review.html)** — a responsive gallery intended for art-direction feedback without needing to unlock later levels. The artwork gallery shows master backgrounds, not gameplay screenshots or animated experiment props.
 
 Previous AppDeploy build: https://petri-panic-pink-lab-o02kge.v2.appdeploy.ai/ — it is a separate, older version and **has not** been updated with this GitHub build. If the GitHub Pages URL does not open immediately, check the [Pages deployment workflow](https://github.com/magicalboyco/petri-panic/actions/workflows/pages.yml) and Settings → Pages.
 
@@ -15,7 +17,8 @@ Previous AppDeploy build: https://petri-panic-pink-lab-o02kge.v2.appdeploy.ai/ �
 - **Adaptive play layout:** Petri dish stays clear of UI buttons; separate Shop / Guardian / Inspect controls and responsive portrait, landscape, tablet and desktop layouts.
 - **Adventure progression:** 21 selectable experiments, locked until unlocked, with replayable earlier experiments and progression preserved after replays. The Next Experiment action displays its actual destination level number. The Adventure mode tile does not show a level number.
 - **24 original Guardian companions:** All rendered in a dedicated collection with descriptive ability labels, grayed-out locked characters, level-based unlocking, and up to three selectable team slots. Current mechanics include roaming collectors and defenders, feeding, healing, calming, fertility support, shields, poison cures, coin powers, enemy control, warning, and rescue. They have original names and appearances; gameplay roles are broadly inspired by classic virtual-aquarium games. These are not copied character assets.
-- **Guardian artwork and collection update:** 23 roaming companions now have individually themed glossy colors, animated silhouettes, and signature charms instead of an identical blue blob; Scuttle retains its separate snail design. The Guardian Corner displays all 24 cards, grays out locked characters, highlights chosen team members, and uses compact scrolling grids for phones.
+- **Keeper artwork and collection update:** All 24 companions are drawn as vectors at runtime, including in gameplay and roster thumbnails; the old pixel atlas renderer is retired. Scuttle has its own animated snail rig. Lookout, Bouncer, Poppy, Mallow, Moonbeam, Dewdrop, Mochi Mop, Orbit, and Sprout have had individual character-remaster passes with animated paws or appendages; the other Keepers retain their earlier vector versions. These character concepts still require aesthetic approval, phone-scale review, and unlocked-gameplay animation testing. The Guardian Corner displays all 24 cards and grays out locked characters.
+- **Scalable environments:** Five 900×620 SVG master scenes represent Victorian Origins, Atomic Age, Space Age, Biotech Renaissance and Tomorrow Lab, including redesigned 1950s mint/pink science kitchen, 1960s pink/aqua Tomorrowland, green botanical conservatory, and lavender holographic finale. All 21 experiment levels have layered scene-detail variants; environment architecture shows through softly at dish edges to protect central Glob visibility. All five era masters are in the [art-review gallery](https://magicalboyco.github.io/petri-panic/art-review.html).
 - **Boss milestones:** Distinct bosses at experiments 4, 9, 15, and 21; each emerges when the player buys the second DNA fragment. Feed Globs for a brief weakness window, defeat the boss before buying the third fragment, and receive BioBits for winning.
 - **Better Blob motion:** Three pink personality types, individual movement speeds, gentle separation from crowds, glowing expressions and facial moods.
 - **BioBits:** Scatter outward and then swirl in circular paths within the petri dish; disappear after a short lifetime and blink before fading.
@@ -27,7 +30,7 @@ Previous AppDeploy build: https://petri-panic-pink-lab-o02kge.v2.appdeploy.ai/ �
 
 ## Current status
 
-The AppDeploy build remains older. The current GitHub `main` source is now published by GitHub Pages (first deployment workflow succeeded on November 8, 2026), but **real device gameplay and rendering tests remain necessary**. The illustrated Rosewood Nursery asset is an initial low-resolution integration test, not final artwork.
+The AppDeploy build remains older; the GitHub Pages URL above is authoritative. Five era master illustrations and the major early-Keeper vector remasters now exist in the playable source, but **none of the 21 experiments is considered final-art approved**. The Victorian room and early-game flow have been visually exercised in a browser. Later-level artwork SVGs load, but each environment and Keeper still requires unlocked-gameplay checks at phone size, animation review, performance testing and art-direction sign-off.
 
 All staged gameplay changes have been checked for JavaScript syntax errors. A mocked DOM gameplay smoke test exercised all 24 Guardian loadouts, all 24 on-screen creature drawings, the four boss milestones (including DNA gates and victories), and autosave/resume. The latest gallery also renders 24 cards and correctly displays locked versus unlocked companions in the simulated interface. Those tests passed, but are **not a substitute for real browser playtests**.
 
@@ -55,4 +58,4 @@ For GitHub Pages beta testing:
 
 ## Road to release
 
-The current 21-level content still needs distinctive challenges and stage art, full Living Lab persistence, a stronger onboarding flow, deeper character art and animations, audio balancing, and extensive real-device QA. Despite the implemented 24-Guardian roster, this remains an **alpha**, not a finished game.
+The game has a playable 21-level core, full Keeper roster and five era artwork masters, but still needs visual sign-off on each experiment, individualized character animation refinements, improved enemies/bosses, complete Professor Trung/Scott story art, audio balancing, full Time Trial/Challenge/Living Lab modes, and real-device iOS/Android testing. All assets in `art-review.html` are works in progress, not approved final art. This remains an **alpha**, not a finished game.
