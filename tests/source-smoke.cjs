@@ -21,4 +21,12 @@ assert(html.includes('drawKeeperAbilityFeedback(guard)'), 'Keeper effects must b
 assert(html.includes('prefers-reduced-motion: reduce'), 'Respect reduced-motion preference');
 assert(html.includes('saveCheckpoint()'), 'Autosave checkpoint required');
 assert(html.includes('defeatBoss('), 'Boss completion required');
+const creatureSource=fs.readFileSync(path.join(root,'assets/js/creature-art.js'),'utf8');
+new vm.Script(creatureSource,{filename:'assets/js/creature-art.js'});
+assert(html.includes('<script src="assets/js/creature-art.js"></script>'),'Live creature artwork loader missing');
+assert(html.includes('PetriPanicCreatureArt?.draw('),'Live invader renderer is not wired to gameplay');
+const review=fs.readFileSync(path.join(root,'creature-review.html'),'utf8');
+assert(review.includes('assets/js/creature-art.js'),'Creature review must use the live renderer');
+assert(review.includes('prefers-reduced-motion: reduce'),'Creature preview must support reduced motion');
+
 console.log('PASS: JavaScript parses, required UI elements and era art exist, all 24 Keepers present, checkpoint/boss/feedback contracts intact.');
