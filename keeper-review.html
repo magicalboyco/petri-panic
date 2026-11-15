@@ -53,13 +53,14 @@ for(const [id,name,emoji,type] of keepers){
  card.append(holder,title,sub);gallery.append(card);
 }
 function renderAll(){
- if(!frame||typeof frame.drawKeeperVector!=='function'){count.textContent='Game drawing runtime unavailable';return}
+ const bridge=frame?.PetriPanicArtPreview;
+ if(!bridge||typeof bridge.drawKeeperVector!=='function'){count.textContent='Game drawing runtime unavailable';return}
  let ok=0;
  for(const card of gallery.children){
   const id=card.dataset.id,canvas=card.querySelector('canvas');
   if(!canvas){
    try{
-    const html=frame.scuttleVectorHTML(160);
+    const html=bridge.scuttleVectorHTML(160);
     if(html){card.querySelector('.face').innerHTML=html;ok++}
    }catch(e){}
    continue;
@@ -67,7 +68,7 @@ function renderAll(){
   const c=canvas.getContext('2d');c.clearRect(0,0,220,220);
   try{
    // Gameplay render mode engages ability reaction; fixed position/zero pace.
-   frame.drawKeeperVector({id,x:110,y:116,keeperFlash:action?2:0,motionSpeed:0,motionStep:0,motionGaze:0},c,152,false);
+   bridge.drawKeeperVector({id,x:110,y:116,keeperFlash:action?2:0,motionSpeed:0,motionStep:0,motionGaze:0},c,152,false);
    ok++;
   }catch(err){
    const error=document.createElement('div');error.textContent='Art unavailable';error.style.color='#9e4d76';card.querySelector('.face').append(error);
