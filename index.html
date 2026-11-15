@@ -2500,6 +2500,77 @@ function drawVictorianExperimentDetails(){
  ctx.restore();
 }
 
+
+// Atomic Age: the same 1950s kitchen across levels 6–10, with recognizable
+// science-fair props per experiment. Foreground details stay near dish edges.
+function drawAtomicExperimentDetails(){
+ const v=Math.max(0,Math.min(4,environmentLevel()-6));
+ const t=elapsed||0;
+ function rr(x,y,w,h,r,fill,stroke='#9e819a',sw=2.2){
+  ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();
+  ctx.lineWidth=sw;ctx.strokeStyle=stroke;ctx.stroke()
+ }
+ function dot(x,y,rx,ry,fill,stroke='',sw=2){
+  ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);
+  ctx.fillStyle=fill;ctx.fill();
+  if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.stroke()}
+ }
+ function lines(pts,color='#997895',sw=2.4){
+  ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+  ctx.strokeStyle=color;ctx.lineWidth=sw;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke()
+ }
+ function atom(x,y){
+  ctx.save();ctx.translate(x,y);
+  for(let i=0;i<3;i++){
+   ctx.beginPath();ctx.ellipse(0,0,24,10,i*Math.PI/3,0,Math.PI*2);
+   ctx.strokeStyle=['#9ecbc4','#e7acc8','#e7cea0'][i];ctx.lineWidth=3;ctx.stroke();
+  }
+  dot(0,0,5,5,'#f7d4dc');ctx.restore();
+ }
+ ctx.save();ctx.globalAlpha=.90;
+ const xs=[125,779];
+ if(v===0){ // The Atomic Kitchen
+  for(const x of xs){
+   rr(x-27,536,54,41,10,'#b6e2d9');
+   rr(x-21,540,42,13,5,'#fff9f2');
+   lines([[x-13,546],[x+13,546]],'#d5a4b9',3);
+   rr(x-13,556,26,11,5,'#f7c3d8');dot(x,561,3,3,'#e9d79c');
+  }
+ }else if(v===1){ // The Isotope Workshop
+  for(const x of xs){
+   rr(x-30,559,60,11,5,'#e6bfd2');
+   for(let i=-1;i<=1;i++){
+    const px=x+i*18;
+    rr(px-7,523+i%2*5,14,40-i%2*5,5,'#f8faff');
+    rr(px-6,546,12,12,4,i===0?'#9edbd0':'#f1afc8');
+    dot(px-2,540,2,2,'#fff');
+   }
+  }
+ }else if(v===2){ // Tomorrow Showroom
+  for(const x of xs){
+   rr(x-32,520,64,50,13,'#afd8d0');
+   rr(x-24,527,48,30,10,'#fff7f3');
+   roomStar(x,540,12,'#efbfd6',6);
+   rr(x-12,572,24,7,4,'#d0b3c9');
+  }
+ }else if(v===3){ // The Pink Reactor
+  for(const x of xs){
+   rr(x-32,539,64,38,11,'#a6d8cf');
+   dot(x,538,23,21,'#f6b7cf','#ae8ca8',2.8);
+   dot(x,538,11+Math.sin(t*1.8)*1.2,10,'#fff5df');
+   atom(x,538);
+  }
+ }else{ // Grand Science Fair
+  for(const x of xs){
+   rr(x-28,538,56,39,10,'#f4c1d3');
+   roomStar(x,540,17,'#f7e3a2',8);
+   dot(x,540,6,6,'#fff5ed');
+   lines([[x-10,558],[x-13,578],[x,570],[x+13,578],[x+10,558]],'#be87ad',3);
+  }
+ }
+ ctx.restore();
+}
+
 function drawScenicRoom(){
  const era=Math.min(4,Math.floor((environmentLevel()-1)/5));
  const master=MASTER_ROOM_IMAGES[era];
@@ -2510,6 +2581,7 @@ function drawScenicRoom(){
   ctx.drawImage(master.image,0,0,W,H);
   ctx.restore();
   if(era===0)drawVictorianExperimentDetails();
+  if(era===1)drawAtomicExperimentDetails();
  }else{
   drawEraRoom();
  }
@@ -2519,8 +2591,8 @@ function drawBackground(){const p=environmentTheme();drawScenicRoom();ctx.save()
  // Victorian rooms now show softly through the edges of the dish: an opaque
  // central safety zone protects the Globs, while the architectural trim remains
  // visible in peripheral gameplay. Other eras keep their original treatment.
- const victorian=environmentLevel()<=5;
- if(victorian){
+ const showRoomEdges=environmentLevel()<=10;
+ if(showRoomEdges){
   grad.addColorStop(0,p.dish[0]+'fc');
   grad.addColorStop(.40,p.dish[0]+'f7');
   grad.addColorStop(.65,p.dish[1]+'e8');
@@ -2529,7 +2601,7 @@ function drawBackground(){const p=environmentTheme();drawScenicRoom();ctx.save()
  }else{
   grad.addColorStop(0,p.dish[0]);grad.addColorStop(.65,p.dish[1]);grad.addColorStop(1,p.dish[2]);
  }
- ctx.globalAlpha=victorian?1:.96;ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;ctx.strokeStyle=p.line+'11';ctx.lineWidth=.6;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();drawDishRim();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
+ ctx.globalAlpha=showRoomEdges?1:.96;ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;ctx.strokeStyle=p.line+'11';ctx.lineWidth=.6;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();drawDishRim();for(let i=0;i<50;i++){let x=(i*183.19)%900,y=(i*121.7)%620;ell(x,y,2+i%4,2+i%4,'#ffb4d335')}ctx.font='bold 14px Trebuchet MS';ctx.fillStyle='#cb82a3';ctx.fillText('P E T R I   P A N I C',37,580);ctx.textAlign='right';ctx.fillText(mode==='lab'?'♡ LIVING LAB':mode==='trial'?'⏱ TIME TRIAL':mode==='challenge'?'💧 DRY DISH CHALLENGE':mode==='hard'?'🔥 HARD EXPERIMENT '+activeLevel:'EXPERIMENT '+activeLevel+'/21',860,580);ctx.textAlign='left';if(flash>0){ctx.fillStyle=`rgba(255,70,124,${flash*.18})`;ctx.fillRect(0,0,W,H)}}
 
 function drawGlob(g){
  const st=stage(g),r=radius(g),dry=g.hunger>30,injured=g.hurtTimer>0,sick=g.poison>0;
