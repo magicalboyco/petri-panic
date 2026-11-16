@@ -38,6 +38,41 @@ const server=createServer(async(req,res)=>{
    if(await story.isVisible())await page.locator('#storySkip').click();
    await page.waitForTimeout(250);
    assert(await page.locator('#overlay').isHidden(),'Experiment did not start');
+   // The real gameplay page must load the three bespoke Glob rigs and legible status marks.
+   const personality=await page.evaluate(()=>{
+    const rig=window.PetriPanicGlobMotion;
+    if(!rig)return null;
+    const samples=[0,1,2].map(personality=>rig.pose({
+      personality,face:1,vx:34,vy:17,hunger:8,hurtTimer:0,hp:1,maxHp:1,poison:0
+    },1.65,true));
+    const canvas=document.createElement('canvas');canvas.width=200;canvas.height=160;
+    const context=canvas.getContext('2d');
+    for(let i=0;i<3;i++){
+      const g={personality:i,x:42+i*52,y:80,face:1,vx:20,vy:0,
+       hunger:i===0?42:8,hurtTimer:i===1?1:0,poison:i===2?1:0};
+      rig.details(context,g,18,0,rig.pose(g,0,true),true);
+    }
+    const data=context.getImageData(0,0,200,160).data;
+    let ink=0;for(let i=3;i<data.length;i+=4)if(data[i]>0)ink++;
+    return {names:rig.names,poses:samples.map(x=>x.kind),distinct:new Set(samples.map(x=>x.kind)).size,ink};
+   });
+   assert.deepEqual(personality?.poses,['shy','sweet','busy'],'All three animation personalities should differ');
+   assert.equal(personality.distinct,3);
+   assert(personality.ink>150,'Hunger, injury and poisoning decorations should draw visible pixels');
+   const transition=await page.evaluate(()=>{
+     const reveal=window.PetriPanicExperimentReveal;
+     if(!reveal)return null;
+     reveal.show(9,'adventure');
+     const card=document.querySelector('#experiment-reveal');
+     const active=card.classList.contains('is-visible');
+     const nonblocking=getComputedStyle(card).pointerEvents==='none';
+     const chapter=card.querySelector('.experiment-reveal__era').textContent;
+     reveal.clear();
+     return {active,nonblocking,chapter,cleared:!card.classList.contains('is-visible')};
+   });
+   assert(transition?.active&&transition.nonblocking&&transition.cleared,'Chapter overlay must show/clear without blocking taps');
+   assert.equal(transition.chapter,'Atomic Age','Experiment nine must belong to the Atomic Age');
+
    await page.locator('#game').click({position:{x:170,y:160},force:true});
 
    // Confirm that the *live* game has the new watercolor feedback runtime, not a separate mockup.
