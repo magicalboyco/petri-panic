@@ -51,6 +51,16 @@ for(const name of scenes){
 }
 assert(html.includes('has-scene-art'),'Portrait layout missing');
 assert(html.includes('Cake secured!'),'Cake dialogue must remain coherent');
+const storyJSON=html.match(/const STORY_SCENES=([\\s\\S]*?);\\nconst STORY_KEY=/);
+assert(storyJSON,'Story scenes JSON must be present');
+const storyScript=JSON.parse(storyJSON[1]);
+assert.equal(storyScript.level8.place,'Church-Wellesley Village','Helpful-stranger cameo belongs in Church-Wellesley');
+assert(storyScript.level12.lines.some(line=>line.includes('cobalt suit')&&line.includes('burgundy')),'Cobalt fitting must explicitly return Trung to burgundy');
+assert(storyScript.level15.lines[3].includes('Breaker High'),'Drake/Jurassic Park page must retain Canadian TV homage');
+assert(storyScript.level16.lines[3].includes('Quebec Brie'),'Kensington cheese scene must retain Quebec Brie');
+assert(html.includes("level15:{3:'Maple Leaf Square"),'Arena cameo must use correct Scotiabank-area location');
+assert(html.includes("level16:{3:'Kensington Market"),'Kensington cameo must remain in Kensington');
+
 assert(html.includes("level19:'assets/story/level19-union-station.jpg'"),'Approved Toronto scenes must be mapped');
 assert(html.includes('defeatBoss('), 'Boss completion required');
 const keeperFx=fs.readFileSync(path.join(root,'assets/js/keeper-signature-fx.js'),'utf8');
