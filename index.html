@@ -416,6 +416,11 @@ body.menu-open{overflow:hidden}
 .story-picture img{max-width:100%;width:100%;height:200px;object-fit:contain}
 .story-picture.has-scene-art{position:relative;width:min(100%,320px);height:clamp(220px,34dvh,330px);min-height:220px;background:#f2c7e6}
 .story-picture.has-scene-art img{height:100%;width:100%;object-fit:cover;object-position:center 23%}
+/* Gentle visual-novel camera movement; expressive art remains entirely readable. */
+.story-picture.has-scene-art img{animation:trung-camera-breathe 6.5s ease-in-out infinite alternate;transform-origin:50% 25%}
+@keyframes trung-camera-breathe{from{transform:scale(1.015) translateY(0)}to{transform:scale(1.06) translateY(-1%)}}
+@media(prefers-reduced-motion:reduce){.story-picture.has-scene-art img{animation:none}}
+
 @media(max-height:650px){.story-picture.has-scene-art{height:175px;min-height:175px}}
 
 .story-fallback{font-size:105px}
