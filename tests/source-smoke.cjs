@@ -20,6 +20,16 @@ assert.equal((html.match(/\{id:'(?:scuttle|bouncer|nurse|feeder|spark|nursery|co
 assert(html.includes('drawKeeperAbilityFeedback(guard)'), 'Keeper effects must be connected to gameplay');
 assert(html.includes('prefers-reduced-motion: reduce'), 'Respect reduced-motion preference');
 assert(html.includes('saveCheckpoint()'), 'Autosave checkpoint required');
+for(const file of ['glob-motion.js','experiment-reveal.js']){
+ const source=fs.readFileSync(path.join(root,'assets/js',file),'utf8');
+ new vm.Script(source,{filename:file});
+ assert(html.includes('<script src="assets/js/'+file+'"></script>'),file+' must load in the live game');
+}
+assert(html.includes('motion?.pose(g,elapsed,still)'),'Glob personality rig must be connected to game render');
+assert(html.includes('motion?.details(ctx,g,r,elapsed,pose,still)'),'Glob status artwork must render in game');
+assert(html.includes('window.PetriPanicExperimentReveal?.show(activeLevel,mode)'),'Chapter animation must run on entering an experiment');
+assert(html.includes('window.PetriPanicExperimentReveal?.clear()'),'Chapter animation must clear on menu changes');
+
 const juiceSource=fs.readFileSync(path.join(root,'assets/js/petri-juice.js'),'utf8');
 new vm.Script(juiceSource,{filename:'assets/js/petri-juice.js'});
 assert(html.includes('<script src="assets/js/petri-juice.js"></script>'),'Live dish polish module missing');
