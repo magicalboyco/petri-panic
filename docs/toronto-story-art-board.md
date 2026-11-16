@@ -60,3 +60,49 @@ These generated images are conversation assets, not verified GitHub game assets.
 
 ## Other canonical ledgers
 `ART-STORY-LEDGER.md`, `STORY_ART_LEDGER.md`, `STORY_ART_TRACKER.md`, `docs/toronto-story-art-inventory.md`, `docs/toronto-story-art-ledger.md`. Some disagree on cameo placement; **runtime code is authoritative for what currently plays**, latest user-approved artwork is authoritative for visual content.
+
+
+## Detailed canon scene list — decisions and scripted actions
+**Key:** SCRIPT = current `STORY_SCENES` visual/action; STORYBOARD = agreed expanded gag from prior planning that is not necessarily in script; CAMEO = separately approved artwork with placement not yet implemented. Exact Game dialogue remains authoritative in `index.html`.
+
+| Scene | Toronto location | SCRIPT: what happens | STORYBOARD / references | Art in game? |
+|---|---|---|---|---|
+| intro / Experiment 1 | Pink Laboratories | Trung greets intern, realizes Scott's anniversary, leaves and continues calls remotely | Scott's “NO EXPERIMENTS AFTER 6 PM” note, pink Glob on coat | No, default portrait |
+| 2 | St. Lawrence Market | Trung gets anniversary cake for Scott | Romantic cake box; market architecture; maple-butter touch | Yes |
+| 3 | St. Lawrence Market | Raccoon gets into the shopping bags | Recurring Toronto raccoon; ongoing goose motif begins later | Yes |
+| 4 | Front Street | Tourist group-photo mishap | `Degrassi` shirt, protect cake, avoid rude departure; Prism Queen call here | Candidate generated, no |
+| 5 | King Street | Construction barriers redirect Trung | TTC red streetcar, `TEMPORARY SINCE 1998`, first recurring goose | Candidate generated, no |
+| 6 | Distillery District | Burgandy anniversary outfit, roses, concert tickets | Romantic wardrobe transformation, Rose Apothecary nod floated; continuity of gifts | Yes (roses); alternate candidate exists |
+| 7 | Distillery District | Street performer repeatedly waves at Trung | Repeated interruption to call with Scott, `SORRY, CASH ONLY` tip jar | No |
+| 8 | Toronto streets (Church-Wellesley in storyboard) | Two strangers help gather or carry shopping bags | Shane Hollander / Ilya Rozanov from *Heated Rivalry*, subtle kind couple encounter; fictional cameo | No |
+| 9 | Church-Wellesley Village | Festival crowd sweeps Trung into dance | Brooke Lynn Hytes cameo, Pride streetscape; Spore Serpent call | Yes |
+| 10 | Church Street | Traditional red-serge Mountie, horse Gordon eats pink roses | Goose background and Gordon Lightfoot name joke, **RCMP** not U.S. uniform | Yes |
+| 11 | Toronto Eaton Centre | Escalator wrong direction as Trung searches for exit | Former electronics retailer `Future Shoppe` parody | No |
+| 12 | Toronto Eaton Centre | Trung is dressed up for a party as crowd applauds | Planned cobalt emergency makeover, MuchMusic Awards rack; older plans placed Moira/David here but later art moved to Kensington | No |
+| 13 | Dundas Street | A stranger shares a pink umbrella | Planned sudden rain / umbrella turns inside out, fictional `Degrassi: The Next Experiment` billboard | No |
+| 14 | Downtown Toronto dessert shop | Trung holds an absurdly enormous dessert for Scott | Planned sundae collapse, `Double Double Disaster` menu | No |
+| 15 | Nathan Phillips Square | Fictional basketball crowd blocks route | Fans lift Trung in celebration; We the North-coded jersey with tiny Glob patch; Abyss Moth boss call | No |
+| 16 | Kensington Market | Confident stranger leads Trung down colorful alley, “shortcut” | Vintage science stall, duct-tape / Red Green reference; **new approved Moira/David grilled-cheese and Quebec Brie illustration** is a separate cameo beat still needing event integration | No |
+| 17 | Kensington Market | Skateboarder catches Trung's falling gift | Small AVRIL sticker | No |
+| 18 | King Street West | Trung listens to street musician | Planned accidental singing/audition, subtle Rush `2112` reference | No |
+| 19 | Union Station | Helpful commuter points toward correct exit | Wrong-exit confusion; Schitt's Creek luggage tag was only brainstormed, not proven in live artwork | Yes |
+| 20 | Near Union Station | CN Tower near, but road closed | `SORRY FOR THE INCONVENIENCE. AGAIN`; recurring goose, action-hero-style detour | No |
+| 21 | Outside Rogers Centre | Trung in glittery scarf meets fictional concert crowd | Last surviving rose, fictional Northern Lights band, Omega Bloom final boss call | No |
+| victory | Anniversary dinner with Scott | Final reunion/romance after 21 experiments | Scott in pink shirt, dark vest, ukulele, pink Glob charm, quiet kiss; Great Scott/Shatner before reunion | **Partial only** |
+
+### Additional approved illustration — location to reconcile
+- **Scotiabank Arena / Maple Leaf Square (Jurassic Park):** user-approved Toronto Raptors/Drake/*Breaker High* illustration; delighted Trung with poutine and foam finger, Drake in vintage *Breaker High* shirt. This is **not at Nathan Phillips Square** and is not yet a defined scene ID. Add a separate city encounter or adjust narration explicitly, without corrupting level15 geography.
+- **Kensington Market Moira/David scene:** user-approved cheerful grilled cheese + Quebec Brie artwork; not yet an event ID or mapped. Do not replace level16's shortcut without planning a two-beat presentation or revising script.
+
+### Separate scripted calls, also missing unique artwork
+- Boss calls: `boss4` Front Street/Prism Queen; `boss9` Church Street/Spore Serpent; `boss15` Nathan Phillips Square/Abyss Moth; `boss21` Rogers Centre/Omega Bloom.
+- Shop upgrades: `nutrition` quick drink buy; `regen` strangers helping with dropped bag; `zap` construction machine; `star` street performer glitter; `mitosis` matching strangers; `revive` rescued falling box; `antidote` shop window of bottles. Each uses existing Toronto background ideas, not a newly invented neighborhood.
+
+### Current inconsistencies to resolve before producing art
+- Original boards placed Moira/David at Front Street #4, Eaton Centre #12, or Kensington #16. **Most recent user-approved art is Kensington**.
+- Nathan Phillips Square #15 and Jurassic Park/Maple Leaf Square are two distinct real locations.
+- #8 script only says “Toronto streets”; Church-Wellesley is the storyboard's intended specificity, not yet in code.
+- #13 script mentions a blue-sky umbrella offer; sudden rain / inversion is storyboard, not yet script.
+- #14 script says Trung carries huge dessert; collapse remains storyboard.
+- #18 script says he stops to listen; an accidental audition is storyboard, not yet script.
+- Both approved new images need original clean files, proper asset transfer, trigger/dialogue wiring, mobile visual QA, and deployment verification.
