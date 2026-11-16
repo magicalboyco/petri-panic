@@ -41,7 +41,7 @@ assert(html.includes('window.PetriPanicJuice?.drawBioBit(ctx,b,elapsed)'),'BioBi
 assert(html.includes('window.PetriPanicJuice?.ambient(ctx,era,elapsed)'),'Era-specific dish ambience missing');
 assert(html.includes('shelf-purchase'),'Supply shelf tactile purchase animation missing');
 
-const scenes=['level3-market-raccoon'];
+const scenes=['level2-st-lawrence-cake','level3-market-raccoon','level6-distillery-roses','level19-union-station'];
 for(const name of scenes){
  const file=path.join(root,'assets/story',name+'.jpg');
  assert(fs.existsSync(file),'Missing Toronto illustration: '+name);
@@ -51,7 +51,7 @@ for(const name of scenes){
 }
 assert(html.includes('has-scene-art'),'Portrait layout missing');
 assert(html.includes('Cake secured!'),'Cake dialogue must remain coherent');
-assert(html.includes("const storyArt={level3:'assets/story/level3-market-raccoon.jpg'}"),'Only approved Toronto scene should be mapped');
+assert(html.includes("level19:'assets/story/level19-union-station.jpg'"),'Approved Toronto scenes must be mapped');
 assert(html.includes('defeatBoss('), 'Boss completion required');
 const keeperFx=fs.readFileSync(path.join(root,'assets/js/keeper-signature-fx.js'),'utf8');
 new vm.Script(keeperFx,{filename:'assets/js/keeper-signature-fx.js'});
