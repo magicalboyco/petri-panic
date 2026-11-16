@@ -91,6 +91,18 @@ const server=createServer(async(req,res)=>{
    await fs.mkdir(path.join(root,'art-test-shots'),{recursive:true});
    if(viewport.width!==844)await page.screenshot({path:path.join(root,'art-test-shots','gameplay-'+viewport.width+'.png'),fullPage:true});
    await page.locator('#shopToggle').click();
+   if(viewport.width<=880){
+    const dialog=await page.locator('#supplyPanel').evaluate(el=>{
+      const rect=el.getBoundingClientRect(),css=getComputedStyle(el);
+      return {position:css.position,top:rect.top,bottom:rect.bottom,visible:getComputedStyle(el).display!=='none'};
+    });
+    assert.equal(dialog.position,'fixed','Mobile shop must float above the dish, not push below it');
+    assert(dialog.top>=0&&dialog.top<viewport.height*.30,'Mobile shop top must be within the visible viewport');
+    assert(dialog.bottom<=viewport.height+4,'Mobile shop must fit the available viewport height');
+    assert.equal(await page.locator('#shopToggle').getAttribute('aria-expanded'),'true');
+    assert.equal(await page.locator('#shopClose').isVisible(),true,'Back to dish must be accessible');
+   }
+
    assert(await page.locator('#supplyPanel').evaluate(el=>el.classList.contains('shopping')),'Shop did not open');
    assert(await page.locator('#supplyPanel .buy').count()>=8,'Polished shop items missing');
    const shopColors=await page.locator('#supplyPanel .buy').first().evaluate(el=>({
@@ -107,6 +119,23 @@ const server=createServer(async(req,res)=>{
    await page.locator('#closeCollection').click();
    await page.locator('#pause').click();
    assert(await page.locator('#overlay').isVisible(),'Pause UI did not open');
+   assert(await page.locator('#play').isVisible(),'Resume button missing');
+   assert.equal(await page.locator('#play').isEnabled(),true,'Resume button disabled');
+   assert.equal(await page.locator('#continueRun').isVisible(),false,'Paused screen must not display redundant Continue button');
+   await page.locator('#play').click();
+   assert(await page.locator('#overlay').isHidden(),'Resume did not close pause overlay');
+   await page.locator('#game').click({position:{x:180,y:180},force:true});
+   await page.locator('#pause').click();
+   assert(await page.locator('#overlay').isVisible(),'Second pause did not open');
+   await page.locator('#pause').click({force:true});
+   assert(await page.locator('#overlay').isHidden(),'Header pause control failed to resume');
+   // Safari-style tab reload should recover from checkpoint, not strand the player.
+   await page.locator('#pause').click();
+   await page.reload({waitUntil:'load'});
+   await page.waitForTimeout(350);
+   assert(await page.locator('#continueRun').isVisible(),'Saved session continuation missing after reload');
+   await page.locator('#continueRun').click();
+   assert(await page.locator('#overlay').isHidden(),'Continue saved experiment did not restore gameplay');
    assert.equal(errors.length,0,'Browser exceptions: '+errors.join(' | '));
    console.log('PASS: '+viewport.width+'x'+viewport.height+' menu, Keeper selection, level, tap, shop, collection, pause');
    await page.close();
