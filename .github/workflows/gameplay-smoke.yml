@@ -1,7 +1,7 @@
 name: Petri Panic gameplay smoke tests
 on:
   push:
-    branches: [main, 'feat/**', 'art/**']
+    branches: [main, 'feat/**', 'art/**', 'fix/**']
   pull_request:
     branches: [main, 'feat/**']
   workflow_dispatch:
