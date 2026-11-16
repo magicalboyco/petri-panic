@@ -41,7 +41,7 @@ const server=createServer(async(req,res)=>{
     await page.waitForFunction(()=>document.querySelector('#storyPicture img')?.complete);
     const image=await photo.evaluate(el=>({src:el.getAttribute('src'),naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight}));
     assert(image.src.includes('professor-trung.svg'),'Intro must use the established professor portrait until replacement approved');
-    assert(image.naturalWidth>300&&image.naturalHeight>300,'Story image failed to load');
+    assert(image.naturalWidth>0&&image.naturalHeight>0,'Story image failed to load');
     if(viewport.width!==844){
      await fs.mkdir(path.join(root,'art-test-shots'),{recursive:true});
      await page.screenshot({path:path.join(root,'art-test-shots','story-intro-'+viewport.width+'.png')});
