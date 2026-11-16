@@ -51,7 +51,7 @@ for(const name of scenes){
 }
 assert(html.includes('has-scene-art'),'Portrait layout missing');
 assert(html.includes('Cake secured!'),'Cake dialogue must remain coherent');
-const storyJSON=html.match(/const STORY_SCENES=([\\s\\S]*?);\\nconst STORY_KEY=/);
+const storyJSON=html.match(/const STORY_SCENES=([\s\S]*?);\nconst STORY_KEY=/);
 assert(storyJSON,'Story scenes JSON must be present');
 const storyScript=JSON.parse(storyJSON[1]);
 assert.equal(storyScript.level8.place,'Church-Wellesley Village','Helpful-stranger cameo belongs in Church-Wellesley');
