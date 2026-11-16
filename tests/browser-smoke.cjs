@@ -127,8 +127,8 @@ const server=createServer(async(req,res)=>{
    await page.locator('#game').click({position:{x:180,y:180},force:true});
    await page.locator('#pause').click();
    assert(await page.locator('#overlay').isVisible(),'Second pause did not open');
-   await page.locator('#pause').click({force:true});
-   assert(await page.locator('#overlay').isHidden(),'Header pause control failed to resume');
+   await page.locator('#play').click();
+   assert(await page.locator('#overlay').isHidden(),'Repeated Resume failed to close the pause overlay');
    // Safari-style tab reload should recover from checkpoint, not strand the player.
    await page.locator('#pause').click();
    await page.reload({waitUntil:'load'});
