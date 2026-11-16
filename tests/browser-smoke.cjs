@@ -35,7 +35,19 @@ const server=createServer(async(req,res)=>{
    await page.locator('#play').click();
    await page.waitForTimeout(350);
    const story=page.locator('#storyScreen');
-   if(await story.isVisible())await page.locator('#storySkip').click();
+   if(await story.isVisible()){
+    const photo=page.locator('#storyPicture img');
+    await photo.waitFor({state:'visible'});
+    await page.waitForFunction(()=>document.querySelector('#storyPicture img')?.complete);
+    const image=await photo.evaluate(el=>({src:el.getAttribute('src'),naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight}));
+    assert(image.src.includes('assets/story/intro-trung-scott-call.jpg'),'Intro story must use new Toronto artwork');
+    assert(image.naturalWidth>300&&image.naturalHeight>300,'Story image failed to load');
+    if(viewport.width!==844){
+     await fs.mkdir(path.join(root,'art-test-shots'),{recursive:true});
+     await page.screenshot({path:path.join(root,'art-test-shots','story-intro-'+viewport.width+'.png')});
+    }
+    await page.locator('#storySkip').click();
+   }
    await page.waitForTimeout(250);
    assert(await page.locator('#overlay').isHidden(),'Experiment did not start');
    // The real gameplay page must load the three bespoke Glob rigs and legible status marks.
