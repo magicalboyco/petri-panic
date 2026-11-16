@@ -40,7 +40,7 @@ const server=createServer(async(req,res)=>{
     await photo.waitFor({state:'visible'});
     await page.waitForFunction(()=>document.querySelector('#storyPicture img')?.complete);
     const image=await photo.evaluate(el=>({src:el.getAttribute('src'),naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight}));
-    assert(image.src.includes('assets/story/intro-trung-scott-call.jpg'),'Intro story must use new Toronto artwork');
+    assert(image.src.includes('professor-trung.svg'),'Intro must use the established professor portrait until replacement approved');
     assert(image.naturalWidth>300&&image.naturalHeight>300,'Story image failed to load');
     if(viewport.width!==844){
      await fs.mkdir(path.join(root,'art-test-shots'),{recursive:true});
