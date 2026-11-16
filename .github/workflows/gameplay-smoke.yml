@@ -21,9 +21,11 @@ jobs:
       - name: Install browser runner
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
       - name: Browser interaction and viewport smoke tests
         run: node tests/browser-smoke.cjs
+      - name: Safari WebKit phone recovery regression
+        run: node tests/safari-resume-smoke.cjs
       - name: Creature art review screenshots
         if: always()
         uses: actions/upload-artifact@v4
