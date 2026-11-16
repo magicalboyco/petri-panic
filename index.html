@@ -2104,15 +2104,11 @@ function storyRender(){
  storyRenderKeepers();
  const pic=$('storyPicture');
  pic.classList.toggle('ending',final&&storyLine===event.lines.length-1);
- const storyArt={
-   intro:'assets/story/intro-trung-scott-call.jpg',
-   level2:'assets/story/level2-st-lawrence-cake.jpg',
-   level3:'assets/story/level3-market-raccoon.jpg',
-   level6:'assets/story/level6-distillery-roses.jpg',
-   level19:'assets/story/level19-union-station.jpg'
- };
- const scottCameo=storyCurrent.id==='intro'&&storyLine===3;
- const artwork=scottCameo?'assets/story/scott-music-office.jpg':storyArt[storyCurrent.id];
+ // Only explicitly approved scene art is displayed in the released game.
+ // Unapproved drafts remain in the repository for review, not in the story.
+ const storyArt={level3:'assets/story/level3-market-raccoon.jpg'};
+ const scottCameo=false;
+ const artwork=storyArt[storyCurrent.id];
  pic.classList.toggle('has-scene-art',Boolean(artwork));
  if(final&&storyLine===event.lines.length-1){
   pic.innerHTML='<div class="final-scene">🌹 🥂 🎶<strong>TRUNG ♥ SCOTT</strong><span>Toronto · CN Tower · Anniversary dinner</span><small>Final illustration in production · original gentle ukulele-style theme playing</small></div>';
