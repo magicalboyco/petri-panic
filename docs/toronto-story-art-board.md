@@ -17,8 +17,12 @@ Full-resolution, saturated, highly detailed cel-shaded anime illustration. Stron
 - On touchscreen, images fit inside the viewport and reveal full composition with optional inspect/zoom.
 - Verify image availability with HTTP 200, visual test on mobile/desktop, and check no reviewer markup remains.
 
+## Previous St. Lawrence Market scenes requiring inventory verification
+- Experiment 2: Scott's anniversary cake from St. Lawrence Market (previously reported published).
+- Experiment 3: St. Lawrence Market raccoon encounter (previously reported published).
+
 ## Next shots — proposed, NOT yet approved
-A. **St. Lawrence Market** — Trung hunts for a peameal-bacon sandwich and trades recommendations with a longtime vendor. Morning market textures and historic brick architecture.
+A. **St. Lawrence Market — already used; do not duplicate**. Prior project history records Experiment 2 (Trung purchasing Scott's anniversary cake, restored/published) and Experiment 3 (Toronto raccoon encounter, completed/published). Inspect current game assets and mappings to verify rather than commissioning a redundant peameal-bacon scene.
 B. **Toronto Islands ferry** — cheerful windswept Trung with skyline behind him; ferry snacks; city-island view rather than random CN Tower collage.
 C. **Queen Street West** — indie record and vintage-shopping encounter; expressive reaction to a deeply Toronto music or fashion discovery; storefront specificity.
 D. **Distillery Historic District** — late-afternoon cobblestones, heritage brick, café stop; one cinematic warm scene with actual Distillery character.
