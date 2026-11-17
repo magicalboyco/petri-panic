@@ -2110,7 +2110,7 @@ function storyRender(){
  // Unapproved drafts remain in the repository for review, not in the story.
  const storyArt={level2:'assets/story/level2-st-lawrence-cake.jpg',level3:'assets/story/level3-market-raccoon.jpg',level4:'assets/story/level4-jim-carrey-photobomb.jpg',level5:'assets/story/level5-keanu-film-roadblock.jpg',level6:'assets/story/level6-distillery-roses.jpg',level8:'assets/story/level8-church-shane-ilya.jpg',level9:'assets/story/level9-church-brooke.jpg',level10:'assets/story/level10-mountie-gordon.jpg',level11:'assets/story/level11-eaton-escalator.jpg',level12:'assets/story/level12-cobalt-temptation.jpg',level13:'assets/story/level13-dundas-umbrella.jpg',level14:'assets/story/level14-carly-yonge-timhortons.jpg',level15:'assets/story/level15-olivia-chow-city-hall.jpg',level16:'assets/story/level16-kensington-moira-david.jpg',level19:'assets/story/level19-union-station.jpg'};
  const scottCameo=false;
- const artwork=final&&storyLine===event.lines.length-2?'assets/story/victory-great-scott.jpg':storyCurrent.id==='level15'&&storyLine===3?'assets/story/level15-drake-breaker-high.jpg':storyArt[storyCurrent.id];
+ const artwork=final&&storyLine===event.lines.length-2?'assets/story/victory-great-scott.jpg':storyCurrent.id==='intro'?`assets/story/intro-${Math.min(storyLine+1,5)}.jpg`:storyCurrent.id==='level15'&&storyLine===3?'assets/story/level15-drake-breaker-high.jpg':storyArt[storyCurrent.id];
  pic.classList.toggle('has-scene-art',Boolean(artwork));
  if(final&&storyLine===event.lines.length-1){
   pic.innerHTML='<div class="final-scene">🌹 🥂 🎶<strong>TRUNG ♥ SCOTT</strong><span>Toronto · CN Tower · Anniversary dinner</span><small>Final illustration in production · original gentle ukulele-style theme playing</small></div>';

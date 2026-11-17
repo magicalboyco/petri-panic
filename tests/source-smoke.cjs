@@ -62,6 +62,8 @@ assert(html.includes("level15:{3:'Maple Leaf Square"),'Arena cameo must use corr
 assert(html.includes("level16:{3:'Kensington Market"),'Kensington cameo must remain in Kensington');
 
 assert(html.includes("level19:'assets/story/level19-union-station.jpg'"),'Approved Toronto scenes must be mapped');
+for(let n=1;n<=5;n++) assert(fs.existsSync(path.join(root,'assets/story/intro-'+n+'.jpg')),'Missing intro art panel '+n);
+assert(html.includes("storyCurrent.id==='intro'?"),'Intro art must change with each dialogue page');
 assert(html.includes('defeatBoss('), 'Boss completion required');
 const keeperFx=fs.readFileSync(path.join(root,'assets/js/keeper-signature-fx.js'),'utf8');
 new vm.Script(keeperFx,{filename:'assets/js/keeper-signature-fx.js'});
