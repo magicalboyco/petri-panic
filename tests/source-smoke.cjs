@@ -41,7 +41,7 @@ assert(html.includes('window.PetriPanicJuice?.drawBioBit(ctx,b,elapsed)'),'BioBi
 assert(html.includes('window.PetriPanicJuice?.ambient(ctx,era,elapsed)'),'Era-specific dish ambience missing');
 assert(html.includes('shelf-purchase'),'Supply shelf tactile purchase animation missing');
 
-const scenes=['level2-st-lawrence-cake','level3-market-raccoon','level4-jim-carrey-photobomb','level5-keanu-film-roadblock','level6-distillery-roses','level8-church-shane-ilya','level10-mountie-gordon','level11-eaton-escalator','level12-cobalt-temptation','level14-carly-yonge-timhortons','level15-olivia-chow-city-hall','level19-union-station'];
+const scenes=['level2-st-lawrence-cake','level3-market-raccoon','level4-jim-carrey-photobomb','level5-keanu-film-roadblock','level6-distillery-roses','level8-church-shane-ilya','level10-mountie-gordon','level11-eaton-escalator','level12-cobalt-temptation','level13-dundas-umbrella','level14-carly-yonge-timhortons','level15-olivia-chow-city-hall','level15-drake-breaker-high','level16-kensington-moira-david','level19-union-station'];
 for(const name of scenes){
  const file=path.join(root,'assets/story',name+'.jpg');
  assert(fs.existsSync(file),'Missing Toronto illustration: '+name);
